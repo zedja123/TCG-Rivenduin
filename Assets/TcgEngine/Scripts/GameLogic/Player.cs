@@ -541,7 +541,7 @@ namespace TcgEngine
         {
             if (cards_hand.Count == 0 && cards_board.Count == 0 && cards_deck.Count == 0)
                 return true;
-            if (hp <= 0)
+            if (!IsOnBoard(hero))
                 return true;
             return false;
         }

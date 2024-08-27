@@ -159,22 +159,7 @@ namespace TcgEngine
         //Check if a card is allowed to attack a player
         public virtual bool CanAttackTarget(Card attacker, Player target, bool skip_cost = false)
         {
-            if(attacker == null || target == null)
-                return false;
-
-            if (!attacker.CanAttack(skip_cost))
-                return false; //Card cant attack
-
-            if (attacker.player_id == target.player_id)
-                return false; //Cant attack same player
-
-            if (!IsOnBoard(attacker) || !attacker.CardData.IsCharacter())
-                return false; //Cards not on board
-
-            if (target.HasStatus(StatusType.Protected) && !attacker.HasStatus(StatusType.Flying))
-                return false; //Protected by taunt
-
-            return true;
+            return false;
         }
 
         //Check if a card is allowed to attack another one
