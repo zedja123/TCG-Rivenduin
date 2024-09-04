@@ -23,7 +23,6 @@ namespace TcgEngine.UI
         public Toggle toggle_owned;
         public Toggle toggle_not_owned;
 
-        public Toggle toggle_hero;
         public Toggle toggle_character;
         public Toggle toggle_spell;
         public Toggle toggle_artifact;
@@ -51,8 +50,7 @@ namespace TcgEngine.UI
         public GameObject deck_cards_prefab;
         public RectTransform deck_content;
         public GridLayoutGroup deck_grid;
-        //public IconButton[] hero_powers;
-        public DeckLine hero_line;
+        public IconButton[] hero_powers;
 
         private TeamData filter_team = null;
         private int filter_dropdown = 0;
@@ -68,8 +66,6 @@ namespace TcgEngine.UI
         private bool spawned = false;
         private bool update_grid = false;
         private float update_grid_timer = 0f;
-
-        private UserCardData hero_card;
 
         private List<UserCardData> deck_cards = new List<UserCardData>();
 
@@ -100,7 +96,7 @@ namespace TcgEngine.UI
             base.Start();
 
             //Set power abilities hover text
-            foreach (IconButton btn in hero_line)
+            foreach (IconButton btn in hero_powers)
             {
                 CardData icard = CardData.Get(btn.value);
                 HoverTargetUI hover = btn.GetComponent<HoverTargetUI>();
@@ -276,13 +272,11 @@ namespace TcgEngine.UI
                             || toggle_owned.isOn == toggle_not_owned.isOn;
 
                         bool type_check = (type == CardType.Character && toggle_character.isOn)
-                      || (type == CardType.Hero && toggle_hero.isOn)
-                                   || (type == CardType.Spell && toggle_spell.isOn)
-                                   || (type == CardType.Artifact && toggle_artifact.isOn)
-                                   || (type == CardType.Equipment && toggle_equipment.isOn)
-                                   || (type == CardType.Secret && toggle_secret.isOn)
-                                   || (!toggle_character.isOn && !toggle_spell.isOn && !toggle_artifact.isOn &&
-                              !toggle_equipment.isOn && !toggle_secret.isOn && !toggle_hero.isOn);
+                            || (type == CardType.Spell && toggle_spell.isOn)
+                            || (type == CardType.Artifact && toggle_artifact.isOn)
+                            || (type == CardType.Equipment && toggle_equipment.isOn)
+                            || (type == CardType.Secret && toggle_secret.isOn)
+                            || (!toggle_character.isOn && !toggle_spell.isOn && !toggle_artifact.isOn && !toggle_equipment.isOn && !toggle_secret.isOn);
 
                         bool rarity_check = (rarity.rank == 1 && toggle_common.isOn)
                             || (rarity.rank == 2 && toggle_uncommon.isOn)
@@ -376,7 +370,7 @@ namespace TcgEngine.UI
             saving = false;
             editing_deck = true;
 
-            foreach (IconButton btn in hero_line)
+            foreach (IconButton btn in hero_powers)
                 btn.Deactivate();
 
             if (deck != null)
@@ -384,7 +378,7 @@ namespace TcgEngine.UI
                 deck_title.text = deck.title;
                 current_deck_tid = deck.tid;
 
-                foreach (IconButton btn in hero_line)
+                foreach (IconButton btn in hero_powers)
                 {
                     if (deck.hero != null && btn.value == deck.hero.tid)
                         btn.Activate();
@@ -742,7 +736,7 @@ namespace TcgEngine.UI
 
         private string GetSelectedHeroId()
         {
-            foreach (IconButton btn in hero_line)
+            foreach (IconButton btn in hero_powers)
             {
                 if (btn.IsActive())
                     return btn.value;

@@ -107,9 +107,6 @@ namespace TcgEngine.Gameplay
             //Init each players
             foreach (Player player in game_data.players)
             {
-                //Add heroes on board
-                player.cards_board.Add(player.hero);
-                player.hero.slot = new Slot(3, 1, Slot.GetP(player.player_id)); //Add hero to the slot you want
                 //Puzzle level deck
                 DeckPuzzleData pdeck = DeckPuzzleData.Get(player.deck);
 
