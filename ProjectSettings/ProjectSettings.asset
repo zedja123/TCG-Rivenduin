@@ -5,7 +5,11 @@ PlayerSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 26
 <<<<<<< HEAD
+<<<<<<< HEAD
   productGUID: 276bae8f5df719b41b225c2cca29e817
+=======
+  productGUID: f530247ad30a64040956befc01c5baee
+>>>>>>> parent of 9ebb9bf (TCG Engine Commit)
 =======
   productGUID: f530247ad30a64040956befc01c5baee
 >>>>>>> parent of 9ebb9bf (TCG Engine Commit)
@@ -44,11 +48,16 @@ PlayerSettings:
     width: 1
     height: 1
 <<<<<<< HEAD
+<<<<<<< HEAD
   m_SplashScreenLogos:
   - logo: {fileID: 10404, guid: 0000000000000000f000000000000000, type: 0}
     duration: 2
   m_VirtualRealitySplashScreen: {fileID: 2800000, guid: 120ebeff77fe42548bbf65b35860ebc8,
     type: 3}
+=======
+  m_SplashScreenLogos: []
+  m_VirtualRealitySplashScreen: {fileID: 0}
+>>>>>>> parent of 9ebb9bf (TCG Engine Commit)
 =======
   m_SplashScreenLogos: []
   m_VirtualRealitySplashScreen: {fileID: 0}
@@ -664,6 +673,7 @@ PlayerSettings:
   webGLMemoryGeometricGrowthCap: 96
   webGLPowerPreference: 2
 <<<<<<< HEAD
+<<<<<<< HEAD
   scriptingDefineSymbols:
     Android: UNITY_POST_PROCESSING_STACK_V2;TCG_ENGINE
     EmbeddedLinux: UNITY_POST_PROCESSING_STACK_V2
@@ -682,6 +692,9 @@ PlayerSettings:
     XboxOne: UNITY_POST_PROCESSING_STACK_V2
     iPhone: UNITY_POST_PROCESSING_STACK_V2
     tvOS: UNITY_POST_PROCESSING_STACK_V2
+=======
+  scriptingDefineSymbols: {}
+>>>>>>> parent of 9ebb9bf (TCG Engine Commit)
 =======
   scriptingDefineSymbols: {}
 >>>>>>> parent of 9ebb9bf (TCG Engine Commit)
