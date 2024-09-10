@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: shell
   m_EditorClassIdentifier: 
   effect: 13
-  title: Shell
+  title: Barreira
   icon: {fileID: 0}
-  desc: On the first hit, takes no damage.
+  desc: Ignora o primeiro dano tomado.
   status_fx: {fileID: 8041625327064058042, guid: 364d6092a8e082740990d503ddee9024,
     type: 3}
   hvalue: 1

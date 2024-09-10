@@ -23,12 +23,12 @@ MonoBehaviour:
   attack: 1
   hp: 3
   traits:
-  - {fileID: 11400000, guid: 9124c4a8561cfd14d812a55b3e885662, type: 2}
-  - {fileID: 11400000, guid: 9124c4a8561cfd14d812a55b3e885662, type: 2}
+  - {fileID: 11400000, guid: e53e864045d6694458d7b823bf4923bb, type: 2}
+  - {fileID: 11400000, guid: a9e41c334ebf68048b2bd112b93623cb, type: 2}
   stats: []
   abilities:
-  - {fileID: 11400000, guid: 643b2aa17cd6c8847884a5771a5656b3, type: 2}
-  text: Spell Immunity
+  - {fileID: 11400000, guid: 794f3e6c72a98224abe6dfcdafabe4a0, type: 2}
+  text: Barreira
   desc: 
   spawn_fx: {fileID: 2106287953758554471, guid: a1e1ec86d02e969408bf2a6c17010f46,
     type: 3}
