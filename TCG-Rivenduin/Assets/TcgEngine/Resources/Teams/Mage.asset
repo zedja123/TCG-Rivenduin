@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 55e41d6c5fb036a40bc0a37bfe1f52ac, type: 3}
-  m_Name: water
+  m_Name: Mage
   m_EditorClassIdentifier: 
-  id: water
-  title: Water
-  icon: {fileID: 21300000, guid: 902c955805daa664683fc8908452e390, type: 3}
-  color: {r: 0.21568628, g: 0.53333336, b: 0.93333334, a: 1}
+  id: mage
+  title: Mage
+  icon: {fileID: 0}
+  color: {r: 0.15294118, g: 0.14901961, b: 0.4156863, a: 1}
   frame: {fileID: 21300000, guid: 6b326e2ce8ec13147a1f2832c2aecb8a, type: 3}
