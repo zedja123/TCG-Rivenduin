@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Humano
   m_EditorClassIdentifier: 
   id: mage
-  title: Mago
+  title: Humano
   icon: {fileID: 0}
