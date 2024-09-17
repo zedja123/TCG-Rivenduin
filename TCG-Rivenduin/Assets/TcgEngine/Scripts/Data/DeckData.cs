@@ -18,6 +18,7 @@ namespace TcgEngine
 
         [Header("Cards")]
         public CardData hero;
+        public CardData passive;
         public CardData[] cards;
 
         public static List<DeckData> deck_list = new List<DeckData>();
