@@ -111,15 +111,7 @@ namespace TcgEngine.Gameplay
                 DeckPuzzleData pdeck = DeckPuzzleData.Get(player.deck);
 
                 //Hp / mana
-
                 player.hp_max = pdeck != null ? pdeck.start_hp : GameplayData.Get().hp_start;
-
-                if (player.hero != null)
-                    player.hp_max += player.hero.hp;
-
-                if (player.passive != null)
-                    player.hp_max += player.passive.hp;
-
                 player.hp = player.hp_max;
                 player.mana_max = pdeck != null ? pdeck.start_mana : GameplayData.Get().mana_start;
                 player.mana = player.mana_max;
@@ -177,9 +169,6 @@ namespace TcgEngine.Gameplay
 
             if (player.hero != null)
                 player.hero.Refresh();
-
-            if (player.passive != null)
-                player.passive.Refresh();
 
             //Refresh Cards and Status Effects
             for (int i = player.cards_board.Count - 1; i >= 0; i--)
@@ -343,10 +332,9 @@ namespace TcgEngine.Gameplay
 
             VariantData variant = VariantData.GetDefault();
             if (deck.hero != null)
+            {
                 player.hero = Card.Create(deck.hero, variant, player);
-
-            if (deck.passive != null)
-                player.passive = Card.Create(deck.passive, variant, player);
+            }
 
             foreach (CardData card in deck.cards)
             {
@@ -382,7 +370,6 @@ namespace TcgEngine.Gameplay
             player.cards_deck.Clear();
             player.deck = deck.tid;
             player.hero = null;
-            player.passive = null;
 
             if (deck.hero != null)
             {
@@ -390,14 +377,6 @@ namespace TcgEngine.Gameplay
                 VariantData hvariant = VariantData.Get(deck.hero.variant);
                 if (hdata != null && hvariant != null)
                     player.hero = Card.Create(hdata, hvariant, player);
-            }
-
-            if (deck.passive != null)
-            {
-                CardData pdata = CardData.Get(deck.passive.tid);
-                VariantData pvariant = VariantData.Get(deck.passive.variant);
-                if (pdata != null && pvariant != null)
-                    player.passive = Card.Create(pdata, pvariant, player);
             }
 
             foreach (UserCardData card in deck.cards)
@@ -1043,9 +1022,6 @@ namespace TcgEngine.Gameplay
                 if (oplayer.hero != null)
                     TriggerCardAbilityType(type, oplayer.hero, triggerer);
 
-                if (oplayer.passive != null)
-                    TriggerCardAbilityType(type, oplayer.passive, triggerer);
-
                 foreach (Card card in oplayer.cards_board)
                     TriggerCardAbilityType(type, card, triggerer);
             }
@@ -1055,9 +1031,6 @@ namespace TcgEngine.Gameplay
         {
             if (player.hero != null)
                 TriggerCardAbilityType(type, player.hero, player.hero);
-
-            if (player.passive != null)
-                TriggerCardAbilityType(type, player.passive, player.passive);
 
             foreach (Card card in player.cards_board)
                 TriggerCardAbilityType(type, card, card);
@@ -1314,7 +1287,6 @@ namespace TcgEngine.Gameplay
             {
                 Player player = game_data.players[p];
                 UpdateOngoingAbilities(player, player.hero);  //Remove this line if hero is on the board
-                UpdateOngoingAbilities(player, player.passive);
 
                 for (int c = 0; c < player.cards_board.Count; c++)
                 {

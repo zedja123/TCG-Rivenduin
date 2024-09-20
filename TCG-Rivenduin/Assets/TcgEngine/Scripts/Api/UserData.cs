@@ -326,7 +326,6 @@ namespace TcgEngine
         public string tid;
         public string title;
         public UserCardData hero;
-        public UserCardData passive;
         public UserCardData[] cards;
 
         public UserDeckData() {}
@@ -336,7 +335,6 @@ namespace TcgEngine
             this.tid = tid;
             this.title = title;
             hero = new UserCardData();
-            passive = new UserCardData();
             cards = new UserCardData[0];
         }
 
@@ -345,7 +343,6 @@ namespace TcgEngine
             tid = deck.id;
             title = deck.title;
             hero = new UserCardData(deck.hero, VariantData.GetDefault());
-            passive = new UserCardData(deck.passive, VariantData.GetDefault());
             cards = new UserCardData[deck.cards.Length];
             for (int i = 0; i < deck.cards.Length; i++)
             {
@@ -371,7 +368,6 @@ namespace TcgEngine
             serializer.SerializeValue(ref tid);
             serializer.SerializeValue(ref title);
             serializer.SerializeValue(ref hero);
-            serializer.SerializeValue(ref passive);
             NetworkTool.NetSerializeArray(serializer, ref cards);
         }
 
@@ -383,7 +379,6 @@ namespace TcgEngine
                 deck.tid = "";
                 deck.title = "";
                 deck.hero = new UserCardData();
-                deck.passive = new UserCardData();
                 deck.cards = new UserCardData[0];
                 return deck;
             }

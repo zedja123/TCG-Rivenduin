@@ -57,7 +57,6 @@ namespace TcgEngine.UI
             udeck.tid = deck_id + "_" + GameTool.GenerateRandomID(4, 7); //Add random id to differentiate from the starter deck if edited
             udeck.title = deck.title;
             udeck.hero = new UserCardData(deck.hero, VariantData.GetDefault());
-            udeck.passive = new UserCardData(deck.passive, VariantData.GetDefault());
 
             List<UserCardData> cards = new List<UserCardData>();
             foreach (CardData card in deck.cards)

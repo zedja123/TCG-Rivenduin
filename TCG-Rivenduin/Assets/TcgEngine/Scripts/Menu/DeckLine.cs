@@ -61,9 +61,9 @@ namespace TcgEngine.UI
             if (title != null)
                 title.color = variant.color;
             if (value != null)
-                value.text = card.type == CardType.Passive || card.type == CardType.Hero ? card.hp.ToString() : quantity.ToString();
+                value.text = quantity.ToString();
             if (value != null)
-                value.enabled = quantity > 1 || card.type == CardType.Passive || card.type == CardType.Hero;
+                value.enabled = quantity > 1;
             if (cost != null)
                 cost.value = card.mana;
             if (this.value != null)

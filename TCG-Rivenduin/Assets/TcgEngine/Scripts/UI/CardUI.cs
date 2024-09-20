@@ -74,7 +74,7 @@ namespace TcgEngine.UI
             if(card_image != null)
                 card_image.sprite = card.GetFullArt(variant);
             if (frame_image != null)
-                frame_image.sprite = variant.frame;
+                frame_image.sprite = card.team.frame;
             if (card_title != null)
                 card_title.text = card.GetTitle().ToUpper();
             if (card_text != null)
@@ -89,9 +89,9 @@ namespace TcgEngine.UI
             if (hp != null)
                 hp.enabled = card.IsBoardCard() || card.IsEquipment();
             if (cost_icon != null)
-                cost_icon.enabled = card.type != CardType.Hero && card.type != CardType.Passive;
+                cost_icon.enabled = card.type != CardType.Hero;
             if (cost != null)
-                cost.enabled = card.type != CardType.Hero && card.type != CardType.Passive;
+                cost.enabled = card.type != CardType.Hero;
 
             if (cost != null)
                 cost.text = card.mana.ToString();
@@ -111,7 +111,7 @@ namespace TcgEngine.UI
             if (rarity_icon != null)
             {
                 rarity_icon.sprite = card.rarity.icon;
-                rarity_icon.enabled = rarity_icon.sprite != null && card.type != CardType.Hero && card.type != CardType.Passive;
+                rarity_icon.enabled = rarity_icon.sprite != null && card.type != CardType.Hero;
             }
 
             foreach (TraitUI stat in stats)

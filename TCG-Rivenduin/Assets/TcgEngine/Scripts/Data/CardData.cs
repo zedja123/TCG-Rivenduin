@@ -7,7 +7,6 @@ namespace TcgEngine
     {
         None = 0,
         Hero = 5,
-        Passive = 6,
         Character = 10,
         Spell = 20,
         Artifact = 30,
@@ -111,8 +110,6 @@ namespace TcgEngine
         {
             if (type == CardType.Hero)
                 return "hero";
-            if (type == CardType.Passive)
-                return "passive";
             if (type == CardType.Character)
                 return "character";
             if (type == CardType.Artifact)

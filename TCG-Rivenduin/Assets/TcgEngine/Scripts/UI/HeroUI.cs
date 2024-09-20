@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TcgEngine.Client;
 using UnityEngine.EventSystems;
-using System.Linq;
 
 namespace TcgEngine.UI
 {
@@ -17,7 +16,6 @@ namespace TcgEngine.UI
         public Image power_image;
         public GameObject power_mana_slot;
         public Text power_mana;
-        public bool passive;
 
         public Material active_mat;
         public Material inactive_mat;
@@ -60,21 +58,17 @@ namespace TcgEngine.UI
 
             Game gdata = GameClient.Get().GetGameData();
             Player player = GetPlayer();
-            Card hero = passive ? player.passive : player.hero;
+            Card hero = player.hero;
             if (hero == null)
                 return;
 
-            AbilityData ability = passive ? hero.GetAbilities().First() : hero.GetAbility(AbilityTrigger.Activate);
+            AbilityData ability = hero.GetAbility(AbilityTrigger.Activate);
             if (ability != null)
             {
                 power_image.sprite = hero.CardData.GetBoardArt(hero.VariantData);
                 power_image.material = !hero.exhausted ? active_mat : inactive_mat;
-
-                if (power_mana_slot)
-                {
-                    power_mana_slot?.SetActive(gdata.IsPlayerTurn(player) && !hero.exhausted);
-                    power_mana.text = ability.mana_cost.ToString();
-                }
+                power_mana_slot?.SetActive(gdata.IsPlayerTurn(player) && !hero.exhausted);
+                power_mana.text = ability.mana_cost.ToString();
             }
 
             if (power_button != null)
@@ -86,7 +80,6 @@ namespace TcgEngine.UI
 
         public void OnClickPower()
         {
-            if (passive) return;
             Game gdata = GameClient.Get().GetGameData();
             Player player = GameClient.Get().GetPlayer();
             Card hero = player.hero;
@@ -141,7 +134,7 @@ namespace TcgEngine.UI
         public Card GetCard()
         {
             Player player = GetPlayer();
-            return passive ? player.passive : player.hero;
+            return player.hero;
         }
 
         public static HeroUI GetFocus()
@@ -154,20 +147,20 @@ namespace TcgEngine.UI
             return null;
         }
 
-        public static HeroUI Get(bool opponent, bool passive)
+        public static HeroUI Get(bool opponent)
         {
             foreach (HeroUI ui in ui_list)
             {
-                if (ui.opponent == opponent && ui.passive == passive)
+                if (ui.opponent == opponent)
                     return ui;
             }
             return null;
         }
 
-        public static HeroUI Get(int player_id, bool passive)
+        public static HeroUI Get(int player_id)
         {
             bool opponent = player_id != GameClient.Get().GetPlayerID();
-            return Get(opponent, passive);
+            return Get(opponent);
         }
     }
 }
