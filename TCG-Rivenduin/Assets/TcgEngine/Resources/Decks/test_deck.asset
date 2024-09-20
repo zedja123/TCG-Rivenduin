@@ -15,6 +15,16 @@ MonoBehaviour:
   id: test_deck
   title: Test Deck
   hero: {fileID: 11400000, guid: cf170aea7ffb041428f37608f1561058, type: 2}
+  passive: {fileID: 11400000, guid: 3358b2636666b1644919373677e765cd, type: 2}
   cards:
-  - {fileID: 11400000, guid: 3505e2c09d7d9af49818308650412aba, type: 2}
-  - {fileID: 11400000, guid: 0ca4783d857de034f9de899e01cfdc04, type: 2}
+  - {fileID: 11400000, guid: 1e22d4647e903814d96f63a729e1f820, type: 2}
+  - {fileID: 11400000, guid: 1e22d4647e903814d96f63a729e1f820, type: 2}
+  - {fileID: 11400000, guid: 2e8eac7ed58a29944a6d2c7d2539fca8, type: 2}
+  - {fileID: 11400000, guid: 2e8eac7ed58a29944a6d2c7d2539fca8, type: 2}
+  - {fileID: 11400000, guid: 4a0f93237a2ae53468e29927c1b7c1ec, type: 2}
+  - {fileID: 11400000, guid: 4a0f93237a2ae53468e29927c1b7c1ec, type: 2}
+  - {fileID: 11400000, guid: 685188cde95b4274c9d959f68adc1bcd, type: 2}
+  - {fileID: 11400000, guid: 685188cde95b4274c9d959f68adc1bcd, type: 2}
+  - {fileID: 11400000, guid: 4fc52d01f2883134ea1e6ea0d9ba82f2, type: 2}
+  - {fileID: 11400000, guid: 4fc52d01f2883134ea1e6ea0d9ba82f2, type: 2}
+  - {fileID: 11400000, guid: 2302f11d23015254dbb067255d70e738, type: 2}

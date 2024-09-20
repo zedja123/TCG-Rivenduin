@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -51,6 +52,8 @@ namespace TcgEngine.UI
         public RectTransform deck_content;
         public GridLayoutGroup deck_grid;
         public IconButton[] hero_powers;
+        public DeckLine passive;
+        public DeckLine active;
 
         private TeamData filter_team = null;
         private int filter_dropdown = 0;
@@ -68,6 +71,9 @@ namespace TcgEngine.UI
         private float update_grid_timer = 0f;
 
         private List<UserCardData> deck_cards = new List<UserCardData>();
+        private UserCardData active_card = null;
+        private UserCardData passive_card = null;
+
 
         private static CollectionPanel instance;
 
@@ -86,6 +92,9 @@ namespace TcgEngine.UI
                 line.onClick += OnClickDeckLine;
             foreach (DeckLine line in deck_lines)
                 line.onClickDelete += OnClickDeckDelete;
+
+            active.onClick += OnClickDeckLine;
+            passive.onClick += OnClickDeckLine;
 
             foreach (IconButton button in team_filters)
                 button.onClick += OnClickTeam;
@@ -216,7 +225,7 @@ namespace TcgEngine.UI
             deck_list_panel.Hide();
             card_list_panel.Show();
         }
-        
+
         public void RefreshCards()
         {
             if (!spawned)
@@ -371,6 +380,8 @@ namespace TcgEngine.UI
             deck_cards.Clear();
             saving = false;
             editing_deck = true;
+            active_card = null;
+            passive_card = null;
 
             foreach (IconButton btn in hero_powers)
                 btn.Deactivate();
@@ -379,13 +390,9 @@ namespace TcgEngine.UI
             {
                 deck_title.text = deck.title;
                 current_deck_tid = deck.tid;
+                passive_card = deck.passive;
+                active_card = deck.hero;
 
-                foreach (IconButton btn in hero_powers)
-                {
-                    if (deck.hero != null && btn.value == deck.hero.tid)
-                        btn.Activate();
-                }
-                
                 for (int i = 0; i < deck.cards.Length; i++)
                 {
                     CardData card = CardData.Get(deck.cards[i].tid);
@@ -402,6 +409,32 @@ namespace TcgEngine.UI
 
         private void RefreshDeckCards()
         {
+            if (active_card != null)
+            {
+                CardData hero_data = CardData.Get(active_card.tid);
+                VariantData hero_variant = VariantData.Get(active_card.variant);
+                active.SetLine(hero_data, hero_variant, 1);
+            }
+            else
+            {
+                active.Hide();
+            }
+
+            if (passive_card != null)
+            {
+                CardData hero_data = CardData.Get(passive_card.tid);
+                VariantData hero_variant = VariantData.Get(passive_card.variant);
+                passive.SetLine(hero_data, hero_variant, 1);
+            }
+            else
+            {
+                passive.Hide();
+            }
+
+            var hero_hp = active_card != null ? CardData.Get(active_card.tid).hp : 0;
+            var passive_hp = passive_card != null ? CardData.Get(passive_card.tid).hp : 0;
+            deck_title.text = deck_title.text.Split(" (").First() + $" (HP: {hero_hp + passive_hp})";
+
             foreach (DeckLine line in deck_card_lines)
                 line.Hide();
 
@@ -469,12 +502,22 @@ namespace TcgEngine.UI
 
         private void AddDeckCard(CardData card, VariantData variant, int quantity = 1)
         {
-            AddDeckCard(card.id, variant.id, quantity);
+            if (card.type == CardType.Hero)
+                active_card = new UserCardData(card, variant);
+            else if (card.type == CardType.Passive)
+                passive_card = new UserCardData(card, variant);
+            else
+                AddDeckCard(card.id, variant.id, quantity);
         }
 
         private void RemoveDeckCard(CardData card, VariantData variant)
         {
-            RemoveDeckCard(card.id, variant.id);
+            if (card.type == CardType.Hero)
+                active_card = null;
+            else if (card.type == CardType.Passive)
+                passive_card = null;
+            else
+                RemoveDeckCard(card.id, variant.id);
         }
 
         private void AddDeckCard(string tid, string variant, int quantity = 1)
@@ -501,7 +544,7 @@ namespace TcgEngine.UI
                 {
                     ucard.quantity--;
 
-                    if(ucard.quantity <= 0)
+                    if (ucard.quantity <= 0)
                         deck_cards.RemoveAt(i);
                 }
             }
@@ -524,8 +567,11 @@ namespace TcgEngine.UI
             udeck.tid = current_deck_tid;
             udeck.title = deck_title.text;
             udeck.hero = new UserCardData();
-            udeck.hero.tid = GetSelectedHeroId();
-            udeck.hero.variant = VariantData.GetDefault().id;
+            udeck.hero.tid = active_card != null ? active_card.tid : "";
+            udeck.hero.variant = active_card != null ? active_card.variant : "";
+            udeck.passive = new UserCardData();
+            udeck.passive.tid = passive_card != null ? passive_card.tid : "";
+            udeck.passive.variant = passive_card != null ? passive_card.variant : "";
             udeck.cards = deck_cards.ToArray();
             saving = true;
 
@@ -709,7 +755,7 @@ namespace TcgEngine.UI
                 DeleteDeck(deck.tid);
             }
         }
-        
+
         // ---- Getters -----
 
         public int CountDeckCards(CardData card, VariantData cvariant)
