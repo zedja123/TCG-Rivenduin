@@ -13,37 +13,26 @@ MonoBehaviour:
   m_Name: test_deck
   m_EditorClassIdentifier: 
   id: test_deck
-  title: Test Deck
+  title: Fire Starter
   hero: {fileID: 11400000, guid: cf170aea7ffb041428f37608f1561058, type: 2}
   cards:
-<<<<<<< HEAD
-  - {fileID: 11400000, guid: 3505e2c09d7d9af49818308650412aba, type: 2}
-<<<<<<< HEAD
-  - {fileID: 11400000, guid: 3505e2c09d7d9af49818308650412aba, type: 2}
-  - {fileID: 11400000, guid: 3505e2c09d7d9af49818308650412aba, type: 2}
-  - {fileID: 11400000, guid: 3505e2c09d7d9af49818308650412aba, type: 2}
-  - {fileID: 11400000, guid: 3505e2c09d7d9af49818308650412aba, type: 2}
-  - {fileID: 11400000, guid: 3505e2c09d7d9af49818308650412aba, type: 2}
-  - {fileID: 11400000, guid: 3505e2c09d7d9af49818308650412aba, type: 2}
-  - {fileID: 11400000, guid: 3505e2c09d7d9af49818308650412aba, type: 2}
-  - {fileID: 11400000, guid: 3505e2c09d7d9af49818308650412aba, type: 2}
-  - {fileID: 11400000, guid: 3505e2c09d7d9af49818308650412aba, type: 2}
-  - {fileID: 11400000, guid: 3505e2c09d7d9af49818308650412aba, type: 2}
-  - {fileID: 11400000, guid: 3505e2c09d7d9af49818308650412aba, type: 2}
-  - {fileID: 11400000, guid: 3505e2c09d7d9af49818308650412aba, type: 2}
-=======
-  - {fileID: 11400000, guid: 0ca4783d857de034f9de899e01cfdc04, type: 2}
->>>>>>> parent of a6454ea (commit)
-=======
-  - {fileID: 11400000, guid: 1e22d4647e903814d96f63a729e1f820, type: 2}
-  - {fileID: 11400000, guid: 1e22d4647e903814d96f63a729e1f820, type: 2}
-  - {fileID: 11400000, guid: 2e8eac7ed58a29944a6d2c7d2539fca8, type: 2}
-  - {fileID: 11400000, guid: 2e8eac7ed58a29944a6d2c7d2539fca8, type: 2}
-  - {fileID: 11400000, guid: 4a0f93237a2ae53468e29927c1b7c1ec, type: 2}
-  - {fileID: 11400000, guid: 4a0f93237a2ae53468e29927c1b7c1ec, type: 2}
-  - {fileID: 11400000, guid: 685188cde95b4274c9d959f68adc1bcd, type: 2}
-  - {fileID: 11400000, guid: 685188cde95b4274c9d959f68adc1bcd, type: 2}
-  - {fileID: 11400000, guid: 4fc52d01f2883134ea1e6ea0d9ba82f2, type: 2}
-  - {fileID: 11400000, guid: 4fc52d01f2883134ea1e6ea0d9ba82f2, type: 2}
-  - {fileID: 11400000, guid: 2302f11d23015254dbb067255d70e738, type: 2}
->>>>>>> parent of d075bb0 (Update test_deck.asset)
+  - {fileID: 11400000, guid: 99081d84b6aa6264aa1c68c6defbe31d, type: 2}
+  - {fileID: 11400000, guid: 99081d84b6aa6264aa1c68c6defbe31d, type: 2}
+  - {fileID: 11400000, guid: 6fc2df66f76e1d04193b9575abbf0991, type: 2}
+  - {fileID: 11400000, guid: 6fc2df66f76e1d04193b9575abbf0991, type: 2}
+  - {fileID: 11400000, guid: 90114aa2c3dd29f46820b95467b2bbd3, type: 2}
+  - {fileID: 11400000, guid: 90322744d448d6a46b8c2361a222d9a6, type: 2}
+  - {fileID: 11400000, guid: 90322744d448d6a46b8c2361a222d9a6, type: 2}
+  - {fileID: 11400000, guid: faacda797c4448a4bbbcbca76c6fefc0, type: 2}
+  - {fileID: 11400000, guid: 83692bb780503404b92feed04c7d222b, type: 2}
+  - {fileID: 11400000, guid: 58f3c5b170fe7824aa33bd4875e07f3a, type: 2}
+  - {fileID: 11400000, guid: 900d0aa6de59c1349ab5c08a481c2a38, type: 2}
+  - {fileID: 11400000, guid: 979b326ecf73d0a4791dc37a6f13c24a, type: 2}
+  - {fileID: 11400000, guid: 91a80a84e1f0cd94fac96f44bc2ff142, type: 2}
+  - {fileID: 11400000, guid: 879711e9fc6210b42a2bc43c0f595222, type: 2}
+  - {fileID: 11400000, guid: 879711e9fc6210b42a2bc43c0f595222, type: 2}
+  - {fileID: 11400000, guid: 153048657a8ea4448951d15c53a7f07e, type: 2}
+  - {fileID: 11400000, guid: 153048657a8ea4448951d15c53a7f07e, type: 2}
+  - {fileID: 11400000, guid: 3e430dc2bad4fe049acd2584de26eaad, type: 2}
+  - {fileID: 11400000, guid: 836b91f8ff0e85742ac0bea1bc45f60d, type: 2}
+  - {fileID: 11400000, guid: 3660f3745defa054392beb41affc32fb, type: 2}
