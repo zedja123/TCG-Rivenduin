@@ -16,6 +16,7 @@ MonoBehaviour:
   title: Fire Starter
   hero: {fileID: 11400000, guid: cf170aea7ffb041428f37608f1561058, type: 2}
   cards:
+<<<<<<< HEAD
   - {fileID: 11400000, guid: 99081d84b6aa6264aa1c68c6defbe31d, type: 2}
   - {fileID: 11400000, guid: 99081d84b6aa6264aa1c68c6defbe31d, type: 2}
   - {fileID: 11400000, guid: 6fc2df66f76e1d04193b9575abbf0991, type: 2}
@@ -36,3 +37,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3e430dc2bad4fe049acd2584de26eaad, type: 2}
   - {fileID: 11400000, guid: 836b91f8ff0e85742ac0bea1bc45f60d, type: 2}
   - {fileID: 11400000, guid: 3660f3745defa054392beb41affc32fb, type: 2}
+=======
+  - {fileID: 11400000, guid: 3505e2c09d7d9af49818308650412aba, type: 2}
+  - {fileID: 11400000, guid: 0ca4783d857de034f9de899e01cfdc04, type: 2}
+>>>>>>> parent of a6454ea (commit)
