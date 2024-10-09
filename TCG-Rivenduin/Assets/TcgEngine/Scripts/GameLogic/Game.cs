@@ -96,6 +96,12 @@ namespace TcgEngine
             return IsPlayerActionTurn(player) || IsPlayerSelectorTurn(player);
         }
 
+        public virtual bool IsPlayerActionTurn(Player player)
+        {
+            return player != null && current_player == player.player_id 
+                && state == GameState.Play && selector == SelectorType.None;
+        }
+
         public virtual bool IsPlayerSelectorTurn(Player player)
         {
             return player != null && selector_player_id == player.player_id 
