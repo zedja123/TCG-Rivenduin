@@ -14,8 +14,6 @@ namespace TcgEngine.UI
 
     public class GameUI : MonoBehaviour
     {
-
-        public Text end_turn_text;
         public Canvas game_canvas;
         public Canvas panel_canvas;
         public Canvas top_canvas;
@@ -79,36 +77,16 @@ namespace TcgEngine.UI
             end_turn_timer += Time.deltaTime;
             selector_timer += Time.deltaTime;
 
-            var timer_val = data.response_phase != ResponsePhase.None ? Mathf.RoundToInt(data.response_timer) : Mathf.RoundToInt(data.turn_timer);
-            if (yourturn)
-            {
-                end_turn_text.text = data.response_phase == ResponsePhase.Response ? "END\nRESPONSE" : "END\nTURN";
-            }
-            else
-            {
-                end_turn_text.text = data.response_phase == ResponsePhase.Response ? "ENEMY\nRESPONSE" : "ENEMY\nTURN";
-            }
             //Timer
             turn_count.text = "Turn " + data.turn_count.ToString();
             turn_timer.enabled = data.turn_timer > 0f;
-            turn_timer.text = timer_val.ToString();
+            turn_timer.text = Mathf.RoundToInt(data.turn_timer).ToString();
             turn_timer.enabled = data.turn_timer < 999f;
 
-            if (data.state == GameState.Play && data.phase == GamePhase.Main && data.response_phase == ResponsePhase.None && data.turn_timer > 0f)
-                data.turn_timer -= Time.deltaTime;
-            if (data.state == GameState.Play && data.response_phase != ResponsePhase.None && data.response_timer > 0f)
-                data.response_timer -= Time.deltaTime;
             //Simulate timer
             if (data.state == GameState.Play && data.turn_timer > 0f)
                 data.turn_timer -= Time.deltaTime;
 
-            if (data.state == GameState.Play)
-            {
-                int tick_val = 10;
-                if (timer_val < prev_time_val && timer_val <= tick_val)
-                    PulseFX();
-                prev_time_val = timer_val;
-            }
             //Timer warning
             if (data.state == GameState.Play)
             {

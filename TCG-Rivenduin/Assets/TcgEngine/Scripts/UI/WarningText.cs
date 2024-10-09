@@ -75,10 +75,5 @@ namespace TcgEngine.UI
         {
             return instance;
         }
-
-        public static void ShowNoResponse()
-        {
-            ShowText("This cannot be used as response");
-        }
     }
 }

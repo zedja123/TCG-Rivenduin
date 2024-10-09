@@ -12,11 +12,6 @@ namespace TcgEngine
     [CreateAssetMenu(fileName = "ability", menuName = "TcgEngine/AbilityData", order = 5)]
     public class AbilityData : ScriptableObject
     {
-
-        public bool selector_owner = true;               //WHO choses? AI or Player?
-        public bool selector_cancelable = true;          //CAN be cancelled? Click on "X" to close window / timeout
-        public bool use_as_response = false;             //CAN be used in response phase?
-
         public string id;
 
         [Header("Trigger")]
