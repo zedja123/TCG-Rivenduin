@@ -9,13 +9,6 @@ namespace TcgEngine
     [System.Serializable]
     public class Game
     {
-<<<<<<< HEAD
-        public ResponsePhase response_phase = ResponsePhase.None;
-        public float response_timer = 0f;
-        public bool selector_cancelable;
-
-=======
->>>>>>> parent of 13d5a49 (commit)
         public string game_uid;
         public GameSettings settings;
 
@@ -91,9 +84,8 @@ namespace TcgEngine
 
         public virtual bool IsPlayerActionTurn(Player player)
         {
-            return player != null && current_player == player.player_id
-                && state == GameState.Play && selector == SelectorType.None
-                && (response_phase == ResponsePhase.None) == (current_player == player.player_id); // Last line ensure that active players don't play on Response, but not-active can.
+            return player != null && current_player == player.player_id 
+                && state == GameState.Play && selector == SelectorType.None;
         }
 
         public virtual bool IsPlayerSelectorTurn(Player player)
@@ -151,12 +143,6 @@ namespace TcgEngine
         {
             if (card == null || !slot.IsValid())
                 return false;
-<<<<<<< HEAD
-            if (response_phase == ResponsePhase.Response)
-                return false;
-=======
-
->>>>>>> parent of 13d5a49 (commit)
             if (!IsOnBoard(card))
                 return false; //Only cards in play can move
 
@@ -184,12 +170,6 @@ namespace TcgEngine
 
             if (!attacker.CanAttack(skip_cost))
                 return false; //Card cant attack
-<<<<<<< HEAD
-            if (response_phase == ResponsePhase.Response)
-                return false;
-=======
-
->>>>>>> parent of 13d5a49 (commit)
             if (attacker.player_id == target.player_id)
                 return false; //Cant attack same player
 
@@ -619,14 +599,4 @@ namespace TcgEngine
         SelectorChoice = 30,
         SelectorCost = 40,
     }
-<<<<<<< HEAD
-    [System.Serializable]
-    public enum ResponsePhase
-    {
-        None = 0,
-        Response = 10,
-        ResponseSelector = 20,
-    }
-=======
->>>>>>> parent of 13d5a49 (commit)
 }
