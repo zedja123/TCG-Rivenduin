@@ -132,6 +132,7 @@ namespace TcgEngine.Server
 
         public virtual void Update()
         {
+
             //Game Expiration if no one is connected or game ended
             int connected_players = CountConnectedClients();
             if (HasGameEnded() || connected_players == 0)
@@ -180,6 +181,28 @@ namespace TcgEngine.Server
             foreach (AIPlayer ai in ai_list)
             {
                 ai.Update();
+            }
+
+            if (game_data.phase == GamePhase.Main && game_data.response_phase == ResponsePhase.None)
+            {
+                game_data.turn_timer -= Time.deltaTime;
+
+            }
+            else if (game_data.response_phase != ResponsePhase.None)
+            {
+                game_data.response_timer -= Time.deltaTime;
+            }
+
+            if (game_data.turn_timer <= 0f)
+            {
+                //Time expired during turn
+                gameplay.NextStep();
+            }
+
+            if (game_data.response_timer <= 0f)
+            {
+                // Time expired to response action
+                gameplay.CancelSelection();
             }
         }
 

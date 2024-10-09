@@ -122,7 +122,7 @@ namespace TcgEngine.AI
         private void CalculateNode(Game data, NodeState node)
         {
             Profiler.BeginSample("Add Actions");
-            Player player = data.GetPlayer(data.current_player);
+            Player player = data.response_phase == ResponsePhase.Response ? data.GetOpponentPlayer(data.current_player) : data.GetPlayer(data.current_player);
             List<AIAction> action_list = list_pool.Create();
 
             int max_actions = node.tdepth < ai_depth_wide ? actions_per_turn_wide : actions_per_turn;
@@ -324,7 +324,8 @@ namespace TcgEngine.AI
         //Add all possible moves for card to list of actions
         private void AddActions(List<AIAction> actions, Game data, NodeState node, ushort type, Card card)
         {
-            Player player = data.GetPlayer(data.current_player);
+            Player player = data.response_phase == ResponsePhase.Response ? data.GetOpponentPlayer(data.current_player) : data.GetPlayer(data.current_player);
+
 
             if (data.selector != SelectorType.None)
                 return;
