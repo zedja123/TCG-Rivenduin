@@ -13,6 +13,7 @@ namespace TcgEngine.UI
 
     public class SelectTargetUI : SelectorPanel
     {
+        public GameObject cancel_button; // Remember to attach it via inspector, is the X GameObject
         public Text title;
         public Text desc;
 
@@ -47,6 +48,7 @@ namespace TcgEngine.UI
 
         public override bool ShouldShow()
         {
+            cancel_button.SetActive(GameClient.Get().GetGameData().selector_cancelable);
             Game data = GameClient.Get().GetGameData();
             int player_id = GameClient.Get().GetPlayerID();
             return data.selector == SelectorType.SelectTarget && data.selector_player_id == player_id;

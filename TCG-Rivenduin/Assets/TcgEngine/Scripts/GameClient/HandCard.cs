@@ -233,6 +233,11 @@ namespace TcgEngine.Client
                 WarningText.ShowNoMana();
                 return;
             }
+            if (gdata.response_phase == ResponsePhase.Response && !card.HasTrait("response"))
+            {
+                WarningText.ShowNoResponse();
+                return;
+            }
 
             if (gdata.CanPlayCard(card, slot, true))
             {
