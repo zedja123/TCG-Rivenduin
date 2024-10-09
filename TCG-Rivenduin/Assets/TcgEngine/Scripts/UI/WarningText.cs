@@ -74,11 +74,6 @@ namespace TcgEngine.UI
         public static WarningText Get()
         {
             return instance;
-      
-        }
-        public static void ShowNoResponse()
-        {
-            ShowText("This cannot be used as response");
         }
     }
 }

@@ -181,28 +181,6 @@ namespace TcgEngine.Server
             {
                 ai.Update();
             }
-
-            if (game_data.phase == GamePhase.Main && game.response_phase == ResponsePhase.None)
-            {
-                game_data.turn_timer -= Time.deltaTime;
-
-            }
-            else if (game_data.response_phase != ResponsePhase.None)
-            {
-                game_data.response_timer -= Time.deltaTime;
-            }
-
-            if (game_data.turn_timer <= 0f)
-            {
-                //Time expired during turn
-                gameplay.NextStep();
-            }
-
-            if (game_data.response_timer <= 0f)
-            {
-                // Time expired to response action
-                gameplay.CancelSelection();
-            }
         }
 
         protected virtual void StartGame()

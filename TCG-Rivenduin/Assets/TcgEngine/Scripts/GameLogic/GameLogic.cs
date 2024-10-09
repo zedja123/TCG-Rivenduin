@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Profiling;
@@ -423,9 +422,6 @@ namespace TcgEngine.Gameplay
 
         public virtual void PlayCard(Card card, Slot slot, bool skip_cost = false)
         {
-
-            if (game_data.state == GameState.GameEnded)
-                return;
             if (game_data.CanPlayCard(card, slot, skip_cost))
             {
                 Player player = game_data.GetPlayer(card.player_id);
@@ -460,15 +456,7 @@ namespace TcgEngine.Gameplay
                     player.cards_discard.Add(card);
                     card.slot = slot; //Save slot in case spell has PlayTarget
                 }
-                if (game_data.response_phase == ResponsePhase.None)
-                {
-                    game_data.response_phase = ResponsePhase.Response;
-                    game_data.response_timer = GameplayData.Get().turn_duration; // you can a different amout for response timer, just add on GameplayData and setup as you want
-                    RefreshData();
-                    return;
-                }
 
-                game_data.response_phase = ResponsePhase.None;
                 //History
                 if (!is_ai_predict && !icard.IsSecret())
                     player.AddHistory(GameAction.PlayCard, card);
@@ -1629,11 +1617,6 @@ namespace TcgEngine.Gameplay
             if (game_data.selector == SelectorType.None)
                 return;
 
-            if (game_data.response_phase == ResponsePhase.ResponseSelector)
-            {
-                game_data.response_phase = ResponsePhase.None;
-            }
-
             Card caster = game_data.GetCard(game_data.selector_caster_uid);
             AbilityData ability = AbilityData.Get(game_data.selector_ability_id);
 
@@ -1674,11 +1657,6 @@ namespace TcgEngine.Gameplay
             if (game_data.selector == SelectorType.None)
                 return;
 
-            if (game_data.response_phase == ResponsePhase.ResponseSelector)
-            {
-                game_data.response_phase = ResponsePhase.None;
-            }
-
             Card caster = game_data.GetCard(game_data.selector_caster_uid);
             AbilityData ability = AbilityData.Get(game_data.selector_ability_id);
 
@@ -1705,11 +1683,6 @@ namespace TcgEngine.Gameplay
         {
             if (game_data.selector == SelectorType.None)
                 return;
-
-            if (game_data.response_phase == ResponsePhase.ResponseSelector)
-            {
-                game_data.response_phase = ResponsePhase.None;
-            }
 
             Card caster = game_data.GetCard(game_data.selector_caster_uid);
             AbilityData ability = AbilityData.Get(game_data.selector_ability_id);
@@ -1738,11 +1711,6 @@ namespace TcgEngine.Gameplay
             if (game_data.selector == SelectorType.None)
                 return;
 
-            if (game_data.response_phase == ResponsePhase.ResponseSelector)
-            {
-                game_data.response_phase = ResponsePhase.None;
-            }
-
             Card caster = game_data.GetCard(game_data.selector_caster_uid);
             AbilityData ability = AbilityData.Get(game_data.selector_ability_id);
 
@@ -1769,11 +1737,6 @@ namespace TcgEngine.Gameplay
         {
             if (game_data.selector == SelectorType.None)
                 return;
-
-            if (game_data.response_phase == ResponsePhase.ResponseSelector)
-            {
-                game_data.response_phase = ResponsePhase.None;
-            }
 
             Player player = game_data.GetPlayer(game_data.selector_player_id);
             Card caster = game_data.GetCard(game_data.selector_caster_uid);
@@ -1802,69 +1765,12 @@ namespace TcgEngine.Gameplay
         {
             if (game_data.selector != SelectorType.None)
             {
-                if (!game_data.selector_cancelable)
-                {
-                    if (game_data.selector == SelectorType.SelectorCard)
-                    {
-                        var iability = AbilityData.Get(game_data.selector_ability_id);
-                        var icard = game_data.GetCard(game_data.selector_caster_uid);
-                        var options = iability.GetCardTargets(game_data, icard);
-
-                        if (options.Count > 0 && options?.First() != null)
-                        {
-                            Card target = game_data.GetCard(options.First().uid);
-                            SelectCard(target);
-                        }
-                    }
-                    else if (game_data.selector == SelectorType.SelectorChoice)
-                    {
-                        var icard = game_data.GetCard(game_data.selector_caster_uid);
-                        var iability = AbilityData.Get(game_data.selector_ability_id);
-                        if (iability != null && iability.chain_abilities.Length > 0)
-                        {
-                            int i = 0;
-                            foreach (var chain_ability in iability.chain_abilities)
-                            {
-                                if (game_data.CanSelectAbility(icard, chain_ability))
-                                {
-                                    SelectChoice(i);
-                                    break;
-                                }
-                                i++;
-                            }
-                        }
-
-                    }
-                    else if (game_data.selector == SelectorType.SelectTarget)
-                    {
-                        var icard = game_data.GetCard(game_data.selector_caster_uid);
-                        AbilityData iability = AbilityData.Get(game_data.selector_ability_id);
-
-                        var found = false;
-                        foreach (var player in game_data.players)
-                        {
-                            for (var i = 0; i < player.cards_board.Count; i++)
-                            {
-                                if (found) break;
-                                var target = player.cards_board[i];
-
-                                if (iability.CanTarget(game_data, icard, target))
-                                {
-                                    SelectCard(target);
-                                    found = true;
-                                }
-
-                            }
-
-                            if (found) break;
-                        }
-
-                    }
-                }
+                //Return card to hand if was selecting cost
+                if (game_data.selector == SelectorType.SelectorCost)
+                    CancelPlayCard();
 
                 //End selection
                 game_data.selector = SelectorType.None;
-
                 RefreshData();
             }
         }
@@ -1887,16 +1793,6 @@ namespace TcgEngine.Gameplay
         }
 
         //-----Trigger Selector-----
-        protected virtual void CheckResponseSelector(AbilityData iability, Card caster)
-        {
-            game_data.selector_player_id = iability.selector_owner ? caster.player_id : game_data.GetOpponentPlayer(caster.player_id).player_id;
-
-            if (iability.selector_owner != (game_data.GetActivePlayer().player_id == caster.player_id) && game_data.response_phase == ResponsePhase.None)
-            {
-                game_data.response_timer = GameplayData.Get().turn_duration;
-                game_data.response_phase = ResponsePhase.ResponseSelector;
-            }
-        }
 
         protected virtual void GoToSelectTarget(AbilityData iability, Card caster)
         {
@@ -1904,8 +1800,6 @@ namespace TcgEngine.Gameplay
             game_data.selector_player_id = caster.player_id;
             game_data.selector_ability_id = iability.id;
             game_data.selector_caster_uid = caster.uid;
-            game_data.selector_cancelable = iability.selector_cancelable;
-            CheckResponseSelector(iability, caster);
             RefreshData();
         }
 
@@ -1915,8 +1809,6 @@ namespace TcgEngine.Gameplay
             game_data.selector_player_id = caster.player_id;
             game_data.selector_ability_id = iability.id;
             game_data.selector_caster_uid = caster.uid;
-            game_data.selector_cancelable = iability.selector_cancelable;
-            CheckResponseSelector(iability, caster);
             RefreshData();
         }
 
@@ -1926,8 +1818,6 @@ namespace TcgEngine.Gameplay
             game_data.selector_player_id = caster.player_id;
             game_data.selector_ability_id = iability.id;
             game_data.selector_caster_uid = caster.uid;
-            game_data.selector_cancelable = iability.selector_cancelable;
-            CheckResponseSelector(iability, caster);
             RefreshData();
         }
 
@@ -1981,5 +1871,4 @@ namespace TcgEngine.Gameplay
         public Game GameData { get { return game_data; } }
         public ResolveQueue ResolveQueue { get { return resolve_queue; } }
     }
-
 }

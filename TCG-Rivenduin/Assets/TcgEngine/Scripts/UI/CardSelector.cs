@@ -13,7 +13,6 @@ namespace TcgEngine.UI
 
     public class CardSelector : SelectorPanel
     {
-        public GameObject cancel_button; // Remember to attach it via inspector, is the X GameObject
         public GameObject card_prefab;
 
         public RectTransform content;
@@ -140,7 +139,6 @@ namespace TcgEngine.UI
             subtitle.text = iability.desc;
             selection_index = 0;
             timer = 0f;
-            cancel_button.SetActive(GameClient.Get().GetGameData().selector_cancelable);
             Show();
         }
 
@@ -156,7 +154,6 @@ namespace TcgEngine.UI
             subtitle.text = "";
             selection_index = 0;
             timer = 0f;
-            cancel_button.SetActive(GameClient.Get().GetGameData().selector_cancelable);
             Show();
         }
 
@@ -239,7 +236,6 @@ namespace TcgEngine.UI
 
         public override void Show(bool instant = false)
         {
-            cancel_button.SetActive(GameClient.Get().GetGameData().selector_cancelable);
             base.Show(instant);
             RefreshPanel();
         }
@@ -252,7 +248,6 @@ namespace TcgEngine.UI
         
         public override bool ShouldShow()
         {
-            cancel_button.SetActive(GameClient.Get().GetGameData().selector_cancelable);
             Game data = GameClient.Get().GetGameData();
             int player_id = GameClient.Get().GetPlayerID();
             return force_show || (data.selector == SelectorType.SelectorCard && data.selector_player_id == player_id);
