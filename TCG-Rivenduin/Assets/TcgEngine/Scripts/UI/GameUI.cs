@@ -93,7 +93,7 @@ namespace TcgEngine.UI
             turn_timer.text = timer_val.ToString();
             turn_timer.enabled = data.turn_timer < 999f;
 
-            //Simulate timer]
+            //Simulate timer
             if (data.state == GameState.Play && data.phase == GamePhase.Main && data.response_phase == ResponsePhase.None && data.turn_timer > 0f)
                 data.turn_timer -= Time.deltaTime;
             if (data.state == GameState.Play && data.response_phase != ResponsePhase.None && data.response_timer > 0f)

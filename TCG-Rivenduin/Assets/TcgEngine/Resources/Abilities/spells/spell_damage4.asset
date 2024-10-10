@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8ce5f81e5cc37f547af6923758602c8c, type: 3}
-  m_Name: spell_damage1
+  m_Name: spell_damage4
   m_EditorClassIdentifier: 
   selector_owner: 1
   selector_cancelable: 1
-  use_as_response: 0
-  id: spell_damage1
+  use_as_response: 1
+  id: spell_damage4
   trigger: 10
   conditions_trigger: []
   target: 20
@@ -26,7 +26,7 @@ MonoBehaviour:
   effects:
   - {fileID: 11400000, guid: 4369324687c62ca488c57afd73a2be36, type: 2}
   status: []
-  value: 1
+  value: 4
   duration: 0
   chain_abilities: []
   mana_cost: 0
