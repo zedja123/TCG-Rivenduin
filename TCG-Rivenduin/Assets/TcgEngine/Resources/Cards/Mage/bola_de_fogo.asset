@@ -23,9 +23,9 @@ MonoBehaviour:
   attack: 0
   hp: 0
   traits:
+  - {fileID: 11400000, guid: bfcf1569780a0264eab00db851526dd3, type: 2}
   - {fileID: 11400000, guid: dbf18a8e1c16dc248a754bebdc380dfc, type: 2}
   - {fileID: 11400000, guid: a9e41c334ebf68048b2bd112b93623cb, type: 2}
-  - {fileID: 11400000, guid: bfcf1569780a0264eab00db851526dd3, type: 2}
   stats: []
   abilities:
   - {fileID: 11400000, guid: f5cdd5b93824ffd44943a0320d6e3db5, type: 2}
