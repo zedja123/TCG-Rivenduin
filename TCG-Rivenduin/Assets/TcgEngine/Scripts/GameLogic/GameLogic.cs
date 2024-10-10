@@ -238,7 +238,7 @@ namespace TcgEngine.Gameplay
             if (game_data.response_phase == ResponsePhase.None)
             {
                 game_data.response_phase = ResponsePhase.Response;
-                game_data.response_timer = GameplayData.Get().turn_duration; // you can a different amout for response timer, just add on GameplayData and setup as you want
+                game_data.response_timer = GameplayData.Get().response_duration; // you can a different amout for response timer, just add on GameplayData and setup as you want
                 RefreshData();
                 return;
             }
@@ -495,6 +495,19 @@ namespace TcgEngine.Gameplay
                 onCardPlayed?.Invoke(card, slot);
                 resolve_queue.ResolveAll(0.3f);
             }
+            if (game_data.state == GameState.GameEnded)
+                return;
+
+            // This will always move to Response after active player End a Turn. You can do something similar to other moments if you want, like after playing a card, before start Main phase, etc
+            if (game_data.response_phase == ResponsePhase.None)
+            {
+                game_data.response_phase = ResponsePhase.Response;
+                game_data.response_timer = GameplayData.Get().response_duration; // you can a different amout for response timer, just add on GameplayData and setup as you want
+                RefreshData();
+                return;
+            }
+
+            game_data.response_phase = ResponsePhase.None;
 
         }
 
@@ -545,6 +558,20 @@ namespace TcgEngine.Gameplay
                     player.AddHistory(GameAction.Attack, attacker, target);
 
                 game_data.last_target = target.uid;
+
+                if (game_data.state == GameState.GameEnded)
+                    return;
+
+                // This will always move to Response after active player End a Turn. You can do something similar to other moments if you want, like after playing a card, before start Main phase, etc
+                if (game_data.response_phase == ResponsePhase.None)
+                {
+                    game_data.response_phase = ResponsePhase.Response;
+                    game_data.response_timer = GameplayData.Get().response_duration; // you can a different amout for response timer, just add on GameplayData and setup as you want
+                    RefreshData();
+                    return;
+                }
+
+                game_data.response_phase = ResponsePhase.None;
 
                 //Trigger before attack abilities
                 TriggerCardAbilityType(AbilityTrigger.OnBeforeAttack, attacker, target);
@@ -623,6 +650,20 @@ namespace TcgEngine.Gameplay
             if (!is_ai_predict)
                 player.AddHistory(GameAction.AttackPlayer, attacker, target);
 
+
+            if (game_data.state == GameState.GameEnded)
+                return;
+
+            // This will always move to Response after active player End a Turn. You can do something similar to other moments if you want, like after playing a card, before start Main phase, etc
+            if (game_data.response_phase == ResponsePhase.None)
+            {
+                game_data.response_phase = ResponsePhase.Response;
+                game_data.response_timer = GameplayData.Get().response_duration; // you can a different amout for response timer, just add on GameplayData and setup as you want
+                RefreshData();
+                return;
+            }
+
+            game_data.response_phase = ResponsePhase.None;
             //Resolve abilities
             TriggerSecrets(AbilityTrigger.OnBeforeAttack, attacker);
             TriggerCardAbilityType(AbilityTrigger.OnBeforeAttack, attacker, target);
@@ -812,6 +853,19 @@ namespace TcgEngine.Gameplay
                     equipment.slot = card.slot;
                 }
             }
+            if (game_data.state == GameState.GameEnded)
+                return;
+
+            // This will always move to Response after active player End a Turn. You can do something similar to other moments if you want, like after playing a card, before start Main phase, etc
+            if (game_data.response_phase == ResponsePhase.None)
+            {
+                game_data.response_phase = ResponsePhase.Response;
+                game_data.response_timer = GameplayData.Get().response_duration; // you can a different amout for response timer, just add on GameplayData and setup as you want
+                RefreshData();
+                return;
+            }
+
+            game_data.response_phase = ResponsePhase.None;
         }
 
         public virtual void UnequipAll(Card card)
@@ -1856,7 +1910,7 @@ namespace TcgEngine.Gameplay
 
             if (iability.selector_owner != (game_data.GetActivePlayer().player_id == caster.player_id) && game_data.response_phase == ResponsePhase.None)
             {
-                game_data.response_timer = GameplayData.Get().turn_duration;
+                game_data.response_timer = GameplayData.Get().response_duration;
                 game_data.response_phase = ResponsePhase.ResponseSelector;
             }
         }

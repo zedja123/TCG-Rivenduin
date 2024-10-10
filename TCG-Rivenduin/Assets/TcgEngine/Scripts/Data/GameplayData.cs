@@ -21,6 +21,7 @@ namespace TcgEngine
         public int cards_per_turn = 1;
         public int cards_max = 10;
         public float turn_duration = 30f;
+        public float response_duration = 20f;
         public CardData second_bonus;
 
         [Header("Deckbuilding")]

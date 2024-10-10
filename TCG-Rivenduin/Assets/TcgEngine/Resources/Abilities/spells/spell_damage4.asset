@@ -40,4 +40,4 @@ MonoBehaviour:
   target_audio: {fileID: 0}
   charge_target: 0
   title: Hot
-  desc: Deal 1 damage.
+  desc: Deal 4 damage.
