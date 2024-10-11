@@ -203,15 +203,16 @@ namespace TcgEngine.Client
 
         public void TryPlayCard(Vector3 board_pos)
         {
-            if (!GameClient.Get().IsYourTurn())
+            Game gdata = GameClient.Get().GetGameData();
+            if (!GameClient.Get().IsYourTurn() && gdata.response_phase != ResponsePhase.Response)
             {
-                WarningText.ShowNotYourTurn();
+               WarningText.ShowNotYourTurn();
                 return;
             }
 
             BSlot bslot = BSlot.GetNearest(board_pos);
             int player_id = GameClient.Get().GetPlayerID();
-            Game gdata = GameClient.Get().GetGameData();
+ 
             Player player = gdata.GetPlayer(player_id);
             Card card = GetCard();
 
@@ -242,15 +243,17 @@ namespace TcgEngine.Client
 
             if (gdata.CanPlayCard(card, slot, true))
             {
-                PlayCard(slot);
+                PlayCard(card, slot);
             }
         }
 
-        public void PlayCard(Slot slot)
+        public void PlayCard(Card card, Slot slot)
         {
             GameClient.Get().PlayCard(GetCard(), slot);
             HandCardArea.Get().DelayRefresh(GetCard());
+            Debug.Log("PlayCard method called with card: " + card.uid + " in slot (x: " + slot.x + ", y: " + slot.y + ", p: " + slot.p + ")");
             Destroy(gameObject);
+
             if (GameTool.IsMobile())
                 BoardCard.UnfocusAll();
         }

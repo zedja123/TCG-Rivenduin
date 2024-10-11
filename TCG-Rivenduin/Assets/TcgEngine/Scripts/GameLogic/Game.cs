@@ -110,6 +110,7 @@ namespace TcgEngine
                 return false; //Cant pay mana
             if (!skip_cost && response_phase == ResponsePhase.Response && !card.HasTrait("response"))
                 return false; //Cant response with it
+            Debug.Log("Response " + response_phase);
             if (!player.HasCard(player.cards_hand, card))
                 return false; // Card not in hand
             if (player.is_ai && card.CardData.IsDynamicManaCost() && player.mana == 0)

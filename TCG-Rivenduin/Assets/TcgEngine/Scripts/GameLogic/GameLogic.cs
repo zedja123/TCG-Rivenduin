@@ -495,19 +495,6 @@ namespace TcgEngine.Gameplay
                 onCardPlayed?.Invoke(card, slot);
                 resolve_queue.ResolveAll(0.3f);
             }
-            if (game_data.state == GameState.GameEnded)
-                return;
-
-            // This will always move to Response after active player End a Turn. You can do something similar to other moments if you want, like after playing a card, before start Main phase, etc
-            if (game_data.response_phase == ResponsePhase.None)
-            {
-                game_data.response_phase = ResponsePhase.Response;
-                game_data.response_timer = GameplayData.Get().response_duration; // you can a different amout for response timer, just add on GameplayData and setup as you want
-                RefreshData();
-                return;
-            }
-
-            game_data.response_phase = ResponsePhase.None;
 
         }
 
