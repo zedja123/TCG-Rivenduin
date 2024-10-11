@@ -12,6 +12,8 @@ namespace TcgEngine
         public ResponsePhase response_phase = ResponsePhase.None;
         public float response_timer = 0f;
         public bool selector_cancelable;
+        public int response_player = 0;
+
 
         public string game_uid;
         public GameSettings settings;
@@ -83,14 +85,19 @@ namespace TcgEngine
         //Check if its player's turn
         public virtual bool IsPlayerTurn(Player player)
         {
-            return IsPlayerActionTurn(player) || IsPlayerSelectorTurn(player);
+            return IsPlayerActionTurn(player) || IsPlayerSelectorTurn(player) || IsResponsePlayerTurn(player);
         }
 
         public virtual bool IsPlayerActionTurn(Player player)
         {
             return player != null && current_player == player.player_id
                 && state == GameState.Play && selector == SelectorType.None
-                && (response_phase == ResponsePhase.None) == (current_player == player.player_id); // Last line ensure that active players don't play on Response, but not-active can.
+                && response_phase == ResponsePhase.None;
+        }
+
+        public virtual bool IsResponsePlayerTurn(Player player)
+        {
+            return player != null && response_phase != ResponsePhase.None && response_player == player.player_id;
         }
 
         public virtual bool IsPlayerSelectorTurn(Player player)
@@ -546,6 +553,10 @@ namespace TcgEngine
         {
             dest.game_uid = source.game_uid;
             dest.settings = source.settings;
+
+            dest.response_player = source.response_player;
+
+            dest.response_timer = source.response_timer;
 
             dest.response_phase = source.response_phase;
 

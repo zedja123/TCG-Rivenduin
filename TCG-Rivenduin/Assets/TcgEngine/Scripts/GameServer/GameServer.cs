@@ -314,7 +314,7 @@ namespace TcgEngine.Server
         {
             MsgPlayCard msg = sdata.Get<MsgPlayCard>();
             Player player = GetPlayer(iclient);
-            if (player != null && msg != null && game_data.IsPlayerActionTurn(player) && !gameplay.IsResolving())
+            if (player != null && msg != null && (game_data.IsPlayerActionTurn(player) || game_data.IsResponsePlayerTurn(player)) && !gameplay.IsResolving())
             {
                 Card card = player.GetCard(msg.card_uid);
                 if (card != null && card.player_id == player.player_id)
