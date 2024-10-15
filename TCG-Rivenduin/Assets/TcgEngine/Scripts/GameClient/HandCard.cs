@@ -251,7 +251,6 @@ namespace TcgEngine.Client
         {
             GameClient.Get().PlayCard(GetCard(), slot);
             HandCardArea.Get().DelayRefresh(GetCard());
-            Debug.Log("PlayCard method called with card: " + card.uid + " in slot (x: " + slot.x + ", y: " + slot.y + ", p: " + slot.p + ")");
             Destroy(gameObject);
 
             if (GameTool.IsMobile())
