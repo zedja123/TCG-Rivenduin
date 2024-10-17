@@ -13,14 +13,6 @@ namespace TcgEngine.UI
 
     public class ChoiceSelector : SelectorPanel
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-        public GameObject cancel_button;
-
-=======
->>>>>>> parent of 13d5a49 (commit)
-=======
->>>>>>> parent of 13d5a49 (commit)
         public ChoiceSelectorChoice[] choices;
 
         private Card caster;

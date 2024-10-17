@@ -75,15 +75,5 @@ namespace TcgEngine.UI
         {
             return instance;
         }
-<<<<<<< HEAD
-<<<<<<< HEAD
-        public static void ShowNoResponse()
-        {
-            ShowText("This cannot be used as response");
-        }
-=======
->>>>>>> parent of 13d5a49 (commit)
-=======
->>>>>>> parent of 13d5a49 (commit)
     }
 }
