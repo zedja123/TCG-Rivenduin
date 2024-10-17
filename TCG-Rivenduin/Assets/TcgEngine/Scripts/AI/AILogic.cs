@@ -30,6 +30,8 @@ namespace TcgEngine.AI
 
         //-----
 
+        public Game response_player;
+
         public int ai_player_id;                    //AI player_id  (usually its 1)
         public int ai_level;                       //AI level
 
@@ -122,7 +124,7 @@ namespace TcgEngine.AI
         private void CalculateNode(Game data, NodeState node)
         {
             Profiler.BeginSample("Add Actions");
-            data.response_phase == ResponsePhase.Response ? data.GetOpponentPlayer(data.current_player) : data.GetPlayer(data.current_player);
+            Player player = data.response_phase == ResponsePhase.Response ? data.GetPlayer(data.response_player) : data.GetPlayer(data.current_player);
             List<AIAction> action_list = list_pool.Create();
 
             int max_actions = node.tdepth < ai_depth_wide ? actions_per_turn_wide : actions_per_turn;
@@ -324,7 +326,7 @@ namespace TcgEngine.AI
         //Add all possible moves for card to list of actions
         private void AddActions(List<AIAction> actions, Game data, NodeState node, ushort type, Card card)
         {
-            data.response_phase == ResponsePhase.Response ? data.GetOpponentPlayer(data.current_player) : data.GetPlayer(data.current_player);
+            Player player = data.response_phase == ResponsePhase.Response ? data.GetPlayer(data.response_player) : data.GetPlayer(data.current_player);
 
 
             if (data.selector != SelectorType.None)
@@ -579,7 +581,7 @@ namespace TcgEngine.AI
         //Simulate AI action
         private void DoAIAction(Game data, AIAction action, int player_id)
         {
-            Player player = data.GetPlayer(player_id);
+            Player player = data.response_phase == ResponsePhase.Response ? data.GetPlayer(data.response_player) : data.GetPlayer(data.current_player);
 
             if (action.type == GameAction.PlayCard)
             {

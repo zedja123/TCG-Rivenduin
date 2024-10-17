@@ -9,6 +9,7 @@ namespace TcgEngine
     [System.Serializable]
     public class Game
     {
+        public int response_player = 0;
         public ResponsePhase response_phase = ResponsePhase.None;
         public float response_timer = 0f;
         public bool selector_cancelable;

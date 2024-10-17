@@ -182,7 +182,7 @@ namespace TcgEngine.Server
                 ai.Update();
             }
 
-            if (game_data.phase == GamePhase.Main && game.response_phase == ResponsePhase.None)
+            if (game_data.phase == GamePhase.Main && game_data.response_phase == ResponsePhase.None)
             {
                 game_data.turn_timer -= Time.deltaTime;
 
