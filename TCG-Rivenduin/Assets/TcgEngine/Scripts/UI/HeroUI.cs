@@ -98,23 +98,6 @@ namespace TcgEngine.UI
                     WarningText.ShowNoMana();
                     return;
                 }
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> parent of 570fdb7 (commit)
-                if (gdata.response_phase == ResponsePhase.Response && !ability.use_as_response)
-                {
-                    WarningText.ShowNoResponse();
-                    return;
-                }
-<<<<<<< HEAD
-=======
->>>>>>> parent of 13d5a49 (commit)
-=======
->>>>>>> parent of 13d5a49 (commit)
-=======
->>>>>>> parent of 570fdb7 (commit)
 
                 bool valid = gdata.IsPlayerActionTurn(player) && gdata.CanCastAbility(hero, ability);
                 if (valid)

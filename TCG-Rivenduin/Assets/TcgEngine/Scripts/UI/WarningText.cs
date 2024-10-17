@@ -75,12 +75,5 @@ namespace TcgEngine.UI
         {
             return instance;
         }
-<<<<<<< HEAD
-=======
-        public static void ShowNoResponse()
-        {
-            ShowText("This cannot be used as response");
-        }
->>>>>>> parent of 570fdb7 (commit)
     }
 }

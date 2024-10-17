@@ -74,7 +74,7 @@ namespace TcgEngine.UI
             if(card_image != null)
                 card_image.sprite = card.GetFullArt(variant);
             if (frame_image != null)
-                frame_image.sprite = card.team.frame;
+                frame_image.sprite = variant.frame;
             if (card_title != null)
                 card_title.text = card.GetTitle().ToUpper();
             if (card_text != null)

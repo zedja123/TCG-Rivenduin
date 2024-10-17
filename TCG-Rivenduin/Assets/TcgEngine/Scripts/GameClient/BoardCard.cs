@@ -46,6 +46,7 @@ namespace TcgEngine.Client
         private float status_alpha_target = 0f;
         private float delayed_damage_timer = 0f;
         private int delayed_damage = 0;
+        private int prev_hp = 0;
 
         private bool back_to_hand;
         private Vector3 back_to_hand_target;
@@ -99,8 +100,12 @@ namespace TcgEngine.Client
             if (!destroyed)
             {
                 card_ui.SetCard(card);
-                card_ui.SetHP(GetDelayedHP());
+                card_ui.SetHP(prev_hp);
             }
+
+            //Save Previous HP
+            if (!IsDamagedDelayed())
+                prev_hp = card.GetHP();
 
             bool selected = controls.GetSelected() == this;
             Vector3 targ_pos = GetTargetPos();
@@ -154,7 +159,7 @@ namespace TcgEngine.Client
                 List<AbilityData> abilities = card.GetAbilities();
                 foreach (AbilityData iability in abilities)
                 {
-                    if (iability != null)
+                    if (iability != null && iability.trigger == AbilityTrigger.Activate)
                     {
                         if (index < buttons.Length)
                         {
@@ -172,7 +177,7 @@ namespace TcgEngine.Client
                     List<AbilityData> equip_abilities = equip.GetAbilities();
                     foreach (AbilityData iability in equip_abilities)
                     {
-                        if (iability != null)
+                        if (iability != null && iability.trigger == AbilityTrigger.Activate)
                         {
                             if (index < buttons.Length)
                             {
@@ -214,6 +219,7 @@ namespace TcgEngine.Client
             this.card_uid = card.uid;
 
             transform.position = GetTargetPos();
+            prev_hp = card.GetHP();
 
             CardData icard = CardData.Get(card.card_id);
             if (icard)

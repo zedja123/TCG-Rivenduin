@@ -30,6 +30,9 @@ namespace TcgEngine.UI
         private bool killed = false;
         private float timer = 0f;
 
+        private int prev_hp = 0;
+        private float delayed_damage_timer = 0f;
+
         private static List<PlayerUI> ui_list = new List<PlayerUI>();
 
         private void Awake()
@@ -67,13 +70,18 @@ namespace TcgEngine.UI
                 pname.text = player.username;
                 mana_bar.value = player.mana;
                 mana_bar.max_value = player.mana_max;
-                hp_txt.text = player.hp.ToString();
+                hp_txt.text = prev_hp.ToString();
                 hp_max_txt.text = "/" + player.hp_max.ToString();
 
                 AvatarData adata = AvatarData.Get(player.avatar);
                 if (avatar != null && adata != null && !killed)
                     avatar.SetAvatar(adata);
+
+                delayed_damage_timer -= Time.deltaTime;
+                if (!IsDamagedDelayed())
+                    prev_hp = player.hp;
             }
+            
 
             timer += Time.deltaTime;
             if (timer > 0.4f)
@@ -110,6 +118,19 @@ namespace TcgEngine.UI
             avatar.SetImage(avatar_dead);
             AudioTool.Get().PlaySFX("fx", dead_audio);
             FXTool.DoFX(dead_fx, avatar.transform.position);
+        }
+
+        public void DelayDamage(int damage, float duration = 1f)
+        {
+            if (damage != 0)
+            {
+                delayed_damage_timer = duration;
+            }
+        }
+
+        public bool IsDamagedDelayed()
+        {
+            return delayed_damage_timer > 0f;
         }
 
         private void OnClickAvatar(AvatarData avatar)

@@ -132,10 +132,6 @@ namespace TcgEngine.Server
 
         public virtual void Update()
         {
-<<<<<<< HEAD
-=======
-
->>>>>>> parent of 570fdb7 (commit)
             //Game Expiration if no one is connected or game ended
             int connected_players = CountConnectedClients();
             if (HasGameEnded() || connected_players == 0)
@@ -184,28 +180,6 @@ namespace TcgEngine.Server
             foreach (AIPlayer ai in ai_list)
             {
                 ai.Update();
-            }
-
-            if (game_data.phase == GamePhase.Main && game_data.response_phase == ResponsePhase.None)
-            {
-                game_data.turn_timer -= Time.deltaTime;
-
-            }
-            else if (game_data.response_phase != ResponsePhase.None)
-            {
-                game_data.response_timer -= Time.deltaTime;
-            }
-
-            if (game_data.turn_timer <= 0f)
-            {
-                //Time expired during turn
-                gameplay.NextStep();
-            }
-
-            if (game_data.response_timer <= 0f)
-            {
-                // Time expired to response action
-                gameplay.CancelSelection();
             }
         }
 
@@ -317,7 +291,7 @@ namespace TcgEngine.Server
         {
             MsgPlayCard msg = sdata.Get<MsgPlayCard>();
             Player player = GetPlayer(iclient);
-            if (player != null && msg != null && (game_data.IsPlayerActionTurn(player) || game_data.IsResponsePlayerTurn(player)) && !gameplay.IsResolving())
+            if (player != null && msg != null && game_data.IsPlayerActionTurn(player) && !gameplay.IsResolving())
             {
                 Card card = player.GetCard(msg.card_uid);
                 if (card != null && card.player_id == player.player_id)

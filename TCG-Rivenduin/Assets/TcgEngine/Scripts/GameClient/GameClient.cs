@@ -183,7 +183,7 @@ namespace TcgEngine.Client
 
         public virtual async void ConnectToServer()
         {
-            await Task.Yield(); //Wait for initialization to finish
+            await Task.Delay(100); //Wait for initialization to finish
 
             if (TcgNetwork.Get().IsActive())
                 return; // Already connected
@@ -204,7 +204,7 @@ namespace TcgEngine.Client
 
         public virtual async void ConnectToGame(string uid)
         {
-            await Task.Yield(); //Wait for initialization to finish
+            await Task.Delay(100); //Wait for initialization to finish
 
             if (!TcgNetwork.Get().IsActive())
                 return; //Not connected to server

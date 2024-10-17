@@ -15,7 +15,6 @@ namespace TcgEngine
         public string title;
         public Sprite icon;
         public Color color;
-        public Sprite frame;
 
         public static List<TeamData> team_list = new List<TeamData>();
 
