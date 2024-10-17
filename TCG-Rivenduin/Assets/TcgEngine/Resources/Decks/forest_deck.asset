@@ -15,6 +15,7 @@ MonoBehaviour:
   id: forest_deck
   title: Forest Starter
   hero: {fileID: 11400000, guid: 04fd0777e8f567b48ad05e6bdaf97c1d, type: 2}
+  passive: {fileID: 11400000, guid: 3358b2636666b1644919373677e765cd, type: 2}
   cards:
   - {fileID: 11400000, guid: 1e22d4647e903814d96f63a729e1f820, type: 2}
   - {fileID: 11400000, guid: 1e22d4647e903814d96f63a729e1f820, type: 2}
