@@ -132,6 +132,10 @@ namespace TcgEngine.Server
 
         public virtual void Update()
         {
+<<<<<<< HEAD
+=======
+
+>>>>>>> parent of 570fdb7 (commit)
             //Game Expiration if no one is connected or game ended
             int connected_players = CountConnectedClients();
             if (HasGameEnded() || connected_players == 0)

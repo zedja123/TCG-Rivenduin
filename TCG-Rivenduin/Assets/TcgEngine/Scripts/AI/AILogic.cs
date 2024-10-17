@@ -124,6 +124,7 @@ namespace TcgEngine.AI
             Profiler.BeginSample("Add Actions");
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             Player player = data.response_phase == ResponsePhase.Response ? data.GetOpponentPlayer(data.current_player) : data.GetPlayer(data.current_player);
 =======
             Player player = data.GetPlayer(data.current_player);
@@ -131,6 +132,9 @@ namespace TcgEngine.AI
 =======
             Player player = data.GetPlayer(data.current_player);
 >>>>>>> parent of 13d5a49 (commit)
+=======
+            Player player = data.response_phase == ResponsePhase.Response ? data.GetOpponentPlayer(data.current_player) : data.GetPlayer(data.current_player);
+>>>>>>> parent of 570fdb7 (commit)
             List<AIAction> action_list = list_pool.Create();
 
             int max_actions = node.tdepth < ai_depth_wide ? actions_per_turn_wide : actions_per_turn;
