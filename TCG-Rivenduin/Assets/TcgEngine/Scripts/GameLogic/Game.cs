@@ -93,7 +93,7 @@ namespace TcgEngine
 
         public virtual bool IsPlayerActionTurn(Player player)
         {
-            return player != null
+            return player != null && current_player == player.player_id
                 && state == GameState.Play && selector == SelectorType.None
                 && response_phase == ResponsePhase.None;
         }
