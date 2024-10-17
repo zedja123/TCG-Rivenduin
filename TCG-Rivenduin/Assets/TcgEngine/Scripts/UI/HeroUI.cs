@@ -99,6 +99,12 @@ namespace TcgEngine.UI
                     return;
                 }
 
+                if (gdata.response_phase == ResponsePhase.Response && !ability.use_as_response)
+                {
+                    WarningText.ShowNoResponse();
+                    return;
+                }
+
                 bool valid = gdata.IsPlayerActionTurn(player) && gdata.CanCastAbility(hero, ability);
                 if (valid)
                 {

@@ -13,6 +13,7 @@ namespace TcgEngine.UI
 
     public class ChoiceSelector : SelectorPanel
     {
+        public GameObject cancel_button;
         public ChoiceSelectorChoice[] choices;
 
         private Card caster;
@@ -96,6 +97,7 @@ namespace TcgEngine.UI
 
         public override void Show(bool instant = false)
         {
+            cancel_button.SetActive(GameClient.Get().GetGameData().selector_cancelable);
             base.Show(instant);
             RefreshPanel();
         }

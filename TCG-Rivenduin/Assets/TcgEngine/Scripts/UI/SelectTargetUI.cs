@@ -13,6 +13,7 @@ namespace TcgEngine.UI
 
     public class SelectTargetUI : SelectorPanel
     {
+        public GameObject cancel_button;
         public Text title;
         public Text desc;
 
@@ -35,6 +36,7 @@ namespace TcgEngine.UI
 
         public override void Show(AbilityData ability, Card caster)
         {
+            cancel_button.SetActive(GameClient.Get().GetGameData().selector_cancelable);
             this.title.text = ability.title;
             //this.desc.text = ability.desc;
             Show();

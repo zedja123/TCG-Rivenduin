@@ -9,6 +9,9 @@ namespace TcgEngine
     [System.Serializable]
     public class Game
     {
+        public ResponsePhase response_phase = ResponsePhase.None;
+        public float response_timer = 0f;
+        public bool selector_cancelable;
         public string game_uid;
         public GameSettings settings;
 
@@ -84,8 +87,9 @@ namespace TcgEngine
 
         public virtual bool IsPlayerActionTurn(Player player)
         {
-            return player != null && current_player == player.player_id 
-                && state == GameState.Play && selector == SelectorType.None;
+            return player != null
+                && state == GameState.Play && selector == SelectorType.None
+                && (response_phase == ResponsePhase.None) == (current_player == player.player_id); // Last line ensure that active players don't play on Response, but not-active can.
         }
 
         public virtual bool IsPlayerSelectorTurn(Player player)
@@ -103,6 +107,8 @@ namespace TcgEngine
             Player player = GetPlayer(card.player_id);
             if (!skip_cost && !player.CanPayMana(card))
                 return false; //Cant pay mana
+            if (!skip_cost && response_phase == ResponsePhase.Response && !card.HasTrait("response"))
+                return false; //Cant response with it
             if (!player.HasCard(player.cards_hand, card))
                 return false; // Card not in hand
             if (player.is_ai && card.CardData.IsDynamicManaCost() && player.mana == 0)
@@ -143,7 +149,8 @@ namespace TcgEngine
         {
             if (card == null || !slot.IsValid())
                 return false;
-
+            if (response_phase == ResponsePhase.Response)
+                return false;
             if (!IsOnBoard(card))
                 return false; //Only cards in play can move
 
@@ -171,7 +178,8 @@ namespace TcgEngine
 
             if (!attacker.CanAttack(skip_cost))
                 return false; //Card cant attack
-
+            if (response_phase == ResponsePhase.Response)
+                return false;
             if (attacker.player_id == target.player_id)
                 return false; //Cant attack same player
 
@@ -192,7 +200,8 @@ namespace TcgEngine
 
             if (!attacker.CanAttack(skip_cost))
                 return false; //Card cant attack
-
+            if (response_phase == ResponsePhase.Response)
+                return false;
             if (attacker.player_id == target.player_id)
                 return false; //Cant attack same player
 
@@ -530,6 +539,8 @@ namespace TcgEngine
         //Clone all variables into another var, used mostly by the AI when building a prediction tree
         public static void Clone(Game source, Game dest)
         {
+
+            dest.response_phase = source.response_phase;
             dest.game_uid = source.game_uid;
             dest.settings = source.settings;
 
@@ -600,5 +611,14 @@ namespace TcgEngine
         SelectorCard = 20,
         SelectorChoice = 30,
         SelectorCost = 40,
+    }
+
+
+    [System.Serializable]
+    public enum ResponsePhase
+    {
+        None = 0,
+        Response = 10,
+        ResponseSelector = 20,
     }
 }
