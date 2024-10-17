@@ -123,7 +123,7 @@ namespace TcgEngine.Gameplay
 
                 player.hp = player.hp_max;
                 player.mana_max = pdeck != null ? pdeck.start_mana : GameplayData.Get().mana_start;
-                player.mana = player.mana_max + Mathf.Clamp(player.mana, 0, 5);
+                player.mana = player.mana_max;
 
                 //Draw starting cards
                 int dcards = pdeck != null ? pdeck.start_cards : GameplayData.Get().cards_start;
