@@ -1031,7 +1031,11 @@ RectTransform:
   m_Children:
   - {fileID: 151845916311054081}
 <<<<<<< HEAD
+<<<<<<< HEAD
   - {fileID: 8124088544030806179}
+=======
+  - {fileID: 6827532530093992956}
+>>>>>>> parent of 13d5a49 (commit)
 =======
   - {fileID: 6827532530093992956}
 >>>>>>> parent of 13d5a49 (commit)
@@ -1067,7 +1071,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   card_image: {fileID: 151845916311054082}
 <<<<<<< HEAD
+<<<<<<< HEAD
   frame_image: {fileID: 2886220201814554513}
+=======
+  frame_image: {fileID: 0}
+>>>>>>> parent of 13d5a49 (commit)
 =======
   frame_image: {fileID: 0}
 >>>>>>> parent of 13d5a49 (commit)

@@ -13,10 +13,13 @@ namespace TcgEngine
     public class AbilityData : ScriptableObject
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
         public bool selector_owner = true;               //WHO choses? AI or Player?
         public bool selector_cancelable = true;          //CAN be cancelled? Click on "X" to close window / timeout
         public bool use_as_response = false;             //CAN be used in response phase?
 
+=======
+>>>>>>> parent of 13d5a49 (commit)
 =======
 >>>>>>> parent of 13d5a49 (commit)
         public string id;

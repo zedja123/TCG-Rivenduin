@@ -14,9 +14,12 @@ namespace TcgEngine.UI
     public class CardSelector : SelectorPanel
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
 
         [SerializeField] public GameObject cancel_button; // Remember to attach it via inspector, is the X GameObject
 
+=======
+>>>>>>> parent of 13d5a49 (commit)
 =======
 >>>>>>> parent of 13d5a49 (commit)
         public GameObject card_prefab;

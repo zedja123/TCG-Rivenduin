@@ -123,7 +123,11 @@ namespace TcgEngine.AI
         {
             Profiler.BeginSample("Add Actions");
 <<<<<<< HEAD
+<<<<<<< HEAD
             Player player = data.response_phase == ResponsePhase.Response ? data.GetOpponentPlayer(data.current_player) : data.GetPlayer(data.current_player);
+=======
+            Player player = data.GetPlayer(data.current_player);
+>>>>>>> parent of 13d5a49 (commit)
 =======
             Player player = data.GetPlayer(data.current_player);
 >>>>>>> parent of 13d5a49 (commit)

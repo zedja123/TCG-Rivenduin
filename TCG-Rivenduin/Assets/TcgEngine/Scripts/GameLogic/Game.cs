@@ -10,12 +10,15 @@ namespace TcgEngine
     public class Game
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
         public ResponsePhase response_phase = ResponsePhase.None;
         public float response_timer = 0f;
         public bool selector_cancelable;
         public int response_player = 0;
 
 
+=======
+>>>>>>> parent of 13d5a49 (commit)
 =======
 >>>>>>> parent of 13d5a49 (commit)
         public string game_uid;
@@ -119,9 +122,12 @@ namespace TcgEngine
             if (!skip_cost && !player.CanPayMana(card))
                 return false; //Cant pay mana
 <<<<<<< HEAD
+<<<<<<< HEAD
             if (!skip_cost && response_phase == ResponsePhase.Response && !card.HasTrait("response"))
                 return false; //Cant response with it
             Debug.Log("Response " + response_phase);
+=======
+>>>>>>> parent of 13d5a49 (commit)
 =======
 >>>>>>> parent of 13d5a49 (commit)
             if (!player.HasCard(player.cards_hand, card))
@@ -629,6 +635,7 @@ namespace TcgEngine
         SelectorCost = 40,
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
     [System.Serializable]
     public enum ResponsePhase
     {
@@ -636,6 +643,8 @@ namespace TcgEngine
         Response = 10,
         ResponseSelector = 20,
     }
+=======
+>>>>>>> parent of 13d5a49 (commit)
 =======
 >>>>>>> parent of 13d5a49 (commit)
 }
