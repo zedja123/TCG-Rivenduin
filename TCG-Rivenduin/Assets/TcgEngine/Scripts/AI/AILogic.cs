@@ -30,8 +30,6 @@ namespace TcgEngine.AI
 
         //-----
 
-        public Game response_player;
-
         public int ai_player_id;                    //AI player_id  (usually its 1)
         public int ai_level;                       //AI level
 

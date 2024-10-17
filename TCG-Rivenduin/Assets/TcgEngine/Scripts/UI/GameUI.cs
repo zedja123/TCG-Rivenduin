@@ -14,7 +14,7 @@ namespace TcgEngine.UI
 
     public class GameUI : MonoBehaviour
     {
-        public Text end_turn_text;
+        [SerializeField] public Text end_turn_text;
 
         public Canvas game_canvas;
         public Canvas panel_canvas;
