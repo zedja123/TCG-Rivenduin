@@ -14,7 +14,10 @@ namespace TcgEngine.UI
 
     public class GameUI : MonoBehaviour
     {
+<<<<<<< HEAD
         public Text end_turn_text;
+=======
+>>>>>>> parent of 13d5a49 (commit)
         public Canvas game_canvas;
         public Canvas panel_canvas;
         public Canvas top_canvas;
@@ -79,6 +82,7 @@ namespace TcgEngine.UI
             selector_timer += Time.deltaTime;
 
             //Timer
+<<<<<<< HEAD
             var timer_val = data.response_phase != ResponsePhase.None ? Mathf.RoundToInt(data.response_timer) : Mathf.RoundToInt(data.turn_timer);
             if (yourturn)
             {
@@ -88,20 +92,26 @@ namespace TcgEngine.UI
             {
                 end_turn_text.text = data.response_phase == ResponsePhase.Response ? "ENEMY\nRESPONSE" : "ENEMY\nTURN";
             }
+=======
+>>>>>>> parent of 13d5a49 (commit)
             turn_count.text = "Turn " + data.turn_count.ToString();
             turn_timer.enabled = data.turn_timer > 0f;
-            turn_timer.text = timer_val.ToString();
+            turn_timer.text = Mathf.RoundToInt(data.turn_timer).ToString();
             turn_timer.enabled = data.turn_timer < 999f;
 
             //Simulate timer
+<<<<<<< HEAD
             if (data.state == GameState.Play && data.phase == GamePhase.Main && data.response_phase == ResponsePhase.None && data.turn_timer > 0f)
                 data.turn_timer -= Time.deltaTime;
             if (data.state == GameState.Play && data.response_phase != ResponsePhase.None && data.response_timer > 0f)
                 data.response_timer -= Time.deltaTime;
+=======
+>>>>>>> parent of 13d5a49 (commit)
             if (data.state == GameState.Play && data.turn_timer > 0f)
                 data.turn_timer -= Time.deltaTime;
 
             //Timer warning
+<<<<<<< HEAD
             if (data.state == GameState.Play)
             {
                 int tick_val = 10;
@@ -109,6 +119,8 @@ namespace TcgEngine.UI
                     PulseFX();
                 prev_time_val = timer_val;
             }
+=======
+>>>>>>> parent of 13d5a49 (commit)
             if (data.state == GameState.Play)
             {
                 int val = Mathf.RoundToInt(data.turn_timer);

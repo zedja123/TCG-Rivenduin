@@ -13,8 +13,11 @@ namespace TcgEngine.UI
 
     public class ChoiceSelector : SelectorPanel
     {
+<<<<<<< HEAD
         public GameObject cancel_button;
 
+=======
+>>>>>>> parent of 13d5a49 (commit)
         public ChoiceSelectorChoice[] choices;
 
         private Card caster;
@@ -91,7 +94,6 @@ namespace TcgEngine.UI
 
         public override void Show(AbilityData iability, Card caster)
         {
-            cancel_button.SetActive(GameClient.Get().GetGameData().selector_cancelable);
             this.caster = caster;
             this.ability = iability;
             Show();
@@ -99,14 +101,12 @@ namespace TcgEngine.UI
 
         public override void Show(bool instant = false)
         {
-            cancel_button.SetActive(GameClient.Get().GetGameData().selector_cancelable);
             base.Show(instant);
             RefreshPanel();
         }
 
         public override bool ShouldShow()
         {
-            cancel_button.SetActive(GameClient.Get().GetGameData().selector_cancelable);
             Game data = GameClient.Get().GetGameData();
             int player_id = GameClient.Get().GetPlayerID();
             return data.selector == SelectorType.SelectorChoice && data.selector_player_id == player_id;

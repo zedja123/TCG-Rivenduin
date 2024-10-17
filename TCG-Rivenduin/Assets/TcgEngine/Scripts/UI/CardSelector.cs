@@ -13,9 +13,12 @@ namespace TcgEngine.UI
 
     public class CardSelector : SelectorPanel
     {
+<<<<<<< HEAD
 
         [SerializeField] public GameObject cancel_button; // Remember to attach it via inspector, is the X GameObject
 
+=======
+>>>>>>> parent of 13d5a49 (commit)
         public GameObject card_prefab;
 
         public RectTransform content;
@@ -134,7 +137,6 @@ namespace TcgEngine.UI
         //Show ability
         public override void Show(AbilityData iability, Card caster)
         {
-            cancel_button.SetActive(GameClient.Get().GetGameData().selector_cancelable);
             Game data = GameClient.Get().GetGameData();
             this.card_list = iability.GetCardTargets(data, caster);
             this.iability = iability;
@@ -149,7 +151,6 @@ namespace TcgEngine.UI
         //Show deck/discard
         public void Show(List<Card> card_list, string title)
         {
-            cancel_button.SetActive(GameClient.Get().GetGameData().selector_cancelable);
             this.card_list.Clear();
             this.card_list.AddRange(card_list);
             this.card_list.Sort((Card a, Card b) => { return a.CardData.title.CompareTo(b.CardData.title); }); //Reorder to not show the deck order
@@ -241,7 +242,6 @@ namespace TcgEngine.UI
 
         public override void Show(bool instant = false)
         {
-            cancel_button.SetActive(GameClient.Get().GetGameData().selector_cancelable);
             base.Show(instant);
             RefreshPanel();
         }
@@ -254,7 +254,6 @@ namespace TcgEngine.UI
         
         public override bool ShouldShow()
         {
-            cancel_button.SetActive(GameClient.Get().GetGameData().selector_cancelable);
             Game data = GameClient.Get().GetGameData();
             int player_id = GameClient.Get().GetPlayerID();
             return force_show || (data.selector == SelectorType.SelectorCard && data.selector_player_id == player_id);
