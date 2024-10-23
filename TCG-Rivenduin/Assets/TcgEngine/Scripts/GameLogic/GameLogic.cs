@@ -233,19 +233,6 @@ namespace TcgEngine.Gameplay
         {
             if (game_data.state == GameState.GameEnded)
                 return;
-
-            // This will always move to Response after active player End a Turn. You can do something similar to other moments if you want, like after playing a card, before start Main phase, etc
-            if (game_data.response_phase == ResponsePhase.None)
-            {
-                game_data.response_phase = ResponsePhase.Response;
-                game_data.response_timer = GameplayData.Get().turn_duration; // you can a different amout for response timer, just add on GameplayData and setup as you want
-                RefreshData();
-                return;
-            }
-
-            game_data.response_phase = ResponsePhase.None;
-            if (game_data.state == GameState.GameEnded)
-                return;
             if (game_data.response_phase == ResponsePhase.Response)
             {
                 game_data.GetPlayer(game_data.response_player).resolve = true;
@@ -287,7 +274,7 @@ namespace TcgEngine.Gameplay
             RefreshData();
 
             resolve_queue.AddCallback(StartNextTurn);
-            resolve_queue.ResolveAll(0.2f);
+            resolve_queue.ResolveAll(0.5f);
         }
 
         //End game with winner
@@ -497,7 +484,7 @@ namespace TcgEngine.Gameplay
                 RefreshData();
 
                 onCardPlayed?.Invoke(card, slot);
-                resolve_queue.ResolveAll(0.3f);
+                resolve_queue.ResolveAll(0.5f);
             }
         }
 
@@ -1834,6 +1821,7 @@ namespace TcgEngine.Gameplay
             }
         }
 
+        // This method will solve the selectors that aren't cancelable, choosing the first valid option, you could remove this logic, adapt, pick random, is in your hands to choose.
         public virtual void CancelSelection()
         {
             if (game_data.selector != SelectorType.None)
