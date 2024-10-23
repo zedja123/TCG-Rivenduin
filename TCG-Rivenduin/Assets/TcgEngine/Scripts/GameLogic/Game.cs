@@ -9,10 +9,15 @@ namespace TcgEngine
     [System.Serializable]
     public class Game
     {
-        public int response_player = 0;
-        public ResponsePhase response_phase = ResponsePhase.None;
+        //Response
         public float response_timer = 0f;
+        public ResponsePhase response_phase = ResponsePhase.None;
+        public int response_player = 0;
         public bool selector_cancelable;
+        public List<ActionHistory> history_list = new List<ActionHistory>();
+        //
+
+
         public string game_uid;
         public GameSettings settings;
 
@@ -83,7 +88,7 @@ namespace TcgEngine
         //Check if its player's turn
         public virtual bool IsPlayerTurn(Player player)
         {
-            return IsPlayerActionTurn(player) || IsPlayerSelectorTurn(player);
+            return IsPlayerActionTurn(player) || IsPlayerSelectorTurn(player) || IsResponsePlayerTurn(player);
         }
 
         public virtual bool IsPlayerActionTurn(Player player)
@@ -98,7 +103,12 @@ namespace TcgEngine
             return player != null && selector_player_id == player.player_id 
                 && state == GameState.Play && selector != SelectorType.None;
         }
-        
+
+        public virtual bool IsResponsePlayerTurn(Player player)
+        {
+            return player != null && response_phase != ResponsePhase.None && response_player == player.player_id;
+        }
+
         //Check if a card is allowed to be played on slot
         public virtual bool CanPlayCard(Card card, Slot slot, bool skip_cost = false)
         {
@@ -542,6 +552,20 @@ namespace TcgEngine
         {
 
             dest.response_phase = source.response_phase;
+            dest.response_player = source.response_player;
+            dest.response_timer = source.response_timer;
+
+            for (int i = 0; i < source.history_list.Count; i++)
+            {
+                if (i < dest.history_list.Count)
+                    ActionHistory.Clone(source.history_list[i], dest.history_list[i]);
+                else
+                    dest.history_list.Add(ActionHistory.CloneNew(source.history_list[i]));
+            }
+
+            if (dest.history_list.Count > source.history_list.Count)
+                dest.history_list.RemoveRange(source.history_list.Count, dest.history_list.Count - source.history_list.Count);
+
             dest.game_uid = source.game_uid;
             dest.settings = source.settings;
 

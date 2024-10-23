@@ -9,6 +9,7 @@ namespace TcgEngine
     [System.Serializable]
     public class Player
     {
+        public bool resolve = true;
         public int player_id;
         public string username;
         public string avatar;
@@ -613,5 +614,29 @@ namespace TcgEngine
         public string ability_id;
         public int target_id;
         public Slot slot;
+        public static void Clone(ActionHistory dest, ActionHistory source)
+        {
+            source.type = dest.type;
+            source.card_id = dest.card_id;
+            source.card_uid = dest.card_uid;
+            source.target_uid = dest.target_uid;
+            source.ability_id = dest.ability_id;
+            source.target_id = dest.target_id;
+            source.slot = dest.slot;
+        }
+
+        public static ActionHistory CloneNew(ActionHistory dest)
+        {
+            var source = new ActionHistory();
+            source.type = dest.type;
+            source.card_id = dest.card_id;
+            source.card_uid = dest.card_uid;
+            source.target_uid = dest.target_uid;
+            source.ability_id = dest.ability_id;
+            source.target_id = dest.target_id;
+            source.slot = dest.slot;
+
+            return source;
+        }
     }
 }

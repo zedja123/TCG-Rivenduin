@@ -22,6 +22,7 @@ namespace TcgEngine
     [CreateAssetMenu(fileName = "card", menuName = "TcgEngine/CardData", order = 5)]
     public class CardData : ScriptableObject
     {
+        public bool skip_stack;
         public string id;
 
         [Header("Display")]
