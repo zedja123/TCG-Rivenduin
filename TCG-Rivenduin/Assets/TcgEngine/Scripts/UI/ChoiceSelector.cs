@@ -23,6 +23,7 @@ namespace TcgEngine.UI
 
         protected override void Awake()
         {
+            cancel_button = GameObject.Find("XChoice");
             base.Awake();
             instance = this;
         }

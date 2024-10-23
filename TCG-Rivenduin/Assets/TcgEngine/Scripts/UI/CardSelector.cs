@@ -41,6 +41,7 @@ namespace TcgEngine.UI
 
         protected override void Awake()
         {
+            cancel_button = GameObject.Find("XCard");
             base.Awake();
             instance = this;
             Hide();

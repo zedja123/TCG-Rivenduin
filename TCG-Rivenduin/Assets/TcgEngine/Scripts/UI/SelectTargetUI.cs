@@ -22,6 +22,7 @@ namespace TcgEngine.UI
         protected override void Awake()
         {
             _instance = this;
+            cancel_button = GameObject.Find("XTarget");
             base.Awake();
         }
 
