@@ -19,7 +19,7 @@ MonoBehaviour:
   type: 20
   team: {fileID: 11400000, guid: 2228f66859204134393e850ef6af7eb7, type: 2}
   rarity: {fileID: 11400000, guid: fab1a52f5a36cc942985dea95be18ac9, type: 2}
-  mana: 1
+  mana: 0
   attack: 0
   hp: 0
   traits:

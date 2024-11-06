@@ -9,10 +9,12 @@ namespace TcgEngine
     [System.Serializable]
     public class Game
     {
-        public int response_player = 0;
-        public ResponsePhase response_phase = ResponsePhase.None;
         public float response_timer = 0f;
+        public ResponsePhase response_phase = ResponsePhase.None;
+        public int response_player = 0;
         public bool selector_cancelable;
+        public List<ActionHistory> history_list = new List<ActionHistory>();
+
         public string game_uid;
         public GameSettings settings;
 
@@ -87,15 +89,21 @@ namespace TcgEngine
         //Check if its player's turn
         public virtual bool IsPlayerTurn(Player player)
         {
-            return IsPlayerActionTurn(player) || IsPlayerSelectorTurn(player);
+            return IsPlayerActionTurn(player) || IsPlayerSelectorTurn(player) || IsResponsePlayerTurn(player);
         }
 
         public virtual bool IsPlayerActionTurn(Player player)
         {
-            return player != null
+            return player != null && current_player == player.player_id
                 && state == GameState.Play && selector == SelectorType.None
-                && (response_phase == ResponsePhase.None) == (current_player == player.player_id); // Last line ensure that active players don't play on Response, but not-active can.
+                && response_phase == ResponsePhase.None; // Last line ensure that active players don't play on Response, but not-active can.
         }
+
+        public virtual bool IsResponsePlayerTurn(Player player)
+        {
+            return player != null && response_phase != ResponsePhase.None && response_player == player.player_id;
+        }
+
 
         public virtual bool IsPlayerSelectorTurn(Player player)
         {
@@ -546,6 +554,18 @@ namespace TcgEngine
         {
 
             dest.response_phase = source.response_phase;
+            dest.response_player = source.response_player;
+            dest.response_timer = source.response_timer;
+            for (int i = 0; i < source.history_list.Count; i++)
+            {
+                if (i < dest.history_list.Count)
+                    ActionHistory.Clone(source.history_list[i], dest.history_list[i]);
+                else
+                    dest.history_list.Add(ActionHistory.CloneNew(source.history_list[i]));
+            }
+
+            if (dest.history_list.Count > source.history_list.Count)
+                dest.history_list.RemoveRange(source.history_list.Count, dest.history_list.Count - source.history_list.Count);
             dest.game_uid = source.game_uid;
             dest.settings = source.settings;
 
@@ -581,6 +601,7 @@ namespace TcgEngine
 
             CloneHash(source.ability_played, dest.ability_played);
             CloneHash(source.cards_attacked, dest.cards_attacked);
+
         }
 
         public static void CloneHash(HashSet<string> source, HashSet<string> dest)

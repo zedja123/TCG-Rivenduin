@@ -23,6 +23,7 @@ namespace TcgEngine
     public class CardData : ScriptableObject
     {
         public string id;
+        public bool skip_stack;
 
         [Header("Display")]
         public string title;

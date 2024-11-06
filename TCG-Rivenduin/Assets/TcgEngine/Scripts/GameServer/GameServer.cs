@@ -149,10 +149,26 @@ namespace TcgEngine.Server
             if (game_data.state == GameState.Play && !gameplay.IsResolving())
             {
                 game_data.turn_timer -= Time.deltaTime;
+                if (game_data.phase == GamePhase.Main && game_data.response_phase == ResponsePhase.None)
+                {
+                    game_data.turn_timer -= Time.deltaTime;
+
+                }
+                else if (game_data.response_phase != ResponsePhase.None)
+                {
+                    game_data.response_timer -= Time.deltaTime;
+                }
+
                 if (game_data.turn_timer <= 0f)
                 {
                     //Time expired during turn
                     gameplay.NextStep();
+                }
+
+                if (game_data.response_timer <= 0f)
+                {
+                    // Time expired to response action
+                    gameplay.CancelSelection();
                 }
             }
 
