@@ -71,7 +71,9 @@ namespace TcgEngine
                 if (player.IsReady())
                     ready++;
             }
+
             return ready >= settings.nb_players;
+
         }
 
         public virtual bool AreAllPlayersConnected()

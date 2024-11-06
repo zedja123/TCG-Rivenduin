@@ -176,6 +176,8 @@ namespace TcgEngine.Server
             {
                 bool all_connected = game_data.AreAllPlayersConnected();
                 bool all_ready = game_data.AreAllPlayersReady();
+                Debug.Log("PLAYERS CONNECTED: " + game_data.AreAllPlayersConnected());
+                Debug.Log("PLAYERS READY: " + game_data.AreAllPlayersReady());
                 if (all_connected && all_ready)
                 {
                     StartGame();
@@ -235,6 +237,7 @@ namespace TcgEngine.Server
             }
 
             //Start Game
+            Debug.Log("Start Gamer protected");
             gameplay.StartGame();
         }
 

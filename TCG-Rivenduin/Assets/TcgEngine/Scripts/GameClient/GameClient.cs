@@ -225,6 +225,8 @@ namespace TcgEngine.Client
         {
             if (game_settings.IsOffline())
             {
+
+                Debug.Log("Connected Offline");
                 //Solo mode, send both your settings and AI settings
                 SendGameplaySettings(game_settings);
                 SendPlayerSettingsAI(ai_settings);
@@ -245,6 +247,7 @@ namespace TcgEngine.Client
 
         private void RegisterRefresh(ushort tag, UnityAction<SerializedData> callback)
         {
+            Debug.Log("1");
             RefreshEvent cmdevt = new RefreshEvent();
             cmdevt.tag = tag;
             cmdevt.callback = callback;
@@ -253,6 +256,7 @@ namespace TcgEngine.Client
 
         public void OnReceiveRefresh(ulong client_id, FastBufferReader reader)
         {
+            Debug.Log("2");
             reader.ReadValueSafe(out ushort type);
             bool found = registered_commands.TryGetValue(type, out RefreshEvent command);
             if (found)

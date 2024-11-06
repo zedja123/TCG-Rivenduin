@@ -85,6 +85,7 @@ namespace TcgEngine.Gameplay
 
         public virtual void StartGame()
         {
+            Debug.Log("START GAME");
             if (game_data.state == GameState.GameEnded)
                 return;
 
