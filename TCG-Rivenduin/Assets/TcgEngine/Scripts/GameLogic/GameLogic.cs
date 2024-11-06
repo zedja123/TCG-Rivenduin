@@ -247,25 +247,8 @@ namespace TcgEngine.Gameplay
             game_data.response_phase = ResponsePhase.None;
             if (game_data.state == GameState.GameEnded)
                 return;
-            if (game_data.response_phase == ResponsePhase.Response)
-            {
-                game_data.GetPlayer(game_data.response_player).resolve = true;
-
-                if (!game_data.GetOpponentPlayer(game_data.response_player).resolve)
-                {
-                    game_data.response_player = game_data.GetOpponentPlayer(game_data.response_player).player_id;
-                    RefreshData();
-                    return;
-                }
-                else
-                {
-                    game_data.response_phase = ResponsePhase.None;
-                    game_data.response_player = game_data.GetOpponentPlayer(game_data.response_player).player_id;
-                    resolve_queue.ResolveAll(true);
-                    RefreshData();
-                    return;
-                }
-            }
+            if (game_data.phase != GamePhase.Main)
+                return;
 
             game_data.selector = SelectorType.None;
             game_data.phase = GamePhase.EndTurn;
@@ -465,84 +448,54 @@ namespace TcgEngine.Gameplay
                 //Play card
                 player.RemoveCardFromAllGroups(card);
 
-                if (card.CardData.skip_stack || skip_cost)
+                //Add to board
+                CardData icard = card.CardData;
+                if (icard.IsBoardCard())
                 {
-                    TriggerCard(card, player, slot);
+                    player.cards_board.Add(card);
+                    card.slot = slot;
+                    card.exhausted = true; //Cant attack first turn
+                }
+                else if (icard.IsEquipment())
+                {
+                    Card bearer = game_data.GetSlotCard(slot);
+                    EquipCard(bearer, card);
+                    card.exhausted = true;
+                }
+                else if (icard.IsSecret())
+                {
+                    player.cards_secret.Add(card);
                 }
                 else
                 {
-                    resolve_queue.AddCard(card, player, slot, TriggerCard);
+                    player.cards_discard.Add(card);
+                    card.slot = slot; //Save slot in case spell has PlayTarget
+                }
 
-                    ActionHistory order = new ActionHistory();
-                    order.type = GameAction.PlayCard;
-                    order.card_id = card.card_id;
-                    order.card_uid = card.uid;
-                    game_data.history_list.Add(order);
+                //History
+                if (!is_ai_predict && !icard.IsSecret())
+                    player.AddHistory(GameAction.PlayCard, card);
 
-                    Player responseOp = game_data.GetOpponentPlayer(game_data.response_phase == ResponsePhase.None ? player.player_id : game_data.response_player);
-                    Player resposePl = game_data.GetOpponentPlayer(responseOp.player_id);
-                    if (game_data.response_phase == ResponsePhase.None || (!resposePl.resolve || !responseOp.resolve))
-                    {
-                        game_data.response_phase = ResponsePhase.Response;
-                        game_data.response_timer = GameplayData.Get().turn_duration; // you can a different amout for response timer, just add on GameplayData and setup as you want
-                        resposePl.resolve = true;
-                        responseOp.resolve = false;
-                        game_data.response_player = responseOp.player_id;
-                        RefreshData();
-                        return;
-                    }
+                //Update ongoing effects
+                game_data.last_played = card.uid;
+                UpdateOngoing();
 
-                    game_data.response_phase = ResponsePhase.None;
+                //Trigger abilities
+                if (card.CardData.IsDynamicManaCost())
+                {
+                    GoToSelectorCost(card);
+                }
+                else
+                {
+                    TriggerSecrets(AbilityTrigger.OnPlayOther, card); //After playing card
+                    TriggerCardAbilityType(AbilityTrigger.OnPlay, card);
+                    TriggerOtherCardsAbilityType(AbilityTrigger.OnPlayOther, card);
                 }
 
                 RefreshData();
 
                 onCardPlayed?.Invoke(card, slot);
                 resolve_queue.ResolveAll(0.3f);
-            }
-        }
-
-        public virtual void TriggerCard(Card card, Player player, Slot slot)
-        {
-            //Add to board
-            CardData icard = card.CardData;
-            if (icard.IsEquipment())
-            {
-                Card bearer = game_data.GetSlotCard(slot);
-                EquipCard(bearer, card);
-                card.exhausted = true;
-            }
-            else if (icard.IsSecret())
-            {
-                player.cards_secret.Add(card);
-            }
-            else
-            {
-                player.cards_discard.Add(card);
-                card.slot = slot; //Save slot in case spell has PlayTarget
-            }
-
-            var history_card = game_data.history_list.Find(item => item.card_uid == card.uid);
-            game_data.history_list.Remove(history_card);
-
-            //History
-            if (!is_ai_predict && !icard.IsSecret())
-                player.AddHistory(GameAction.PlayCard, card);
-
-            //Update ongoing effects
-            game_data.last_played = card.uid;
-            UpdateOngoing();
-
-            //Trigger abilities
-            if (card.CardData.IsDynamicManaCost())
-            {
-                GoToSelectorCost(card);
-            }
-            else
-            {
-                TriggerSecrets(AbilityTrigger.OnPlayOther, card); //After playing card
-                TriggerCardAbilityType(AbilityTrigger.OnPlay, card);
-                TriggerOtherCardsAbilityType(AbilityTrigger.OnPlayOther, card);
             }
         }
 

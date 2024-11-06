@@ -16,15 +16,11 @@ namespace TcgEngine
         private Pool<SecretQueueElement> secret_elem_pool = new Pool<SecretQueueElement>();
         private Pool<AttackQueueElement> attack_elem_pool = new Pool<AttackQueueElement>();
         private Pool<CallbackQueueElement> callback_elem_pool = new Pool<CallbackQueueElement>();
-        private Pool<CardQueueElement> card_elem_pool = new Pool<CardQueueElement>();
 
-        private Stack<AbilityQueueElement> ability_queue = new Stack<AbilityQueueElement>();
-        private Stack<SecretQueueElement> secret_queue = new Stack<SecretQueueElement>();
-        private Stack<AttackQueueElement> attack_queue = new Stack<AttackQueueElement>();
-        private Stack<CallbackQueueElement> callback_queue = new Stack<CallbackQueueElement>();
-        private Stack<CardQueueElement> card_elem_queue = new Stack<CardQueueElement>();
-
-        private bool stack = false;
+        private Queue<AbilityQueueElement> ability_queue = new Queue<AbilityQueueElement>();
+        private Queue<SecretQueueElement> secret_queue = new Queue<SecretQueueElement>();
+        private Queue<AttackQueueElement> attack_queue = new Queue<AttackQueueElement>();
+        private Queue<CallbackQueueElement> callback_queue = new Queue<CallbackQueueElement>();
 
         private Game game_data;
         private bool is_resolving = false;
@@ -44,26 +40,11 @@ namespace TcgEngine
 
         public virtual void Update(float delta)
         {
-            this.stack = game_data.response_phase != ResponsePhase.Response;
             if (resolve_delay > 0f)
             {
                 resolve_delay -= delta;
                 if (resolve_delay <= 0f)
                     ResolveAll();
-            }
-        }
-
-
-        public virtual void AddCard(Card caster, Player owner, Slot slot, Action<Card, Player, Slot> callback)
-        {
-            if (caster != null && owner != null)
-            {
-                CardQueueElement elem = card_elem_pool.Create();
-                elem.caster = caster;
-                elem.owner = owner;
-                elem.slot = slot;
-                elem.callback = callback;
-                card_elem_queue.Push(elem);
             }
         }
 
@@ -76,7 +57,7 @@ namespace TcgEngine
                 elem.triggerer = triggerer;
                 elem.ability = ability;
                 elem.callback = callback;
-                ability_queue.Push(elem);
+                ability_queue.Enqueue(elem);
             }
         }
 
@@ -90,7 +71,7 @@ namespace TcgEngine
                 elem.ptarget = null;
                 elem.skip_cost = skip_cost;
                 elem.callback = callback;
-                attack_queue.Push(elem);
+                attack_queue.Enqueue(elem);
             }
         }
 
@@ -104,7 +85,7 @@ namespace TcgEngine
                 elem.ptarget = target;
                 elem.skip_cost = skip_cost;
                 elem.pcallback = callback;
-                attack_queue.Push(elem);
+                attack_queue.Enqueue(elem);
             }
         }
 
@@ -117,7 +98,7 @@ namespace TcgEngine
                 elem.secret = secret;
                 elem.triggerer = trigger;
                 elem.callback = callback;
-                secret_queue.Push(elem);
+                secret_queue.Enqueue(elem);
             }
         }
 
@@ -127,30 +108,30 @@ namespace TcgEngine
             {
                 CallbackQueueElement elem = callback_elem_pool.Create();
                 elem.callback = callback;
-                callback_queue.Push(elem);
+                callback_queue.Enqueue(elem);
             }
         }
 
-        public virtual void Resolve(bool stack = false)
+        public virtual void Resolve()
         {
             if (ability_queue.Count > 0)
             {
                 //Resolve Ability
-                AbilityQueueElement elem = ability_queue.Pop();
+                AbilityQueueElement elem = ability_queue.Dequeue();
                 ability_elem_pool.Dispose(elem);
                 elem.callback?.Invoke(elem.ability, elem.caster, elem.triggerer);
             }
             else if (secret_queue.Count > 0)
             {
                 //Resolve Secret
-                SecretQueueElement elem = secret_queue.Pop();
+                SecretQueueElement elem = secret_queue.Dequeue();
                 secret_elem_pool.Dispose(elem);
                 elem.callback?.Invoke(elem.secret_trigger, elem.secret, elem.triggerer);
             }
             else if (attack_queue.Count > 0)
             {
                 //Resolve Attack
-                AttackQueueElement elem = attack_queue.Pop();
+                AttackQueueElement elem = attack_queue.Dequeue();
                 attack_elem_pool.Dispose(elem);
                 if (elem.ptarget != null)
                     elem.pcallback?.Invoke(elem.attacker, elem.ptarget, elem.skip_cost);
@@ -159,33 +140,27 @@ namespace TcgEngine
             }
             else if (callback_queue.Count > 0)
             {
-                CallbackQueueElement elem = callback_queue.Pop();
+                CallbackQueueElement elem = callback_queue.Dequeue();
                 callback_elem_pool.Dispose(elem);
                 elem.callback.Invoke();
             }
-            else if (stack && card_elem_queue.Count > 0)
-            {
-                //Resolve Card
-                CardQueueElement elem = card_elem_queue.Pop();
-                card_elem_pool.Dispose(elem);
-                elem.callback?.Invoke(elem.caster, elem.owner, elem.slot);
-            }
         }
+
         public virtual void ResolveAll(float delay)
         {
             SetDelay(delay);
             ResolveAll();  //Resolve now if no delay
         }
 
-        public virtual void ResolveAll(bool force_stack = false)
+        public virtual void ResolveAll()
         {
             if (is_resolving)
                 return;
 
             is_resolving = true;
-            while (CanResolve(force_stack || stack))
+            while (CanResolve())
             {
-                Resolve(force_stack || stack);
+                Resolve();
             }
             is_resolving = false;
         }
@@ -198,7 +173,7 @@ namespace TcgEngine
             }
         }
 
-        public virtual bool CanResolve(bool force_stack)
+        public virtual bool CanResolve()
         {
             if (resolve_delay > 0f)
                 return false;   //Is waiting delay
@@ -206,7 +181,7 @@ namespace TcgEngine
                 return false; //Cant execute anymore when game is ended
             if (game_data.selector != SelectorType.None)
                 return false; //Waiting for player input, in the middle of resolve loop
-            return (stack && card_elem_queue.Count > 0) || attack_queue.Count > 0 || ability_queue.Count > 0 || secret_queue.Count > 0 || callback_queue.Count > 0;
+            return attack_queue.Count > 0 || ability_queue.Count > 0 || secret_queue.Count > 0 || callback_queue.Count > 0;
         }
 
         public virtual bool IsResolving()
@@ -224,30 +199,24 @@ namespace TcgEngine
             ability_queue.Clear();
             secret_queue.Clear();
             callback_queue.Clear();
-            card_elem_pool.DisposeAll();
-            card_elem_queue.Clear();
         }
 
-        public Stack<CardQueueElement> GetCardQueue()
-        {
-            return card_elem_queue;
-        }
-        public Stack<AttackQueueElement> GetAttackQueue()
+        public Queue<AttackQueueElement> GetAttackQueue()
         {
             return attack_queue;
         }
 
-        public Stack<AbilityQueueElement> GetAbilityQueue()
+        public Queue<AbilityQueueElement> GetAbilityQueue()
         {
             return ability_queue;
         }
 
-        public Stack<SecretQueueElement> GetSecretQueue()
+        public Queue<SecretQueueElement> GetSecretQueue()
         {
             return secret_queue;
         }
 
-        public Stack<CallbackQueueElement> GetCallbackQueue()
+        public Queue<CallbackQueueElement> GetCallbackQueue()
         {
             return callback_queue;
         }
@@ -282,13 +251,5 @@ namespace TcgEngine
     public class CallbackQueueElement
     {
         public Action callback;
-    }
-
-    public class CardQueueElement
-    {
-        public Card caster;
-        public Slot slot;
-        public Player owner;
-        public Action<Card, Player, Slot> callback;
     }
 }

@@ -49,7 +49,7 @@ namespace TcgEngine.Client
                 //Target selector, select this card
                 GameClient.Get().SelectCard(card);
             }
-            else if ((gdata.IsPlayerActionTurn(player) || gdata.IsResponsePlayerTurn(player)) && card.player_id == player.player_id)
+            else if (gdata.IsPlayerActionTurn(player) && card.player_id == player.player_id)
             {
                 //Start dragging card
                 selected_card = bcard;
