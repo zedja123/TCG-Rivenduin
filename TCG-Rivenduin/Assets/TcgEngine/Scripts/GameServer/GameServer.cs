@@ -46,6 +46,7 @@ namespace TcgEngine.Server
 
         protected virtual void Init(string uid, int players, bool online)
         {
+            Debug.Log("Init");
             game_uid = uid;
             nb_players = Mathf.Max(players, 2);
             is_dedicated_server = online;
@@ -263,6 +264,7 @@ namespace TcgEngine.Server
             CommandEvent cmdevt = new CommandEvent();
             cmdevt.tag = tag;
             cmdevt.callback = callback;
+            Debug.Log("RegisterActions: " + tag + " " + cmdevt);
             registered_commands.Add(tag, cmdevt);
         }
 
@@ -302,6 +304,7 @@ namespace TcgEngine.Server
 
         public void ReceivePlayerSettings(ClientData iclient, SerializedData sdata)
         {
+            Debug.Log("Player Receive");
             PlayerSettings msg = sdata.Get<PlayerSettings>();
             Player player = GetPlayer(iclient);
             Debug.Log("Player Receive: " + player);
