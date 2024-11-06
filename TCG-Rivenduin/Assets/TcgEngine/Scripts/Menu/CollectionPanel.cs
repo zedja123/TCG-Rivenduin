@@ -422,9 +422,9 @@ namespace TcgEngine.UI
 
             if (passive_card != null)
             {
-                CardData hero_data = CardData.Get(passive_card.tid);
-                VariantData hero_variant = VariantData.Get(passive_card.variant);
-                passive.SetLine(hero_data, hero_variant, 1);
+                CardData passive_data = CardData.Get(passive_card.tid);
+                VariantData passive_variant = VariantData.Get(passive_card.variant);
+                passive.SetLine(passive_data, passive_variant, 1);
             }
             else
             {

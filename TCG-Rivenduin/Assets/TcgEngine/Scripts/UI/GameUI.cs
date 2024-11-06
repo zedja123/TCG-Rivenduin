@@ -62,7 +62,6 @@ namespace TcgEngine.UI
         void Update()
         {
             Game data = GameClient.Get().GetGameData();
-            Debug.Log("Data State: " + data.state);
             bool is_connecting = data == null || data.state == GameState.Connecting;
             bool connection_lost = !is_connecting && !GameClient.Get().IsReady();
             ConnectionPanel.Get().SetVisible(connection_lost);
@@ -75,7 +74,6 @@ namespace TcgEngine.UI
                 return;
 
             bool yourturn = GameClient.Get().IsYourTurn();
-            Debug.Log("Data Has Started: " + data.HasStarted());
             LoadPanel.Get().SetVisible(is_connecting && !data.HasStarted());
             end_turn_button.interactable = yourturn && end_turn_timer > 1f;
             end_turn_timer += Time.deltaTime;

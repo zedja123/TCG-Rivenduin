@@ -68,6 +68,7 @@ namespace TcgEngine
             int ready = 0;
             foreach (Player player in players)
             {
+                Debug.Log("Player is Ready? " + player.username + " " + player.IsReady());
                 if (player.IsReady())
                     ready++;
             }
@@ -81,6 +82,7 @@ namespace TcgEngine
             int ready = 0;
             foreach (Player player in players)
             {
+                Debug.Log("Player is Connected? " + player.username + " " + player.IsConnected());
                 if (player.IsConnected())
                     ready++;
             }

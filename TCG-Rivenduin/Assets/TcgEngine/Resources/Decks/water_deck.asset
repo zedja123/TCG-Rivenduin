@@ -15,6 +15,7 @@ MonoBehaviour:
   id: water_deck
   title: Water Starter
   hero: {fileID: 11400000, guid: 111d60b13ae137f4597da2789d94ecce, type: 2}
+  passive: {fileID: 11400000, guid: 3358b2636666b1644919373677e765cd, type: 2}
   cards:
   - {fileID: 11400000, guid: 89f3d73097f233148896600d94d482c0, type: 2}
   - {fileID: 11400000, guid: f11bd6abea1b4c24ab733ae003dfa279, type: 2}

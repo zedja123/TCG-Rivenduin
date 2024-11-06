@@ -303,6 +303,7 @@ namespace TcgEngine.Server
         {
             PlayerSettings msg = sdata.Get<PlayerSettings>();
             Player player = GetPlayer(iclient);
+            Debug.Log("Player Receive: " + player);
             if (player != null && msg != null)
             {
                 SetPlayerSettings(player.player_id, msg);
@@ -313,6 +314,7 @@ namespace TcgEngine.Server
         {
             PlayerSettings msg = sdata.Get<PlayerSettings>();
             Player player = GetPlayer(iclient);
+            Debug.Log("AI Receive: " + player);
             if (player != null && msg != null)
             {
                 SetPlayerSettingsAI(player.player_id, msg);
@@ -491,6 +493,7 @@ namespace TcgEngine.Server
 
         public virtual async void SetPlayerDeck(int player_id, string username, UserDeckData deck)
         {
+            Debug.Log("Entered SetPlayerDeck");
             Player player = game_data.GetPlayer(player_id);
             if (player != null && game_data.state == GameState.Connecting)
             {
@@ -529,12 +532,14 @@ namespace TcgEngine.Server
                 else
                     Debug.Log("Player " + player_id + " deck not found: " + deck.tid);
 
+
                 SendPlayerReady(player);
             }
         }
 
         public virtual void SetPlayerSettings(int player_id, PlayerSettings psettings)
         {
+            Debug.Log("Is Connecting: " + GameState.Connecting);
             if (game_data.state != GameState.Connecting)
                 return; //Cant send setting if game already started
 
@@ -545,6 +550,7 @@ namespace TcgEngine.Server
                 player.cardback = psettings.cardback;
                 player.is_ai = false;
                 player.ready = true;
+                Debug.Log("Player Ready: " + player.ready);
                 SetPlayerDeck(player_id, player.username, psettings.deck);
                 RefreshAll();
             }
@@ -565,6 +571,7 @@ namespace TcgEngine.Server
                 player.cardback = psettings.cardback;
                 player.is_ai = true;
                 player.ready = true;
+                Debug.Log("AI Ready: " + player.ready);
                 player.ai_level = psettings.ai_level;
 
                 SetPlayerDeck(player.player_id, player.username, psettings.deck);
@@ -622,6 +629,7 @@ namespace TcgEngine.Server
             {
                 player.username = client.username;
                 player.connected = true;
+                Debug.Log("Player: " + player.username + " " + " Connected: " + player.connected);
             }
 
             return player_id;
@@ -888,8 +896,10 @@ namespace TcgEngine.Server
 
         protected virtual void SendPlayerReady(Player player)
         {
+            Debug.Log("Entered SendPlayerReady");
             if (player != null && player.IsReady())
             {
+                Debug.Log("Entered IF SendPlayerReady");
                 MsgInt mdata = new MsgInt();
                 mdata.value = player.player_id;
                 SendToAll(GameAction.PlayerReady, mdata, NetworkDelivery.Reliable);
