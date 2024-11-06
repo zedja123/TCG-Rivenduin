@@ -171,6 +171,7 @@ namespace TcgEngine.Server
                 }
             }
 
+
             //Start Game when ready
             if (game_data.state == GameState.Connecting)
             {
