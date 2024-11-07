@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TcgEngine.Gameplay;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -29,6 +30,7 @@ namespace TcgEngine
         private bool is_resolving = false;
         private float resolve_delay = 0f;
         private bool skip_delay = false;
+
 
         public ResolveQueue(Game data, bool skip)
         {
