@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/TcgEngine/Scenes/Server/Server.unity
     guid: acefba10b24d5f14aa51f6451ec467bf
+  - enabled: 0
+    path: Assets/TcgEngine/Scenes/Tool/TestP2P.unity
+    guid: 6f9ac14d723692947a10179c5a9df34b
   m_configObjects: {}
