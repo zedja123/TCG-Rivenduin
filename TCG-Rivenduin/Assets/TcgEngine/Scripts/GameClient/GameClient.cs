@@ -403,6 +403,7 @@ namespace TcgEngine.Client
             writer.WriteNetworkSerializable(data);
             Messaging.Send("action", ServerID, writer, delivery);
             writer.Dispose();
+            Debug.Log("SendAction " + type + " " + data + " " + delivery);
         }
 
         public void SendAction(ushort type, int data)

@@ -174,7 +174,7 @@ namespace TcgEngine.Server
 
 
             //Start Game when ready
-            if (game_data.state == GameState.Connecting)
+            if (game_data.state != GameState.Connecting)
             {
                 bool all_connected = game_data.AreAllPlayersConnected();
                 bool all_ready = game_data.AreAllPlayersReady();
