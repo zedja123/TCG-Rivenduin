@@ -155,12 +155,6 @@ namespace TcgEngine
                 else
                     elem.callback?.Invoke(elem.attacker, elem.target, elem.skip_cost);
             }
-            else if (callback_queue.Count > 0)
-            {
-                CallbackQueueElement elem = callback_queue.Pop();
-                callback_elem_pool.Dispose(elem);
-                elem.callback.Invoke();
-            }
             else if (stack && card_elem_queue.Count > 0)
             {
                 //Resolve Card
@@ -170,6 +164,9 @@ namespace TcgEngine
             }
             else if (callback_queue.Count > 0)
             {
+                CallbackQueueElement elem = callback_queue.Pop();
+                callback_elem_pool.Dispose(elem);
+                elem.callback.Invoke();
             }
         }
 
@@ -185,9 +182,9 @@ namespace TcgEngine
                 return;
 
             is_resolving = true;
-            while (CanResolve(force_stack))
+            while (CanResolve(force_stack || stack))
             {
-                Resolve(force_stack);
+                Resolve(force_stack || stack);
             }
             is_resolving = false;
         }
@@ -200,7 +197,7 @@ namespace TcgEngine
             }
         }
 
-        public virtual bool CanResolve(bool canresolve)
+        public virtual bool CanResolve(bool stack = false)
         {
             if (resolve_delay > 0f)
                 return false;   //Is waiting delay
@@ -220,10 +217,10 @@ namespace TcgEngine
         {
             card_elem_pool.DisposeAll();
             card_elem_queue.Clear();
-            /*attack_elem_pool.DisposeAll();
+            attack_elem_pool.DisposeAll();
             ability_elem_pool.DisposeAll();
             secret_elem_pool.DisposeAll();
-            callback_elem_pool.DisposeAll();*/
+            callback_elem_pool.DisposeAll();
             attack_queue.Clear();
             ability_queue.Clear();
             secret_queue.Clear();

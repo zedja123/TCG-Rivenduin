@@ -174,7 +174,7 @@ namespace TcgEngine.Server
 
 
             //Start Game when ready
-            if (game_data.state != GameState.Connecting)
+            if (game_data.state == GameState.Connecting)
             {
                 bool all_connected = game_data.AreAllPlayersConnected();
                 bool all_ready = game_data.AreAllPlayersReady();
@@ -200,28 +200,6 @@ namespace TcgEngine.Server
             foreach (AIPlayer ai in ai_list)
             {
                 ai.Update();
-            }
-
-            if (game_data.phase == GamePhase.Main && game_data.response_phase == ResponsePhase.None)
-            {
-                game_data.turn_timer -= Time.deltaTime;
-
-            }
-            else if (game_data.response_phase != ResponsePhase.None)
-            {
-                game_data.response_timer -= Time.deltaTime;
-            }
-
-            if (game_data.turn_timer <= 0f)
-            {
-                //Time expired during turn
-                gameplay.NextStep();
-            }
-
-            if (game_data.response_timer <= 0f)
-            {
-                // Time expired to response action
-                gameplay.CancelSelection();
             }
         }
 
@@ -304,7 +282,6 @@ namespace TcgEngine.Server
 
         public void ReceivePlayerSettings(ClientData iclient, SerializedData sdata)
         {
-            Debug.Log("Player Receive");
             PlayerSettings msg = sdata.Get<PlayerSettings>();
             Player player = GetPlayer(iclient);
             Debug.Log("Player Receive: " + player);
@@ -338,7 +315,7 @@ namespace TcgEngine.Server
         {
             MsgPlayCard msg = sdata.Get<MsgPlayCard>();
             Player player = GetPlayer(iclient);
-            if (player != null && msg != null && game_data.IsPlayerActionTurn(player) && !gameplay.IsResolving())
+            if (player != null && msg != null && (game_data.IsPlayerActionTurn(player) || game_data.IsResponsePlayerTurn(player)) && !gameplay.IsResolving())
             {
                 Card card = player.GetCard(msg.card_uid);
                 if (card != null && card.player_id == player.player_id)
@@ -392,7 +369,7 @@ namespace TcgEngine.Server
         {
             MsgCastAbility msg = sdata.Get<MsgCastAbility>();
             Player player = GetPlayer(iclient);
-            if (player != null && msg != null && game_data.IsPlayerActionTurn(player) && !gameplay.IsResolving())
+            if (player != null && msg != null && (game_data.IsPlayerActionTurn(player) || game_data.IsResponsePlayerTurn(player)) && !gameplay.IsResolving())
             {
                 Card card = player.GetCard(msg.caster_uid);
                 AbilityData iability = AbilityData.Get(msg.ability_id);

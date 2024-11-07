@@ -282,17 +282,29 @@ namespace TcgEngine
         public void Send(string type, ulong target, FastBufferWriter writer, NetworkDelivery delivery)
         {
             if (IsOnline)
+            {
                 SendOnline(type, target, writer, delivery);
+            }
+                
             else if(target == ClientID)
+            {
                 SendOffline(type, writer);
+            }
+                
         }
 
         public void Send(string type, IReadOnlyList<ulong> targets, FastBufferWriter writer, NetworkDelivery delivery)
         {
             if (IsOnline)
+            {
                 SendOnline(type, targets, writer, delivery);
+            }
+                
             else if (Contains(targets, ClientID))
+            {
                 SendOffline(type, writer);
+            }
+                
         }
 
         public void SendAll(string type, FastBufferWriter writer, NetworkDelivery delivery)
@@ -302,11 +314,14 @@ namespace TcgEngine
 
         private void SendOnline(string type, ulong target, FastBufferWriter writer, NetworkDelivery delivery)
         {
+            //Entering
+            Debug.Log("SendPassed");
             network.NetworkManager.CustomMessagingManager.SendNamedMessage(type, target, writer, delivery);
         }
 
         private void SendOnline(string type, IReadOnlyList<ulong> targets, FastBufferWriter writer, NetworkDelivery delivery)
         {
+
             network.NetworkManager.CustomMessagingManager.SendNamedMessage(type, targets, writer, delivery);
         }
 
