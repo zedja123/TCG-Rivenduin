@@ -2846,6 +2846,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2166740353331577933, guid: b2cda006105c05b428bace831c06c984,
+        type: 3}
+      propertyPath: m_Name
+      value: XChoice
+      objectReference: {fileID: 0}
     - target: {fileID: 2552961730338996592, guid: b2cda006105c05b428bace831c06c984,
         type: 3}
       propertyPath: m_RootOrder
@@ -2920,6 +2925,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 77.600006
+      objectReference: {fileID: 0}
+    - target: {fileID: 5230550345292544606, guid: b2cda006105c05b428bace831c06c984,
+        type: 3}
+      propertyPath: m_Name
+      value: XCard
       objectReference: {fileID: 0}
     - target: {fileID: 6409331570538253152, guid: b2cda006105c05b428bace831c06c984,
         type: 3}

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: maga_aprendiz
   m_EditorClassIdentifier: 
   id: maga_aprendiz
+  skip_stack: 1
   title: Maga Aprendiz
   art_full: {fileID: 21300000, guid: c4f595da357f64f4f9002b3e8509464f, type: 3}
   art_board: {fileID: 21300000, guid: c4f595da357f64f4f9002b3e8509464f, type: 3}

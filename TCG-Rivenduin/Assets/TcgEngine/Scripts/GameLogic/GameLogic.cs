@@ -463,6 +463,18 @@ namespace TcgEngine.Gameplay
                 if (card.CardData.skip_stack || skip_cost)
                 {
                     TriggerCard(card, player, slot);
+                    Player responseOp = game_data.GetOpponentPlayer(game_data.response_phase == ResponsePhase.None ? player.player_id : game_data.response_player);
+                    Player resposePl = game_data.GetOpponentPlayer(responseOp.player_id);
+                    if (game_data.response_phase == ResponsePhase.None || (!resposePl.resolve || !responseOp.resolve))
+                    {
+                        game_data.response_phase = ResponsePhase.Response;
+                        game_data.response_timer = GameplayData.Get().turn_duration; // you can a different amout for response timer, just add on GameplayData and setup as you want
+                        resposePl.resolve = true;
+                        responseOp.resolve = false;
+                        game_data.response_player = responseOp.player_id;
+                        RefreshData();
+                        return;
+                    }
                 }
                 else
                 {
@@ -1391,7 +1403,7 @@ namespace TcgEngine.Gameplay
             }
 
             onAbilityEnd?.Invoke(iability, caster);
-            resolve_queue.ResolveAll(0.5f);
+            resolve_queue.ResolveAll(1f);
             RefreshData();
         }
 

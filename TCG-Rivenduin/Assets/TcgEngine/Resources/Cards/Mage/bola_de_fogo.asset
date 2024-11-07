@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: bola_de_fogo
   m_EditorClassIdentifier: 
   id: bola_de_fogo
+  skip_stack: 0
   title: Bola de Fogo
   art_full: {fileID: 21300000, guid: b5b760b64bc656743ab798e7a92f86ad, type: 3}
   art_board: {fileID: 21300000, guid: b5b760b64bc656743ab798e7a92f86ad, type: 3}

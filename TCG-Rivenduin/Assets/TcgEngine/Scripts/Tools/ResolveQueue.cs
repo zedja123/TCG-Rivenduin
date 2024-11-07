@@ -11,8 +11,9 @@ namespace TcgEngine
     /// Resolve abilties and actions one by one, with an optional delay in between each
     /// </summary>
 
-    public class ResolveQueue 
+    public class ResolveQueue
     {
+
         private Pool<CardQueueElement> card_elem_pool = new Pool<CardQueueElement>();
         private Pool<AbilityQueueElement> ability_elem_pool = new Pool<AbilityQueueElement>();
         private Pool<SecretQueueElement> secret_elem_pool = new Pool<SecretQueueElement>();
@@ -28,7 +29,7 @@ namespace TcgEngine
 
         private Game game_data;
         private bool is_resolving = false;
-        private float resolve_delay = 0f;
+        private float resolve_delay = 1f;
         private bool skip_delay = false;
 
 
