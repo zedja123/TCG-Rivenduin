@@ -132,6 +132,14 @@ namespace TcgEngine.Gameplay
 
                 //Add coin second player
                 bool is_random = level == null || level.first_player == LevelFirst.Random;
+
+                //Add 1 mana second player
+                if (is_random && player.player_id != game_data.first_player && GameplayData.Get().second_bonus == null)
+                {
+                    player.mana_max += GameplayData.Get().mana_per_turn;
+                    player.mana = player.mana_max;
+                }
+
                 if (is_random && player.player_id != game_data.first_player && GameplayData.Get().second_bonus != null)
                 {
                     Card card = Card.Create(GameplayData.Get().second_bonus, VariantData.GetDefault(), player);
@@ -164,10 +172,10 @@ namespace TcgEngine.Gameplay
                 DrawCard(player, GameplayData.Get().cards_per_turn);
             }
 
-            //Mana 
+            //Mana
             player.mana_max += GameplayData.Get().mana_per_turn;
             player.mana_max = Mathf.Min(player.mana_max, GameplayData.Get().mana_max);
-            player.mana = player.mana_max;
+            player.mana = player.mana_max + Mathf.Clamp(player.mana, 0, 5);
 
             //Turn timer and history
             game_data.turn_timer = GameplayData.Get().turn_duration;

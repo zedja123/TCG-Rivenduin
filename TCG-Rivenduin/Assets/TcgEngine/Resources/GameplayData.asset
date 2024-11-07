@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: GameplayData
   m_EditorClassIdentifier: 
   hp_start: 0
-  mana_start: 2
+  mana_start: 1
   mana_per_turn: 1
-  mana_max: 10
+  mana_max: 15
+  mana_excess: 5
   cards_start: 5
   cards_per_turn: 1
   cards_max: 10

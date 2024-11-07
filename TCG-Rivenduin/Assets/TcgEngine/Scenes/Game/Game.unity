@@ -2059,6 +2059,30 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1591726936}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1620799063 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5080411870148684724, guid: b2cda006105c05b428bace831c06c984,
+    type: 3}
+  m_PrefabInstance: {fileID: 962576083989124239}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1733536355 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6662708842999636567, guid: b2cda006105c05b428bace831c06c984,
+    type: 3}
+  m_PrefabInstance: {fileID: 962576083989124239}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1735995983
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2671,6 +2695,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2017469900}
   m_CullTransparentMesh: 1
+--- !u!114 &2021737991 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3682377902002486046, guid: b2cda006105c05b428bace831c06c984,
+    type: 3}
+  m_PrefabInstance: {fileID: 962576083989124239}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2046869329
 GameObject:
   m_ObjectHideFlags: 0
@@ -2780,6 +2816,26 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -26
       objectReference: {fileID: 0}
+    - target: {fileID: 209928453693938780, guid: b2cda006105c05b428bace831c06c984,
+        type: 3}
+      propertyPath: icons.Array.size
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 209928453693938780, guid: b2cda006105c05b428bace831c06c984,
+        type: 3}
+      propertyPath: icons.Array.data[12]
+      value: 
+      objectReference: {fileID: 1733536355}
+    - target: {fileID: 209928453693938780, guid: b2cda006105c05b428bace831c06c984,
+        type: 3}
+      propertyPath: icons.Array.data[13]
+      value: 
+      objectReference: {fileID: 1620799063}
+    - target: {fileID: 209928453693938780, guid: b2cda006105c05b428bace831c06c984,
+        type: 3}
+      propertyPath: icons.Array.data[14]
+      value: 
+      objectReference: {fileID: 2021737991}
     - target: {fileID: 962576084495618108, guid: b2cda006105c05b428bace831c06c984,
         type: 3}
       propertyPath: m_Name
@@ -2844,6 +2900,36 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3793233286561025186, guid: b2cda006105c05b428bace831c06c984,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -473
+      objectReference: {fileID: 0}
+    - target: {fileID: 3793233286561025186, guid: b2cda006105c05b428bace831c06c984,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -32
+      objectReference: {fileID: 0}
+    - target: {fileID: 3891856200958776947, guid: b2cda006105c05b428bace831c06c984,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 322
+      objectReference: {fileID: 0}
+    - target: {fileID: 3891856200958776947, guid: b2cda006105c05b428bace831c06c984,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 77.600006
+      objectReference: {fileID: 0}
+    - target: {fileID: 6409331570538253152, guid: b2cda006105c05b428bace831c06c984,
+        type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6409331570538253152, guid: b2cda006105c05b428bace831c06c984,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.00030517578
       objectReference: {fileID: 0}
     - target: {fileID: 6998234637461408072, guid: b2cda006105c05b428bace831c06c984,
         type: 3}

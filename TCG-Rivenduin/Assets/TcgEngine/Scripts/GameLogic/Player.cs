@@ -25,7 +25,7 @@ namespace TcgEngine
         public int hp;
         public int hp_max;
         public int mana = 0;
-        public int mana_max = 0;
+        public int mana_max = 15;
         public int kill_count = 0;
 
         public Dictionary<string, Card> cards_all = new Dictionary<string, Card>(); //Dictionnary for quick access to any card by UID

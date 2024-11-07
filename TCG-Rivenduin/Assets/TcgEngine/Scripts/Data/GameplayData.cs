@@ -17,6 +17,7 @@ namespace TcgEngine
         public int mana_start = 1;
         public int mana_per_turn = 1;
         public int mana_max = 10;
+        public int mana_excess = 5;
         public int cards_start = 5;
         public int cards_per_turn = 1;
         public int cards_max = 10;
