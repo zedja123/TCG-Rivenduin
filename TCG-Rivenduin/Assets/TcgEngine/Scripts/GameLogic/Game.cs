@@ -99,6 +99,7 @@ namespace TcgEngine
 
         public virtual bool IsResponsePlayerTurn(Player player)
         {
+            Debug.Log("IsResponsePlayerTurn " +  player.username);
             return player != null && response_phase != ResponsePhase.None && response_player == player.player_id;
         }
 
