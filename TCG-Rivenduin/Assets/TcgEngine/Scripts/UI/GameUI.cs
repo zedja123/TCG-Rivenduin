@@ -83,11 +83,14 @@ namespace TcgEngine.UI
             var timer_val = data.response_phase != ResponsePhase.None ? Mathf.RoundToInt(data.response_timer) : Mathf.RoundToInt(data.turn_timer);
             if (yourturn)
             {
-                end_turn_text.text = data.response_phase == ResponsePhase.Response ? "END\nRESPONSE" : "END\nTURN";
+                end_turn_text.text = data.response_phase == ResponsePhase.Response ? "END\nRESPONSE" : "YOUR\nTURN";
+                Debug.Log(data.response_phase == ResponsePhase.Response ? "END\nRESPONSE" : "YOUR\nTURN");
             }
             else
             {
                 end_turn_text.text = data.response_phase == ResponsePhase.Response ? "ENEMY\nRESPONSE" : "ENEMY\nTURN";
+                Debug.Log(data.response_phase == ResponsePhase.Response ? "ENEMY\nRESPONSE" : "ENEMY\nTURN");
+
             }
             turn_count.text = "Turn " + data.turn_count.ToString();
             turn_timer.enabled = data.turn_timer > 0f;

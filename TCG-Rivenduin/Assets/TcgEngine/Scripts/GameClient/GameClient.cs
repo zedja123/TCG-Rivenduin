@@ -265,7 +265,6 @@ namespace TcgEngine.Client
 
         public void SendPlayerSettings(PlayerSettings psettings)
         {
-            Debug.Log("SendingPlayerSettings " + GameAction.PlayerSettings + " " + psettings + " " +  NetworkDelivery.ReliableFragmentedSequenced);
             SendAction(GameAction.PlayerSettings, psettings, NetworkDelivery.ReliableFragmentedSequenced);
         }
 
@@ -403,7 +402,6 @@ namespace TcgEngine.Client
             writer.WriteNetworkSerializable(data);
             Messaging.Send("action", ServerID, writer, delivery);
             writer.Dispose();
-            Debug.Log("SendAction: " + type + " " + data + " " + delivery);
         }
 
         public void SendAction(ushort type, int data)

@@ -314,8 +314,6 @@ namespace TcgEngine
 
         private void SendOnline(string type, ulong target, FastBufferWriter writer, NetworkDelivery delivery)
         {
-            //Entering
-            Debug.Log("SendPassed");
             network.NetworkManager.CustomMessagingManager.SendNamedMessage(type, target, writer, delivery);
         }
 

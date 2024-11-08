@@ -2851,6 +2851,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: XChoice
       objectReference: {fileID: 0}
+    - target: {fileID: 2543412654274123999, guid: b2cda006105c05b428bace831c06c984,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -20
+      objectReference: {fileID: 0}
     - target: {fileID: 2552961730338996592, guid: b2cda006105c05b428bace831c06c984,
         type: 3}
       propertyPath: m_RootOrder
@@ -2906,6 +2911,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2704046264928988136, guid: b2cda006105c05b428bace831c06c984,
+        type: 3}
+      propertyPath: m_Name
+      value: X
+      objectReference: {fileID: 0}
     - target: {fileID: 3793233286561025186, guid: b2cda006105c05b428bace831c06c984,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -2946,6 +2956,11 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1477232087}
+    - target: {fileID: 8185942885187583064, guid: b2cda006105c05b428bace831c06c984,
+        type: 3}
+      propertyPath: m_Name
+      value: XSelect
+      objectReference: {fileID: 0}
     - target: {fileID: 8602402450329033153, guid: b2cda006105c05b428bace831c06c984,
         type: 3}
       propertyPath: m_Camera

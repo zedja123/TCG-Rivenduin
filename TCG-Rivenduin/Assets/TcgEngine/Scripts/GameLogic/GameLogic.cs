@@ -85,7 +85,6 @@ namespace TcgEngine.Gameplay
 
         public virtual void StartGame()
         {
-            Debug.Log("START GAME");
             if (game_data.state == GameState.GameEnded)
                 return;
 
@@ -498,15 +497,8 @@ namespace TcgEngine.Gameplay
                         RefreshData();
                         return;
                     }
-
-                    game_data.response_phase = ResponsePhase.None;
+                        game_data.response_phase = ResponsePhase.None;
                 }
-
-                RefreshData();
-
-                onCardPlayed?.Invoke(card, slot);
-                resolve_queue.ResolveAll(0.3f);
-            
 
             //Add to board
             CardData icard = card.CardData;

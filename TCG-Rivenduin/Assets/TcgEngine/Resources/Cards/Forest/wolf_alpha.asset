@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: wolf_alpha
   m_EditorClassIdentifier: 
   id: wolf_alpha
+  skip_stack: 1
   title: Alpha Wolf
   art_full: {fileID: 21300000, guid: e51daa54a539c9a4ba7c82f9c832bbc9, type: 3}
   art_board: {fileID: 21300000, guid: 5cd105acce20b0f40810123f6fe80756, type: 3}
