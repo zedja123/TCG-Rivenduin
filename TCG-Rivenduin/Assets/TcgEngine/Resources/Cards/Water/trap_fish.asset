@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: trap_fish
   m_EditorClassIdentifier: 
   id: trap_fish
+  skip_stack: 1
   title: Fish Trap
   art_full: {fileID: 21300000, guid: fe2c7c6b8f46572479435ecb1695dce6, type: 3}
   art_board: {fileID: 0}
