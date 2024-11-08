@@ -14,6 +14,8 @@ namespace TcgEngine.FX
 
     public class BoardCardFX : MonoBehaviour
     {
+        private ParticleSystem ready_fx = null;
+
         public Material kill_mat;
         public string kill_mat_fade = "noise_fade";
 
@@ -93,6 +95,12 @@ namespace TcgEngine.FX
                 exhausted_fx.Play();
             if (exhausted_fx != null && exhausted_fx.isPlaying && !card.exhausted)
                 exhausted_fx.Stop();
+
+            //Ready add/remove
+            if (ready_fx != null && !ready_fx.isPlaying && card.hp > 0 && !card.exhausted)
+                ready_fx.Play();
+            if (ready_fx != null && ready_fx.isPlaying && card.exhausted)
+                ready_fx.Stop();
         }
 
         private void OnSpawn()
@@ -134,6 +142,14 @@ namespace TcgEngine.FX
                     fx.transform.localPosition = Vector3.zero;
                 }
             });
+
+            // Action Ready FX
+            if (AssetData.Get().card_ready_fx != null)
+            {
+                GameObject rfx = Instantiate(AssetData.Get().card_ready_fx, transform);
+                rfx.transform.localPosition = Vector3.zero;
+                ready_fx = rfx.GetComponent<ParticleSystem>();
+            }
         }
 
         private void OnKill()

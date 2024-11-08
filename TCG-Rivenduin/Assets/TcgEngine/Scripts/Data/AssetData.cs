@@ -10,6 +10,7 @@ namespace TcgEngine
     public class AssetData : ScriptableObject
     {
         [Header("FX")]
+        public GameObject card_ready_fx;
         public GameObject card_spawn_fx;
         public GameObject card_destroy_fx;
         public GameObject card_attack_fx;

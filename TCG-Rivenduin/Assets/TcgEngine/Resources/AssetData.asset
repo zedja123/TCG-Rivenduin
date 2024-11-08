@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cca20da9cbfd28a449b51ac452845bc8, type: 3}
   m_Name: AssetData
   m_EditorClassIdentifier: 
+  card_ready_fx: {fileID: 7052257666040929376, guid: caadb540421ddca4ba84bb173024079b,
+    type: 3}
   card_spawn_fx: {fileID: 7052257666040929376, guid: caadb540421ddca4ba84bb173024079b,
     type: 3}
   card_destroy_fx: {fileID: 150204448029249, guid: 899a445106b612047b4d4ed24e9ea1c1,
@@ -41,6 +43,7 @@ MonoBehaviour:
   card_spawn_audio: {fileID: 0}
   card_destroy_audio: {fileID: 0}
   card_attack_audio: {fileID: 0}
+  card_move_audio: {fileID: 0}
   card_damage_audio: {fileID: 0}
   player_damage_audio: {fileID: 0}
   hand_card_click_audio: {fileID: 0}
