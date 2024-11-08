@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using TcgEngine.Gameplay;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -13,25 +12,23 @@ namespace TcgEngine
 
     public class ResolveQueue
     {
-
-        private Pool<CardQueueElement> card_elem_pool = new Pool<CardQueueElement>();
         private Pool<AbilityQueueElement> ability_elem_pool = new Pool<AbilityQueueElement>();
         private Pool<SecretQueueElement> secret_elem_pool = new Pool<SecretQueueElement>();
         private Pool<AttackQueueElement> attack_elem_pool = new Pool<AttackQueueElement>();
+        private Pool<CardQueueElement> card_elem_pool = new Pool<CardQueueElement>();
         private Pool<CallbackQueueElement> callback_elem_pool = new Pool<CallbackQueueElement>();
+
         private Stack<AbilityQueueElement> ability_queue = new Stack<AbilityQueueElement>();
         private Stack<SecretQueueElement> secret_queue = new Stack<SecretQueueElement>();
         private Stack<AttackQueueElement> attack_queue = new Stack<AttackQueueElement>();
         private Stack<CallbackQueueElement> callback_queue = new Stack<CallbackQueueElement>();
         private Stack<CardQueueElement> card_elem_queue = new Stack<CardQueueElement>();
 
-        private bool stack = false;
-
         private Game game_data;
         private bool is_resolving = false;
-        private float resolve_delay = 1f;
+        private float resolve_delay = 0f;
+        private bool stack = false;
         private bool skip_delay = false;
-
 
         public ResolveQueue(Game data, bool skip)
         {
@@ -51,7 +48,10 @@ namespace TcgEngine
             {
                 resolve_delay -= delta;
                 if (resolve_delay <= 0f)
+                {
                     ResolveAll();
+                }
+
             }
         }
 
@@ -67,6 +67,7 @@ namespace TcgEngine
                 card_elem_queue.Push(elem);
             }
         }
+
 
         public virtual void AddAbility(AbilityData ability, Card caster, Card triggerer, Action<AbilityData, Card, Card> callback)
         {
@@ -218,25 +219,28 @@ namespace TcgEngine
 
         public virtual void Clear()
         {
-            card_elem_pool.DisposeAll();
-            card_elem_queue.Clear();
             attack_elem_pool.DisposeAll();
             ability_elem_pool.DisposeAll();
             secret_elem_pool.DisposeAll();
             callback_elem_pool.DisposeAll();
+            card_elem_pool.DisposeAll();
             attack_queue.Clear();
             ability_queue.Clear();
             secret_queue.Clear();
             callback_queue.Clear();
-        }
-        public Stack<CardQueueElement> GetCardQueue()
-        {
-            return card_elem_queue;
+            card_elem_queue.Clear();
+            //if (game_data != null && game_data.history_list != null)
+            //    game_data.history_list.Clear();
         }
 
         public Stack<AttackQueueElement> GetAttackQueue()
         {
             return attack_queue;
+        }
+
+        public Stack<CardQueueElement> GetCardQueue()
+        {
+            return card_elem_queue;
         }
 
         public Stack<AbilityQueueElement> GetAbilityQueue()
@@ -273,6 +277,14 @@ namespace TcgEngine
         public Action<Card, Player, bool> pcallback;
     }
 
+    public class CardQueueElement
+    {
+        public Card caster;
+        public Slot slot;
+        public Player owner;
+        public Action<Card, Player, Slot> callback;
+    }
+
     public class SecretQueueElement
     {
         public AbilityTrigger secret_trigger;
@@ -285,13 +297,4 @@ namespace TcgEngine
     {
         public Action callback;
     }
-
-    public class CardQueueElement
-    {
-        public Card caster;
-        public Slot slot;
-        public Player owner;
-        public Action<Card, Player, Slot> callback;
-    }
-
 }
