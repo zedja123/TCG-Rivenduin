@@ -22,8 +22,8 @@ MonoBehaviour:
   cards_max: 10
   turn_duration: 9999
   second_bonus: {fileID: 0}
-  deck_size: 20
-  deck_duplicate_max: 2
+  deck_size: 5
+  deck_duplicate_max: 5
   sell_ratio: 0.8
   ai_type: 10
   ai_level: 10
@@ -31,6 +31,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8aea02f8dfcc2834d8eeca8e259140ce, type: 2}
   - {fileID: 11400000, guid: 8539b1ce42aef234786631b3c4bfb067, type: 2}
   - {fileID: 11400000, guid: e371ae9abcc31014992b685a145a087c, type: 2}
+  - {fileID: 11400000, guid: 0e6326c43c0688e40bbf592cf3ea6dec, type: 2}
   starter_decks:
   - {fileID: 11400000, guid: 8aea02f8dfcc2834d8eeca8e259140ce, type: 2}
   - {fileID: 11400000, guid: 09106faf9dd31a245a2c2d4ab51acb8c, type: 2}

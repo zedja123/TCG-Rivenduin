@@ -9,7 +9,7 @@ namespace TcgEngine
     [System.Serializable]
     public class Player
     {
-        public bool resolve = true;
+        public bool resolve = false;
         public int player_id;
         public string username;
         public string avatar;

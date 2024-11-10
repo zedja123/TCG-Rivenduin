@@ -84,6 +84,7 @@ namespace TcgEngine
             return ready >= settings.nb_players;
         }
 
+
         //Check if its player's turn
         public virtual bool IsPlayerTurn(Player player)
         {
@@ -99,7 +100,6 @@ namespace TcgEngine
 
         public virtual bool IsResponsePlayerTurn(Player player)
         {
-            Debug.Log("IsResponsePlayerTurn " +  player.username);
             return player != null && response_phase != ResponsePhase.None && response_player == player.player_id;
         }
 

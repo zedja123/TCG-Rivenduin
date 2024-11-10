@@ -500,8 +500,8 @@ namespace TcgEngine.Gameplay
                         game_data.response_phase = ResponsePhase.None;
                 }
 
-            //Add to board
-            CardData icard = card.CardData;
+                //Add to board
+                CardData icard = card.CardData;
                 if (icard.IsBoardCard())
                 {
                     player.cards_board.Add(card);

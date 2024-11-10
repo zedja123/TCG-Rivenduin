@@ -39,7 +39,7 @@ module.exports = {
   limiter_auth_max: 10,        //max nb of Login/Register request within the time window
   limiter_proxy: false,       //Must be set to true if your server is behind a proxy, otherwise the proxy itself will be blocked
   
-  ip_whitelist: ["127.0.0.1"],  //These IP are not affected by the limiter, for example you could add your game server's IP
+  ip_whitelist: ["127.0.0.1,177.12.10.87"],  //These IP are not affected by the limiter, for example you could add your game server's IP
   ip_blacklist: [],             //These IP are blocked forever
 
   //Email config, required for the API to send emails
