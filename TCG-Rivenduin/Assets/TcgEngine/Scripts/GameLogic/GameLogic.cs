@@ -46,6 +46,7 @@ namespace TcgEngine.Gameplay
 
         private Game game_data;
 
+        private bool  bothresolve = false;
         private ResolveQueue resolve_queue;
         private bool is_ai_predict = false;
 
@@ -244,21 +245,33 @@ namespace TcgEngine.Gameplay
             if (game_data.response_phase == ResponsePhase.Response)
             {
                 game_data.GetPlayer(game_data.response_player).resolve = true;
+                Debug.Log("Response Player = True");
 
                 if (!game_data.GetOpponentPlayer(game_data.response_player).resolve)
                 {
+                    Debug.Log("Response Player = True IF");
                     game_data.response_player = game_data.GetOpponentPlayer(game_data.response_player).player_id;
                     RefreshData();
                     return;
                 }
-                else
+                else if(game_data.GetPlayer(game_data.response_player).resolve == true && game_data.GetOpponentPlayer(game_data.response_player).resolve == true && bothresolve == false)
                 {
-                    game_data.response_phase = ResponsePhase.None;
+                    Debug.Log("Response Player = True ELSE");
                     game_data.response_player = game_data.GetOpponentPlayer(game_data.response_player).player_id;
-                    resolve_queue.ResolveAll(true);
+                    bothresolve = true;
                     RefreshData();
                     return;
                 }
+                else if(bothresolve)
+                {
+                    bothresolve = false;
+                    Debug.Log("Resolving");
+                    resolve_queue.ResolveAll(true);
+                    game_data.response_phase = ResponsePhase.None;
+                    RefreshData();
+                    return;
+                }
+
             }
 
             game_data.selector = SelectorType.None;

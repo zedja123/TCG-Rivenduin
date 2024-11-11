@@ -23,7 +23,8 @@ MonoBehaviour:
   mana: 0
   attack: 0
   hp: 21
-  traits: []
+  traits:
+  - {fileID: 11400000, guid: bfcf1569780a0264eab00db851526dd3, type: 2}
   stats: []
   abilities:
   - {fileID: 11400000, guid: ef16c91b1e7fc774b80da01b75b41941, type: 2}
