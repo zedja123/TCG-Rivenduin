@@ -93,15 +93,15 @@ namespace TcgEngine.UI
             AbilityData ability = hero?.GetAbility(AbilityTrigger.Activate);
             if (ability != null && !opponent)
             {
-                if (!hero.exhausted && !player.CanPayAbility(hero, ability))
-                {
-                    WarningText.ShowNoMana();
-                    return;
-                }
-
                 if (gdata.response_phase == ResponsePhase.Response && !ability.use_as_response)
                 {
                     WarningText.ShowNoResponse();
+                    return;
+                }
+
+                if (!hero.exhausted && !player.CanPayAbility(hero, ability))
+                {
+                    WarningText.ShowNoMana();
                     return;
                 }
 
