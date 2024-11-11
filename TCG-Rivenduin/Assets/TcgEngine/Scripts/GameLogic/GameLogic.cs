@@ -266,11 +266,11 @@ namespace TcgEngine.Gameplay
                 {
                     bothresolve = false;
                     Debug.Log("Resolving");
-                    resolve_queue.ResolveAll(true);
                     game_data.response_phase = ResponsePhase.None;
-                    return;
+                    resolve_queue.ResolveAll(true);
+                    RefreshData();
                 }
-
+                return;
             }
 
             game_data.selector = SelectorType.None;
