@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selector_owner: 1
   selector_cancelable: 1
-  use_as_response: 1
+  use_as_response: 0
   id: activate_fire
   trigger: 5
   conditions_trigger:

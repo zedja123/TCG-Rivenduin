@@ -269,11 +269,17 @@ namespace TcgEngine.Gameplay
                     game_data.GetPlayer(game_data.response_player).resolve = false;
                     game_data.GetOpponentPlayer(game_data.response_player).resolve = false;
                     Debug.Log("Resolving");
-                    game_data.response_phase = ResponsePhase.None;
                     resolve_queue.ResolveAll(true);
+<<<<<<< HEAD
                     RefreshData();
                     return;
                 }
+=======
+                    game_data.response_phase = ResponsePhase.None;
+                    return;
+                }
+
+>>>>>>> parent of 97deb23 (commit)
             }
 
             game_data.selector = SelectorType.None;

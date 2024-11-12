@@ -39,7 +39,7 @@ namespace TcgEngine.UI
         void Start()
         {
             power_area.SetActive(false);
-            if (power_button != null && passive == false)
+            if (power_button != null)
                 power_button.onClick.AddListener(OnClickPower);
 
             EventTrigger trigger = power_area.GetComponent<EventTrigger>();
@@ -86,6 +86,7 @@ namespace TcgEngine.UI
 
         public void OnClickPower()
         {
+            if (passive) return;
             Game gdata = GameClient.Get().GetGameData();
             Player player = GameClient.Get().GetPlayer();
             Card hero = player.hero;
