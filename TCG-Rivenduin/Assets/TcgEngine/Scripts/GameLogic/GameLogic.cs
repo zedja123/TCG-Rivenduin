@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TcgEngine.UI;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Profiling;
@@ -271,8 +272,8 @@ namespace TcgEngine.Gameplay
                     game_data.response_phase = ResponsePhase.None;
                     resolve_queue.ResolveAll(true);
                     RefreshData();
+                    return;
                 }
-                return;
             }
 
             game_data.selector = SelectorType.None;
@@ -511,6 +512,7 @@ namespace TcgEngine.Gameplay
                         RefreshData();
                         return;
                     }
+
                         game_data.response_phase = ResponsePhase.None;
                 }
 
