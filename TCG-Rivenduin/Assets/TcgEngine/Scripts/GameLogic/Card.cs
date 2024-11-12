@@ -457,6 +457,7 @@ namespace TcgEngine
             //   return false;
             //if (!skip_cost && exhausted)
             //    return false; //no more action
+
             return true; 
         }
 
