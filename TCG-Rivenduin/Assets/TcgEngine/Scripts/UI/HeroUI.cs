@@ -104,12 +104,10 @@ namespace TcgEngine.UI
                     WarningText.ShowNoMana();
                     return;
                 }
-                bool valid = gdata.IsPlayerActionTurn(player) && gdata.CanCastAbility(hero, ability);
-                bool validResponse = gdata.IsResponsePlayerTurn(player) && gdata.CanCastAbility(hero, ability);
 
-                if (valid || validResponse)
+                bool valid = gdata.IsPlayerActionTurn(player) && gdata.CanCastAbility(hero, ability);
+                if (valid)
                 {
-                    Debug.Log("Entering Cast Hero Power");
                     GameClient.Get().CastAbility(hero, ability);
                 }
             }
