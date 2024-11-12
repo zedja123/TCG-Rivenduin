@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ce5f81e5cc37f547af6923758602c8c, type: 3}
   m_Name: activate_water
   m_EditorClassIdentifier: 
+  selector_owner: 1
+  selector_cancelable: 1
+  use_as_response: 0
   id: activate_water
   trigger: 5
   conditions_trigger:
@@ -25,11 +28,12 @@ MonoBehaviour:
   value: 1
   duration: 0
   chain_abilities: []
-  mana_cost: 3
+  mana_cost: 2
   exhaust: 1
   board_fx: {fileID: 0}
   caster_fx: {fileID: 0}
   target_fx: {fileID: 0}
+  projectile_fx: {fileID: 0}
   cast_audio: {fileID: 0}
   target_audio: {fileID: 0}
   charge_target: 0

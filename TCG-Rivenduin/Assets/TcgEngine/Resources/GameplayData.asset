@@ -17,7 +17,7 @@ MonoBehaviour:
   mana_per_turn: 1
   mana_max: 15
   mana_excess: 5
-  cards_start: 10
+  cards_start: 5
   cards_per_turn: 1
   cards_max: 10
   turn_duration: 9999

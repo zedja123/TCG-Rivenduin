@@ -265,6 +265,8 @@ namespace TcgEngine.Gameplay
                 else if(bothresolve)
                 {
                     bothresolve = false;
+                    game_data.GetPlayer(game_data.response_player).resolve = false;
+                    game_data.GetOpponentPlayer(game_data.response_player).resolve = false;
                     Debug.Log("Resolving");
                     game_data.response_phase = ResponsePhase.None;
                     resolve_queue.ResolveAll(true);
@@ -506,60 +508,59 @@ namespace TcgEngine.Gameplay
                         resposePl.resolve = true;
                         responseOp.resolve = false;
                         game_data.response_player = responseOp.player_id;
+                        //Add to board
+                        CardData icard = card.CardData;
+                        if (icard.IsBoardCard())
+                        {
+                            player.cards_board.Add(card);
+                            card.slot = slot;
+                            card.exhausted = true; //Cant attack first turn
+                        }
+                        else if (icard.IsEquipment())
+                        {
+                            Card bearer = game_data.GetSlotCard(slot);
+                            EquipCard(bearer, card);
+                            card.exhausted = true;
+                        }
+                        else if (icard.IsSecret())
+                        {
+                            player.cards_secret.Add(card);
+                        }
+                        else
+                        {
+                            player.cards_discard.Add(card);
+                            card.slot = slot; //Save slot in case spell has PlayTarget
+                        }
+
+                        //History
+                        if (!is_ai_predict && !icard.IsSecret())
+                            player.AddHistory(GameAction.PlayCard, card);
+
+                        //Update ongoing effects
+                        game_data.last_played = card.uid;
+                        UpdateOngoing();
+
+                        //Trigger abilities
+                        if (card.CardData.IsDynamicManaCost())
+                        {
+                            GoToSelectorCost(card);
+                        }
+                        else
+                        {
+                            TriggerSecrets(AbilityTrigger.OnPlayOther, card); //After playing card
+                            TriggerCardAbilityType(AbilityTrigger.OnPlay, card);
+                            TriggerOtherCardsAbilityType(AbilityTrigger.OnPlayOther, card);
+                        }
+
+                        RefreshData();
+
+                        onCardPlayed?.Invoke(card, slot);
+                        resolve_queue.ResolveAll(true);
                         RefreshData();
                         return;
                     }
                         game_data.response_phase = ResponsePhase.None;
                 }
-
-                //Add to board
-                CardData icard = card.CardData;
-                if (icard.IsBoardCard())
-                {
-                    player.cards_board.Add(card);
-                    card.slot = slot;
-                    card.exhausted = true; //Cant attack first turn
-                }
-                else if (icard.IsEquipment())
-                {
-                    Card bearer = game_data.GetSlotCard(slot);
-                    EquipCard(bearer, card);
-                    card.exhausted = true;
-                }
-                else if (icard.IsSecret())
-                {
-                    player.cards_secret.Add(card);
-                }
-                else
-                {
-                    player.cards_discard.Add(card);
-                    card.slot = slot; //Save slot in case spell has PlayTarget
-                }
-
-                //History
-                if (!is_ai_predict && !icard.IsSecret())
-                    player.AddHistory(GameAction.PlayCard, card);
-
-                //Update ongoing effects
-                game_data.last_played = card.uid;
-                UpdateOngoing();
-
-                //Trigger abilities
-                if (card.CardData.IsDynamicManaCost())
-                {
-                    GoToSelectorCost(card);
-                }
-                else
-                {
-                    TriggerSecrets(AbilityTrigger.OnPlayOther, card); //After playing card
-                    TriggerCardAbilityType(AbilityTrigger.OnPlay, card);
-                    TriggerOtherCardsAbilityType(AbilityTrigger.OnPlayOther, card);
-                }
-
-                RefreshData();
-
-                onCardPlayed?.Invoke(card, slot);
-                resolve_queue.ResolveAll(0.3f);
             }
         }
 

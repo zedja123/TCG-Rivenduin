@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: hero_fire
   m_EditorClassIdentifier: 
   id: hero_fire
-  skip_stack: 0
+  skip_stack: 1
   title: Fire Spirit
   art_full: {fileID: 21300000, guid: 7699cccd52686144db4e7915c70e7a67, type: 3}
   art_board: {fileID: 21300000, guid: 683a50fcd851d6d45ac0a67c123f2a04, type: 3}
-  type: 5
+  type: 20
   team: {fileID: 11400000, guid: 6bbb96863ece0314fb318c0fce569afc, type: 2}
   rarity: {fileID: 11400000, guid: fab1a52f5a36cc942985dea95be18ac9, type: 2}
   mana: 0

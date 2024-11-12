@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: hero_water
   m_EditorClassIdentifier: 
   id: hero_water
+  skip_stack: 0
   title: Water Spirit
   art_full: {fileID: 21300000, guid: ec6a5b8f080a26f4aa952f761b64ff29, type: 3}
   art_board: {fileID: 21300000, guid: 902c955805daa664683fc8908452e390, type: 3}
@@ -21,7 +22,7 @@ MonoBehaviour:
   rarity: {fileID: 11400000, guid: 13b592f40b7cd424c966f5d7eef425aa, type: 2}
   mana: 0
   attack: 0
-  hp: 0
+  hp: 21
   traits: []
   stats: []
   abilities:
