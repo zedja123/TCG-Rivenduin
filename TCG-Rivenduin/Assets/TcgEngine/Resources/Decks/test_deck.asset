@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87ecef176d27eb040a9770e0eefea2ec, type: 3}
   m_Name: test_deck
   m_EditorClassIdentifier: 
-  id: test_deck
-  title: Test Deck
+  id: fire_deck
+  title: Fire Starter
   hero: {fileID: 11400000, guid: cf170aea7ffb041428f37608f1561058, type: 2}
   passive: {fileID: 11400000, guid: 3358b2636666b1644919373677e765cd, type: 2}
   cards:
@@ -22,12 +22,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4d7eaa06820bcc54694f4b2a8ee7e06a, type: 2}
   - {fileID: 11400000, guid: 4d7eaa06820bcc54694f4b2a8ee7e06a, type: 2}
   - {fileID: 11400000, guid: 4d7eaa06820bcc54694f4b2a8ee7e06a, type: 2}
-<<<<<<< HEAD
   - {fileID: 11400000, guid: 4d7eaa06820bcc54694f4b2a8ee7e06a, type: 2}
   - {fileID: 11400000, guid: 4d7eaa06820bcc54694f4b2a8ee7e06a, type: 2}
   - {fileID: 11400000, guid: 4d7eaa06820bcc54694f4b2a8ee7e06a, type: 2}
   - {fileID: 11400000, guid: 4d7eaa06820bcc54694f4b2a8ee7e06a, type: 2}
   - {fileID: 11400000, guid: 4d7eaa06820bcc54694f4b2a8ee7e06a, type: 2}
-  - {fileID: 11400000, guid: 4d7eaa06820bcc54694f4b2a8ee7e06a, type: 2}
-=======
->>>>>>> parent of 97deb23 (commit)
