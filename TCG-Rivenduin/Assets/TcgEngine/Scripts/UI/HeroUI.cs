@@ -39,7 +39,7 @@ namespace TcgEngine.UI
         void Start()
         {
             power_area.SetActive(false);
-            if (power_button != null && !passive)
+            if (power_button != null)
                 power_button.onClick.AddListener(OnClickPower);
 
             EventTrigger trigger = power_area.GetComponent<EventTrigger>();
@@ -86,7 +86,7 @@ namespace TcgEngine.UI
 
         public void OnClickPower()
         {
-            Debug.Log("OnClickPower");
+            if (passive) return;
             Game gdata = GameClient.Get().GetGameData();
             Player player = GameClient.Get().GetPlayer();
             Card hero = player.hero;
@@ -107,9 +107,8 @@ namespace TcgEngine.UI
 
                 bool valid = gdata.IsPlayerActionTurn(player) && gdata.CanCastAbility(hero, ability);
                 bool validResponse = gdata.IsResponsePlayerTurn(player) && gdata.CanCastAbility(hero, ability);
-                if (valid || validResponse)
+                if (valid)
                 {
-                    Debug.Log("PowerCasted");
                     GameClient.Get().CastAbility(hero, ability);
                 }
             }

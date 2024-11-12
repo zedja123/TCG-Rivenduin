@@ -492,26 +492,26 @@ namespace TcgEngine.Gameplay
                 }
                 else
                 {
-                        resolve_queue.AddCard(card, player, slot, TriggerCard);
+                    resolve_queue.AddCard(card, player, slot, TriggerCard);
 
-                        ActionHistory order = new ActionHistory();
-                        order.type = GameAction.PlayCard;
-                        order.card_id = card.card_id;
-                        order.card_uid = card.uid;
-                        game_data.history_list.Add(order);
+                    ActionHistory order = new ActionHistory();
+                    order.type = GameAction.PlayCard;
+                    order.card_id = card.card_id;
+                    order.card_uid = card.uid;
+                    game_data.history_list.Add(order);
 
-                        Player responseOp = game_data.GetOpponentPlayer(game_data.response_phase == ResponsePhase.None ? player.player_id : game_data.response_player);
-                        Player resposePl = game_data.GetOpponentPlayer(responseOp.player_id);
-                        if (game_data.response_phase == ResponsePhase.None || (!resposePl.resolve || !responseOp.resolve))
-                        {
-                            game_data.response_phase = ResponsePhase.Response;
-                            game_data.response_timer = GameplayData.Get().turn_duration; // you can a different amout for response timer, just add on GameplayData and setup as you want
-                            resposePl.resolve = true;
-                            responseOp.resolve = false;
-                            game_data.response_player = responseOp.player_id;
-                            RefreshData();
-                            return;
-                        }
+                    Player responseOp = game_data.GetOpponentPlayer(game_data.response_phase == ResponsePhase.None ? player.player_id : game_data.response_player);
+                    Player resposePl = game_data.GetOpponentPlayer(responseOp.player_id);
+                    if (game_data.response_phase == ResponsePhase.None || (!resposePl.resolve || !responseOp.resolve))
+                    {
+                        game_data.response_phase = ResponsePhase.Response;
+                        game_data.response_timer = GameplayData.Get().turn_duration; // you can a different amout for response timer, just add on GameplayData and setup as you want
+                        resposePl.resolve = true;
+                        responseOp.resolve = false;
+                        game_data.response_player = responseOp.player_id;
+                        RefreshData();
+                        return;
+                    }
 
                         game_data.response_phase = ResponsePhase.None;
                 }
