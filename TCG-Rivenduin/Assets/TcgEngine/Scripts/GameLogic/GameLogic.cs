@@ -270,11 +270,10 @@ namespace TcgEngine.Gameplay
                     game_data.GetOpponentPlayer(game_data.response_player).resolve = false;
                     Debug.Log("Resolving");
                     resolve_queue.ResolveAll(true);
-                    RefreshData();
-                }
                     game_data.response_phase = ResponsePhase.None;
                     RefreshData();
                     return;
+                }
             }
 
             game_data.selector = SelectorType.None;
