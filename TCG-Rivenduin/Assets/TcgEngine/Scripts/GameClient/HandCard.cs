@@ -228,15 +228,14 @@ namespace TcgEngine.Client
                 return;
             }
 
-            if (gdata.response_phase == ResponsePhase.Response && !card.HasTrait("response"))
-            {
-                WarningText.ShowNoResponse();
-                return;
-            }
-
             if (!player.CanPayMana(card))
             {
                 WarningText.ShowNoMana();
+                return;
+            }
+            if (gdata.response_phase == ResponsePhase.Response && !card.HasTrait("response"))
+            {
+                WarningText.ShowNoResponse();
                 return;
             }
 

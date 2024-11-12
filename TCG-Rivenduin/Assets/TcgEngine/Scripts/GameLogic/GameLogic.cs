@@ -276,6 +276,7 @@ namespace TcgEngine.Gameplay
                 }
 =======
                     game_data.response_phase = ResponsePhase.None;
+                    RefreshData();
                     return;
                 }
 
