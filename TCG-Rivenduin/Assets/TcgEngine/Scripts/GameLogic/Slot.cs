@@ -18,10 +18,9 @@ namespace TcgEngine
 
         public static int x_min = 1; //Dont change this, should start at 1  (0,0,0 represent invalid slot)
         public static int x_max = 5; //Number of slots in a row/zone
-        public static int x_max_y_2 = 20;
 
         public static int y_min = 1; //Dont change this, should start at 1  (0,0,0 represent invalid slot)
-        public static int y_max = 2; //Set this to the number of rows/locations you want to have
+        public static int y_max = 1; //Set this to the number of rows/locations you want to have
 
         public static bool ignore_p = false; //Set to true if you dont want to use P value
 
@@ -88,9 +87,6 @@ namespace TcgEngine
         //Check if the slot is valid one (or if out of board)
         public bool IsValid()
         {
-            // No limit for lands
-            if (y == 2) return x >= x_min && x <= x_max_y_2 && y >= y_min && y <= y_max && p >= 0;
-
             return x >= x_min && x <= x_max && y >= y_min && y <= y_max && p >= 0;
         }
 
@@ -109,18 +105,16 @@ namespace TcgEngine
         public static Slot GetRandom(int pid, System.Random rand)
         {
             int p = GetP(pid);
-            var y = rand.Next(y_min, y_max + 1);
             if (y_max > y_min)
-                return new Slot(rand.Next(x_min, (y != 2 ? x_max : x_max_y_2) + 1), y, p);
+                return new Slot(rand.Next(x_min, x_max + 1), rand.Next(y_min, y_max + 1), p);
             return new Slot(rand.Next(x_min, x_max + 1), y_min, p);
         }
 
         //Get a random slot amongts all valid ones
         public static Slot GetRandom(System.Random rand)
         {
-            var y = rand.Next(y_min, y_max + 1);
             if (y_max > y_min)
-                return new Slot(rand.Next(x_min, (y != 2 ? x_max : x_max_y_2) + 1), y, rand.Next(0, 2));
+                return new Slot(rand.Next(x_min, x_max + 1), rand.Next(y_min, y_max + 1), rand.Next(0, 2));
             return new Slot(rand.Next(x_min, x_max + 1), y_min, rand.Next(0, 2));
         }
 		
@@ -146,7 +140,7 @@ namespace TcgEngine
             List<Slot> list = new List<Slot>();
             for (int y = y_min; y <= y_max; y++)
             {
-                for (int x = x_min; x <= (y != 2 ? x_max : x_max_y_2); x++)
+                for (int x = x_min; x <= x_max; x++)
                 {
                     list.Add(new Slot(x, y, p));
                 }
@@ -165,7 +159,7 @@ namespace TcgEngine
             {
                 for (int y = y_min; y <= y_max; y++)
                 {
-                    for (int x = x_min; x <= (y != 2 ? x_max : x_max_y_2); x++)
+                    for (int x = x_min; x <= x_max; x++)
                     {
                         all_slots.Add(new Slot(x, y, p));
                     }

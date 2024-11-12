@@ -10,7 +10,7 @@ namespace TcgEngine
     /// Resolve abilties and actions one by one, with an optional delay in between each
     /// </summary>
 
-    public class ResolveQueue 
+    public class ResolveQueue
     {
         private Pool<AbilityQueueElement> ability_elem_pool = new Pool<AbilityQueueElement>();
         private Pool<SecretQueueElement> secret_elem_pool = new Pool<SecretQueueElement>();
@@ -51,7 +51,7 @@ namespace TcgEngine
                 {
                     ResolveAll();
                 }
-                    
+
             }
         }
 
@@ -159,7 +159,7 @@ namespace TcgEngine
                 else
                     elem.callback?.Invoke(elem.attacker, elem.target, elem.skip_cost);
             }
-            else if(stack && card_elem_queue.Count > 0)
+            else if (stack && card_elem_queue.Count > 0)
             {
                 //Resolve Card
                 CardQueueElement elem = card_elem_queue.Pop();

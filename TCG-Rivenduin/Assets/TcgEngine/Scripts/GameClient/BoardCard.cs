@@ -6,7 +6,6 @@ using TcgEngine.Client;
 using UnityEngine.Events;
 using TcgEngine.UI;
 using TcgEngine.FX;
-using System.Linq;
 
 namespace TcgEngine.Client
 {
@@ -47,6 +46,7 @@ namespace TcgEngine.Client
         private float status_alpha_target = 0f;
         private float delayed_damage_timer = 0f;
         private int delayed_damage = 0;
+        private int prev_hp = 0;
 
         private bool back_to_hand;
         private Vector3 back_to_hand_target;
@@ -96,13 +96,16 @@ namespace TcgEngine.Client
             Game data = GameClient.Get().GetGameData();
             Player player = GameClient.Get().GetPlayer();
             Card card = data.GetCard(card_uid);
-            Player owner = GameClient.Get().GetGameData().GetPlayer(card.player_id);
 
             if (!destroyed)
             {
                 card_ui.SetCard(card);
-                card_ui.SetHP(GetDelayedHP());
+                card_ui.SetHP(prev_hp);
             }
+
+            //Save Previous HP
+            if (!IsDamagedDelayed())
+                prev_hp = card.GetHP();
 
             bool selected = controls.GetSelected() == this;
             Vector3 targ_pos = GetTargetPos();
@@ -121,10 +124,6 @@ namespace TcgEngine.Client
             card_glow.color = new Color(ccolor.r, ccolor.g, ccolor.b, calpha);
             card_shadow.enabled = !destroyed && timer > 0.4f;
             card_sprite.color = card.HasStatus(StatusType.Stealth) ? Color.gray : Color.white;
-
-            if (timer > 0.5f)
-                card_ui.transform.localRotation = card.exhausted ? Quaternion.Euler(0, 0, -30) : Quaternion.identity;
-
             card_ui.hp.color = (destroyed || card.damage > 0) ? Color.yellow : Color.white;
 
             //armor
@@ -160,7 +159,7 @@ namespace TcgEngine.Client
                 List<AbilityData> abilities = card.GetAbilities();
                 foreach (AbilityData iability in abilities)
                 {
-                    if (iability != null)
+                    if (iability != null && iability.trigger == AbilityTrigger.Activate)
                     {
                         if (index < buttons.Length)
                         {
@@ -178,7 +177,7 @@ namespace TcgEngine.Client
                     List<AbilityData> equip_abilities = equip.GetAbilities();
                     foreach (AbilityData iability in equip_abilities)
                     {
-                        if (iability != null)
+                        if (iability != null && iability.trigger == AbilityTrigger.Activate)
                         {
                             if (index < buttons.Length)
                             {
@@ -220,6 +219,7 @@ namespace TcgEngine.Client
             this.card_uid = card.uid;
 
             transform.position = GetTargetPos();
+            prev_hp = card.GetHP();
 
             CardData icard = CardData.Get(card.card_id);
             if (icard)

@@ -147,6 +147,7 @@ namespace TcgEngine.Server
             //Timer during game
             if (game_data.state == GameState.Play && !gameplay.IsResolving())
             {
+                game_data.turn_timer -= Time.deltaTime;
                 if (game_data.phase == GamePhase.Main && game_data.response_phase == ResponsePhase.None)
                 {
                     game_data.turn_timer -= Time.deltaTime;
@@ -169,6 +170,7 @@ namespace TcgEngine.Server
                     gameplay.CancelSelection();
                 }
             }
+
 
             //Start Game when ready
             if (game_data.state == GameState.Connecting)
@@ -502,6 +504,7 @@ namespace TcgEngine.Server
                 //Deck not found
                 else
                     Debug.Log("Player " + player_id + " deck not found: " + deck.tid);
+
 
                 SendPlayerReady(player);
             }

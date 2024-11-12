@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace TcgEngine
 {
@@ -7,6 +9,12 @@ namespace TcgEngine
     [System.Serializable]
     public class Game
     {
+        public float response_timer = 0f;
+        public ResponsePhase response_phase = ResponsePhase.None;
+        public int response_player = 0;
+        public bool selector_cancelable;
+        public List<ActionHistory> history_list = new List<ActionHistory>();
+
         public string game_uid;
         public GameSettings settings;
 
@@ -15,12 +23,9 @@ namespace TcgEngine
         public int current_player = 0;
         public int turn_count = 0;
         public float turn_timer = 0f;
-        public float response_timer = 0f;
 
         public GameState state = GameState.Connecting;
         public GamePhase phase = GamePhase.None;
-        public ResponsePhase response_phase = ResponsePhase.None;
-        public int response_player = 0;
 
         //Players
         public Player[] players;
@@ -30,7 +35,6 @@ namespace TcgEngine
         public int selector_player_id = 0;
         public string selector_ability_id;
         public string selector_caster_uid;
-        public bool selector_cancelable;
 
         //Other reference values
         public string last_played;
@@ -44,10 +48,9 @@ namespace TcgEngine
         //Other reference arrays 
         public HashSet<string> ability_played = new HashSet<string>();
         public HashSet<string> cards_attacked = new HashSet<string>();
-        public List<ActionHistory> history_list = new List<ActionHistory>();
 
         public Game() { }
-
+        
         public Game(string uid, int nb_players)
         {
             this.game_uid = uid;
@@ -65,7 +68,9 @@ namespace TcgEngine
                 if (player.IsReady())
                     ready++;
             }
+
             return ready >= settings.nb_players;
+
         }
 
         public virtual bool AreAllPlayersConnected()
@@ -79,6 +84,7 @@ namespace TcgEngine
             return ready >= settings.nb_players;
         }
 
+
         //Check if its player's turn
         public virtual bool IsPlayerTurn(Player player)
         {
@@ -89,7 +95,7 @@ namespace TcgEngine
         {
             return player != null && current_player == player.player_id
                 && state == GameState.Play && selector == SelectorType.None
-                && response_phase == ResponsePhase.None;
+                && response_phase == ResponsePhase.None; // Last line ensure that active players don't play on Response, but not-active can.
         }
 
         public virtual bool IsResponsePlayerTurn(Player player)
@@ -97,12 +103,13 @@ namespace TcgEngine
             return player != null && response_phase != ResponsePhase.None && response_player == player.player_id;
         }
 
+
         public virtual bool IsPlayerSelectorTurn(Player player)
         {
-            return player != null && selector_player_id == player.player_id
+            return player != null && selector_player_id == player.player_id 
                 && state == GameState.Play && selector != SelectorType.None;
         }
-
+        
         //Check if a card is allowed to be played on slot
         public virtual bool CanPlayCard(Card card, Slot slot, bool skip_cost = false)
         {
@@ -154,19 +161,13 @@ namespace TcgEngine
         {
             if (card == null || !slot.IsValid())
                 return false;
-
             if (response_phase == ResponsePhase.Response)
                 return false;
-
             if (!IsOnBoard(card))
                 return false; //Only cards in play can move
 
             if (!card.CanMove(skip_cost))
                 return false; //Card cant move
-
-            // Cannot move to land space
-            if (slot.y == 2)
-                return false;
 
             if (Slot.GetP(card.player_id) != slot.p)
                 return false; //Card played wrong side
@@ -184,15 +185,13 @@ namespace TcgEngine
         //Check if a card is allowed to attack a player
         public virtual bool CanAttackTarget(Card attacker, Player target, bool skip_cost = false)
         {
-            if (attacker == null || target == null)
+            if(attacker == null || target == null)
                 return false;
 
             if (!attacker.CanAttack(skip_cost))
                 return false; //Card cant attack
-
             if (response_phase == ResponsePhase.Response)
                 return false;
-
             if (attacker.player_id == target.player_id)
                 return false; //Cant attack same player
 
@@ -213,7 +212,8 @@ namespace TcgEngine
 
             if (!attacker.CanAttack(skip_cost))
                 return false; //Card cant attack
-
+            if (response_phase == ResponsePhase.Response)
+                return false;
             if (attacker.player_id == target.player_id)
                 return false; //Cant attack same player
 
@@ -471,7 +471,7 @@ namespace TcgEngine
             }
             return null;
         }
-
+        
         public virtual Player GetRandomPlayer(System.Random rand)
         {
             Player player = GetPlayer(rand.NextDouble() < 0.5 ? 1 : 0);
@@ -551,29 +551,10 @@ namespace TcgEngine
         //Clone all variables into another var, used mostly by the AI when building a prediction tree
         public static void Clone(Game source, Game dest)
         {
-            dest.game_uid = source.game_uid;
-            dest.settings = source.settings;
 
-            dest.first_player = source.first_player;
-            dest.current_player = source.current_player;
             dest.response_phase = source.response_phase;
             dest.response_player = source.response_player;
-            dest.turn_count = source.turn_count;
-            dest.turn_timer = source.turn_timer;
             dest.response_timer = source.response_timer;
-            dest.state = source.state;
-            dest.phase = source.phase;
-
-            if (dest.players == null)
-            {
-                dest.players = new Player[source.players.Length];
-                for (int i = 0; i < source.players.Length; i++)
-                    dest.players[i] = new Player(i);
-            }
-
-            for (int i = 0; i < source.players.Length; i++)
-                Player.Clone(source.players[i], dest.players[i]);
-
             for (int i = 0; i < source.history_list.Count; i++)
             {
                 if (i < dest.history_list.Count)
@@ -584,6 +565,25 @@ namespace TcgEngine
 
             if (dest.history_list.Count > source.history_list.Count)
                 dest.history_list.RemoveRange(source.history_list.Count, dest.history_list.Count - source.history_list.Count);
+            dest.game_uid = source.game_uid;
+            dest.settings = source.settings;
+
+            dest.first_player = source.first_player;
+            dest.current_player = source.current_player;
+            dest.turn_count = source.turn_count;
+            dest.turn_timer = source.turn_timer;
+            dest.state = source.state;
+            dest.phase = source.phase;
+
+            if (dest.players == null)
+            {
+                dest.players = new Player[source.players.Length];
+                for(int i=0; i< source.players.Length; i++)
+                    dest.players[i] = new Player(i);
+            }
+
+            for (int i = 0; i < source.players.Length; i++)
+                Player.Clone(source.players[i], dest.players[i]);
 
             dest.selector = source.selector;
             dest.selector_player_id = source.selector_player_id;
@@ -600,6 +600,7 @@ namespace TcgEngine
 
             CloneHash(source.ability_played, dest.ability_played);
             CloneHash(source.cards_attacked, dest.cards_attacked);
+
         }
 
         public static void CloneHash(HashSet<string> source, HashSet<string> dest)
@@ -636,6 +637,7 @@ namespace TcgEngine
         SelectorChoice = 30,
         SelectorCost = 40,
     }
+
 
     [System.Serializable]
     public enum ResponsePhase

@@ -33,7 +33,7 @@ namespace TcgEngine.Client
 
         private void Start()
         {
-            if (x < Slot.x_min || (y != 2 ? x > Slot.x_max : x > Slot.x_max_y_2) || y < Slot.y_min || y > Slot.y_max)
+            if (x < Slot.x_min || x > Slot.x_max || y < Slot.y_min || y > Slot.y_max)
                 Debug.LogError("Board Slot X and Y value must be within the min and max set for those values, check Slot.cs script to change those min/max.");
         }
 
@@ -71,7 +71,7 @@ namespace TcgEngine.Client
             {
                 Card caster = gdata.GetCard(gdata.selector_caster_uid);
                 AbilityData ability = AbilityData.Get(gdata.selector_ability_id);
-                if (ability != null && slot_card == null && ability.CanTarget(gdata, caster, slot))
+                if(ability != null && slot_card == null && ability.CanTarget(gdata, caster, slot))
                     target_alpha = 1f; //Highlight when selecting a target and slot are valid
                 if (ability != null && slot_card != null && ability.CanTarget(gdata, caster, slot_card))
                     target_alpha = 1f; //Highlight when selecting a target and cards are valid
@@ -97,7 +97,7 @@ namespace TcgEngine.Client
                 int pid = GameClient.Get().GetPlayerID();
                 int px = x;
                 if ((pid % 2) == 1)
-                    px = (y != 2 ? Slot.x_max : Slot.x_max_y_2) - x + Slot.x_min; //Flip X coordinate if not the first player
+                    px = Slot.x_max - x + Slot.x_min; //Flip X coordinate if not the first player
                 return new Slot(px, y, p);
             }
 
@@ -112,9 +112,9 @@ namespace TcgEngine.Client
 
             if (type == BoardSlotType.PlayerSelf)
                 p = GameClient.Get().GetPlayerID();
-            if (type == BoardSlotType.PlayerOpponent)
+            if(type == BoardSlotType.PlayerOpponent)
                 p = GameClient.Get().GetOpponentPlayerID();
-
+           
             return new Slot(x, y, p);
         }
 

@@ -194,7 +194,7 @@ namespace TcgEngine.Client
         {
             Vector2 mpos = GameCamera.Get().MouseToPercent(Input.mousePosition);
             Vector3 board_pos = GameBoard.Get().RaycastMouseBoard();
-            if (drag && (mpos.x <= 0.35f || mpos.y > 0.25f))
+            if (drag && mpos.y > 0.25f)
                 TryPlayCard(board_pos);
             else
                 HandCardArea.Get().SortCards();
@@ -233,7 +233,6 @@ namespace TcgEngine.Client
                 WarningText.ShowNoMana();
                 return;
             }
-
             if (gdata.response_phase == ResponsePhase.Response && !card.HasTrait("response"))
             {
                 WarningText.ShowNoResponse();

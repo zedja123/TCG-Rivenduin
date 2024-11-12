@@ -15,7 +15,7 @@ namespace TcgEngine.AI
     {
         //-------- AI Logic Params ------------------
 
-        public int ai_depth = 1;                //How many turns in advance does it check, higher number takes exponentially longer
+        public int ai_depth = 3;                //How many turns in advance does it check, higher number takes exponentially longer
         public int ai_depth_wide = 1;           //For these first few turns, will consider more options, slow!
         public int actions_per_turn = 2;          //AI wont predict more than this number of sequential actions per turn, if more than that will EndTurn (Do A, then do B, then do C, then end turn)
         public int actions_per_turn_wide = 3;     //Same but in wide depth
@@ -325,6 +325,7 @@ namespace TcgEngine.AI
         private void AddActions(List<AIAction> actions, Game data, NodeState node, ushort type, Card card)
         {
             Player player = data.response_phase == ResponsePhase.Response ? data.GetPlayer(data.response_player) : data.GetPlayer(data.current_player);
+
 
             if (data.selector != SelectorType.None)
                 return;

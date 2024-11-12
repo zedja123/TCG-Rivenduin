@@ -36,7 +36,7 @@ namespace TcgEngine.Client
 
         private void Start()
         {
-            if (min_x < Slot.x_min || (y != 2 ? max_x > Slot.x_max : max_x > Slot.x_max_y_2) || y < Slot.y_min || y > Slot.y_max)
+            if (min_x < Slot.x_min || max_x > Slot.x_max || y < Slot.y_min || y > Slot.y_max)
                 Debug.LogError("Board Slot X and Y value must be within the min and max set for those values, check Slot.cs script to change those min/max.");
 
             GameClient.Get().onConnectGame += OnConnect;
@@ -73,11 +73,11 @@ namespace TcgEngine.Client
 
             //Find target opacity value
             target_alpha = 0f;
-            if (your_turn && dcard != null && dcard.CardData.IsBoardCard());
+            if (your_turn && dcard != null && dcard.CardData.IsBoardCard())
             {
                 foreach (GroupSlot slot in group_slots)
                 {
-                    if (gdata.CanPlayCard(dcard, slot.slot))
+                    if(gdata.CanPlayCard(dcard, slot.slot))
                         target_alpha = 1f; //hightlight when dragging a character or artifact
                 }
             }
@@ -124,14 +124,6 @@ namespace TcgEngine.Client
                     slot.pos = transform.position + Vector3.right * (nb_occupied * spacing + offset);
                 }
             }
-
-            if (y == 2)
-            {
-                if (nb_occupied == 0)
-                    spacing = 1.25f;
-                else
-                    spacing = 1.25f / Mathf.Ceil((float)nb_occupied / 4);
-            }
         }
 
         public bool IsInGroup(Slot slot)
@@ -173,7 +165,7 @@ namespace TcgEngine.Client
                 int pid = GameClient.Get().GetPlayerID();
                 int px = x;
                 if ((pid % 2) == 1)
-                    px = (y != 2 ? Slot.x_max : Slot.x_max_y_2) - x + Slot.x_min; //Flip X coordinate if not the first player
+                    px = Slot.x_max - x + Slot.x_min; //Flip X coordinate if not the first player
                 return new Slot(px, y, p);
             }
 
@@ -188,9 +180,9 @@ namespace TcgEngine.Client
 
             if (type == BoardSlotType.PlayerSelf)
                 p = GameClient.Get().GetPlayerID();
-            if (type == BoardSlotType.PlayerOpponent)
+            if(type == BoardSlotType.PlayerOpponent)
                 p = GameClient.Get().GetOpponentPlayerID();
-
+           
             return new Slot(x, y, p);
         }
 
@@ -281,6 +273,6 @@ namespace TcgEngine.Client
         public Vector3 pos;
         public float timer;
 
-        public bool IsOccupied { get { return timer > 0.01f; } }
+        public bool IsOccupied { get { return timer > 0.01f;  } }
     }
 }

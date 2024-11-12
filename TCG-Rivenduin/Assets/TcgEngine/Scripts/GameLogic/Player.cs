@@ -9,6 +9,7 @@ namespace TcgEngine
     [System.Serializable]
     public class Player
     {
+        public bool resolve = false;
         public int player_id;
         public string username;
         public string avatar;
@@ -20,14 +21,11 @@ namespace TcgEngine
 
         public bool connected = false; //Connected to server and game
         public bool ready = false;     //Sent all player data, ready to play
-        public bool resolve = true;
 
         public int hp;
         public int hp_max;
         public int mana = 0;
-        public int lands = 0;
-        public int lands_max = 1;
-        public int mana_max = 0;
+        public int mana_max = 15;
         public int kill_count = 0;
 
         public Dictionary<string, Card> cards_all = new Dictionary<string, Card>(); //Dictionnary for quick access to any card by UID
@@ -587,12 +585,11 @@ namespace TcgEngine
             dest.hp = source.hp;
             dest.hp_max = source.hp_max;
             dest.mana = source.mana;
-            dest.lands = source.lands;
-            dest.lands_max = source.lands_max;
             dest.mana_max = source.mana_max;
             dest.kill_count = source.kill_count;
 
             Card.CloneNull(source.hero, ref dest.hero);
+            Card.CloneNull(source.passive, ref dest.passive);
             Card.CloneDict(source.cards_all, dest.cards_all);
             Card.CloneListRef(dest.cards_all, source.cards_board, dest.cards_board);  
             Card.CloneListRef(dest.cards_all, source.cards_equip, dest.cards_equip);  
