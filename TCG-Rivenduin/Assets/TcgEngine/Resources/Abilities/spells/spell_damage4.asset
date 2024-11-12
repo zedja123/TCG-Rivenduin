@@ -18,7 +18,7 @@ MonoBehaviour:
   id: spell_damage4
   trigger: 10
   conditions_trigger: []
-  target: 20
+  target: 30
   conditions_target:
   - {fileID: 11400000, guid: ef09540f94d8428408b69fea46ec3334, type: 2}
   - {fileID: 11400000, guid: a1fb3a7171663234280fdfb41c99ab0a, type: 2}
