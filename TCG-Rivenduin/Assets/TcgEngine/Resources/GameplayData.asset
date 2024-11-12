@@ -43,4 +43,4 @@ MonoBehaviour:
   - Game
   test_deck: {fileID: 11400000, guid: 8539b1ce42aef234786631b3c4bfb067, type: 2}
   test_deck_ai: {fileID: 11400000, guid: 8539b1ce42aef234786631b3c4bfb067, type: 2}
-  ai_vs_ai: 0
+  ai_vs_ai: 1
