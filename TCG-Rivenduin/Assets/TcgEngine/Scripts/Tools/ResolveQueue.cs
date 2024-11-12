@@ -26,7 +26,7 @@ namespace TcgEngine
 
         private Game game_data;
         private bool is_resolving = false;
-        private float resolve_delay = 1f;
+        private float resolve_delay = 0f;
         private bool stack = false;
         private bool skip_delay = false;
 
@@ -135,10 +135,8 @@ namespace TcgEngine
 
         public virtual void Resolve(bool stack = false)
         {
-            Debug.Log("EnteredResolve");
             if (ability_queue.Count > 0)
             {
-                Debug.Log("Resolve Ability");
                 //Resolve Ability
                 AbilityQueueElement elem = ability_queue.Pop();
                 ability_elem_pool.Dispose(elem);
@@ -146,7 +144,6 @@ namespace TcgEngine
             }
             else if (secret_queue.Count > 0)
             {
-                Debug.Log("Resolve Secret");
                 //Resolve Secret
                 SecretQueueElement elem = secret_queue.Pop();
                 secret_elem_pool.Dispose(elem);
@@ -154,7 +151,6 @@ namespace TcgEngine
             }
             else if (attack_queue.Count > 0)
             {
-                Debug.Log("Resolve Attack");
                 //Resolve Attack
                 AttackQueueElement elem = attack_queue.Pop();
                 attack_elem_pool.Dispose(elem);
@@ -165,7 +161,6 @@ namespace TcgEngine
             }
             else if (stack && card_elem_queue.Count > 0)
             {
-                Debug.Log("Resolve Card");
                 //Resolve Card
                 CardQueueElement elem = card_elem_queue.Pop();
                 card_elem_pool.Dispose(elem);
@@ -177,10 +172,6 @@ namespace TcgEngine
                 callback_elem_pool.Dispose(elem);
                 elem.callback.Invoke();
             }
-            else
-            {
-                is_resolving = false;
-            }
         }
 
         public virtual void ResolveAll(float delay)
@@ -191,10 +182,15 @@ namespace TcgEngine
 
         public virtual void ResolveAll(bool force_stack = false)
         {
+            if (is_resolving)
+                return;
+
+            is_resolving = true;
             while (CanResolve(force_stack || stack))
             {
                 Resolve(force_stack || stack);
             }
+            is_resolving = false;
         }
 
         public virtual void SetDelay(float delay)
