@@ -106,6 +106,7 @@ namespace TcgEngine.UI
                 }
 
                 bool valid = gdata.IsPlayerActionTurn(player) && gdata.CanCastAbility(hero, ability);
+                bool validResponse = gdata.IsResponsePlayerTurn(player) && gdata.CanCastAbility(hero, ability);
                 if (valid)
                 {
                     GameClient.Get().CastAbility(hero, ability);
