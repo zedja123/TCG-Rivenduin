@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: spell_damage4
   m_EditorClassIdentifier: 
   selector_owner: 1
-  selector_cancelable: 1
+  selector_cancelable: 0
   use_as_response: 1
   id: spell_damage4
   trigger: 10
