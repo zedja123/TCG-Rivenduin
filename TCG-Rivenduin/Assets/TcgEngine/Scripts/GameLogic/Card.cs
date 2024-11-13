@@ -14,6 +14,8 @@ namespace TcgEngine
         public int player_id;
         public string variant_id;
 
+        public string title;
+
         public Slot slot;
         public bool exhausted;
         public int damage = 0;
@@ -68,6 +70,7 @@ namespace TcgEngine
             attack = icard.attack;
             hp = icard.hp;
             mana = icard.mana;
+            title = icard.title;
             SetTraits(icard);
             SetAbilities(icard);
         }

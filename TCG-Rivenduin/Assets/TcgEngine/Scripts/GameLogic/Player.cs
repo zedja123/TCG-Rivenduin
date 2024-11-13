@@ -22,6 +22,7 @@ namespace TcgEngine
         public bool connected = false; //Connected to server and game
         public bool ready = false;     //Sent all player data, ready to play
 
+        public bool playedcard = false;
         public int hp;
         public int hp_max;
         public int mana = 0;

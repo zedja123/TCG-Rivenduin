@@ -47,7 +47,9 @@ namespace TcgEngine.Gameplay
 
         private Game game_data;
 
-        private bool  bothresolve = false;
+        private bool bothresolve = false;
+        private bool playedcard = false;
+
         private ResolveQueue resolve_queue;
         private bool is_ai_predict = false;
 
@@ -161,6 +163,8 @@ namespace TcgEngine.Gameplay
                 return;
 
             ClearTurnData();
+            game_data.GetActivePlayer().playedcard = false;
+            Debug.Log("Start Turn Player Played Card" + game_data.GetActivePlayer().playedcard);
             game_data.phase = GamePhase.StartTurn;
             onTurnStart?.Invoke();
             RefreshData();
@@ -246,31 +250,33 @@ namespace TcgEngine.Gameplay
             if (game_data.response_phase == ResponsePhase.Response)
             {
                 game_data.GetPlayer(game_data.response_player).resolve = true;
-                Debug.Log("Response Player = True");
+                Debug.Log("Response Player = True: " + game_data.GetPlayer(game_data.response_player).username);
+
 
                 if (!game_data.GetOpponentPlayer(game_data.response_player).resolve)
                 {
-                    Debug.Log("Response Player = True IF");
                     game_data.response_player = game_data.GetOpponentPlayer(game_data.response_player).player_id;
+                    Debug.Log("Response Player = True IF: " + game_data.GetOpponentPlayer(game_data.response_player).username);
                     RefreshData();
                     return;
                 }
-                else if(game_data.GetPlayer(game_data.response_player).resolve == true && game_data.GetOpponentPlayer(game_data.response_player).resolve == true && bothresolve == false)
+                else if (game_data.GetPlayer(game_data.response_player).resolve == true && game_data.GetOpponentPlayer(game_data.response_player).resolve == true && bothresolve == false)
                 {
-                    Debug.Log("Response Player = True ELSE");
                     game_data.response_player = game_data.GetOpponentPlayer(game_data.response_player).player_id;
+                    Debug.Log("Response Player = True ELSE: " + game_data.GetOpponentPlayer(game_data.response_player).username);
                     bothresolve = true;
                     RefreshData();
                     return;
-                }
-                else if(bothresolve)
+                } 
+                else if (bothresolve)
                 {
+                    Debug.Log("Response Player: " + game_data.GetOpponentPlayer(game_data.response_player).playedcard);
                     bothresolve = false;
-                    game_data.GetPlayer(game_data.response_player).resolve = false;
-                    game_data.GetOpponentPlayer(game_data.response_player).resolve = false;
                     Debug.Log("Resolving");
                     resolve_queue.ResolveAll(true);
                     game_data.response_phase = ResponsePhase.None;
+                    game_data.GetPlayer(game_data.response_player).resolve = false;
+                    game_data.GetOpponentPlayer(game_data.response_player).resolve = false;
                     RefreshData();
                     return;
                 }
@@ -477,6 +483,8 @@ namespace TcgEngine.Gameplay
                 if (card.CardData.skip_stack || skip_cost)
                 {
                     TriggerCard(card, player, slot);
+                    game_data.GetActivePlayer().playedcard = true;
+                    Debug.Log(game_data.GetPlayer(card.player_id).username + " Played Card " + card.title);
                     Player responseOp = game_data.GetOpponentPlayer(game_data.response_phase == ResponsePhase.None ? player.player_id : game_data.response_player);
                     Player resposePl = game_data.GetOpponentPlayer(responseOp.player_id);
                     if (game_data.response_phase == ResponsePhase.None || (!resposePl.resolve || !responseOp.resolve))
@@ -493,7 +501,8 @@ namespace TcgEngine.Gameplay
                 else
                 {
                     resolve_queue.AddCard(card, player, slot, TriggerCard);
-
+                    game_data.GetActivePlayer().playedcard = true;
+                    Debug.Log(game_data.GetPlayer(card.player_id).username + " Played Card " + card.title);
                     ActionHistory order = new ActionHistory();
                     order.type = GameAction.PlayCard;
                     order.card_id = card.card_id;
